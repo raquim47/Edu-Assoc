@@ -11,7 +11,6 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  font-weight: 300;
   font-family: 'Noto Sans KR', sans-serif;
   line-height: 1.2;
   overflow-x: hidden;
@@ -38,7 +37,6 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
