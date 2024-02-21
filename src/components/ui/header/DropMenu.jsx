@@ -17,14 +17,30 @@ const Wrapper = styled.ul`
     font-size: 15px;
     color: white;
   }
+`;
 
-  li a {
+const StyledLink = styled(Link)`
+  display: block;
+  padding: 10px 15px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
     display: block;
-    padding: 10px 15px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    transition: width 0.2s ease;
   }
-
-  li a:hover {
-    color: #004071;
+  
+  &:hover::before,
+  &:focus::before {
+    width: 70%;
   }
 `;
 
@@ -33,7 +49,7 @@ const DropMenu = ({ subMenus, isDropMenuShow }) => {
     <Wrapper $isDropMenuShow={isDropMenuShow}>
       {subMenus.map((subMenuItem) => (
         <li key={subMenuItem.name}>
-          <Link to={subMenuItem.path}>{subMenuItem.name}</Link>
+          <StyledLink to={subMenuItem.path}>{subMenuItem.name}</StyledLink>
         </li>
       ))}
     </Wrapper>
