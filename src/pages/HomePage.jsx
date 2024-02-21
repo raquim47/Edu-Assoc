@@ -1,6 +1,7 @@
-import bannerImage from '../assets/banner.jpeg';
-import BoardsSection from '../components/ui/home/BoardsSection';
-import ContactSection from '../components/ui/home/ContactSection';
+import bannerImage from 'assets/banner.jpeg';
+import Footer from 'components/footer/Footer';
+import BoardsSection from 'components/home/BoardsSection';
+import ContactSection from 'components/home/ContactSection';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,7 @@ const HomePage = () => {
       </section>
       <BoardsSection/>
       <ContactSection/>
+      <Footer/>
     </>
   );
 };

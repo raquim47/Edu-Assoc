@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import contactBg from '../../../assets/contact-bg.png';
+import contactBg from 'assets/contact-bg.png';
 
 const Wrapper = styled.section`
   background-color: #f3f3f3;
-  margin-bottom: 300px;
 
   .inner {
     display: flex;
