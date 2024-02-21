@@ -20,19 +20,20 @@ const Wrapper = styled.ul`
 `;
 
 const StyledLink = styled(Link)`
-  display: block;
+  display: inline-block;
   padding: 10px 15px;
   position: relative;
   overflow: hidden;
+  /* border: 1px solid red; */
 
   &::before {
     content: '';
     display: block;
     position: absolute;
-    bottom: 0;
+    bottom: 4px;
     left: 50%;
     width: 0;
-    height: 2px;
+    height: 1px;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.8);
     transition: width 0.2s ease;
@@ -40,7 +41,7 @@ const StyledLink = styled(Link)`
   
   &:hover::before,
   &:focus::before {
-    width: 70%;
+    width: 80%;
   }
 `;
 

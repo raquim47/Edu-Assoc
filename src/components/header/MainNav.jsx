@@ -9,7 +9,6 @@ const Wrapper = styled.nav`
   align-items: center;
   position: relative;
   padding-top: 40px;
-
   h1 {
     font-size: 30px;
     color: #414547;
@@ -17,7 +16,10 @@ const Wrapper = styled.nav`
 
   .main-list {
     display: flex;
-    padding-top: 40px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
   }
 
   .main-list > li {
@@ -26,7 +28,7 @@ const Wrapper = styled.nav`
 
   .main-list > li > a {
     display: block;
-    padding: 20px 50px;
+    padding: 15px 50px;
     font-size: 18px;
   }
 `;
