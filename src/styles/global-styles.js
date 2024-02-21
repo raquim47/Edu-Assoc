@@ -58,4 +58,16 @@ a {
   text-decoration:none;
   color:inherit;
 }
+
+button {
+  background: none;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
 `;
+
