@@ -3,7 +3,7 @@ import MainNav from './MainNav';
 import SubNav from './SubNav';
 
 const Wrapper = styled.header`
-  border-bottom: 1px solid #ddd;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 `;
 
 const Header = () => {

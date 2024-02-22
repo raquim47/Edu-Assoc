@@ -9,6 +9,7 @@ const Wrapper = styled.nav`
   align-items: center;
   position: relative;
   padding-top: 40px;
+
   h1 {
     font-size: 30px;
     color: #414547;
