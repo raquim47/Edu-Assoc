@@ -25,10 +25,10 @@ const SubNav = () => {
     <Wrapper>
       <ul>
         <li>
-          <Link>홈</Link>
+          <Link to="/">홈</Link>
         </li>
         <li>
-          <Link>로그인</Link>
+          <Link to="/accounts/login">로그인</Link>
         </li>
         <li>
           <Link>회원가입</Link>
