@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.nav`
   padding: 10px 0;
-  background-color: #122b41;
+  background-color: ${props => props.theme.color.blue[0]};
 
   ul {
     display: flex;
@@ -13,10 +13,10 @@ const Wrapper = styled.nav`
   }
 
   li {
-    font-size: 14px;
-    font-weight: 300;
     padding: 0 10px;
-    color: #fff;
+    font-size:${props => props.theme.fontSize.s};;
+    font-weight: 300;
+    color: ${props => props.theme.color.white};
   }
 `;
 

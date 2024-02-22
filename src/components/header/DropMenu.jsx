@@ -21,7 +21,7 @@ const Wrapper = styled.ul`
 
 const StyledLink = styled(Link)`
   display: inline-block;
-  padding: 10px 15px;
+  padding: 6px 15px;
   position: relative;
   overflow: hidden;
   /* border: 1px solid red; */

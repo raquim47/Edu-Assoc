@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   padding: 20px;
 
   h3 {
-    font-size: 24px;
+    font-size: ${(props) => props.theme.fontSize.xxl};
     font-weight: 400;
     margin-bottom: 25px;
   }
@@ -19,21 +19,21 @@ const Form = styled.form`
     width: 100%;
     margin-bottom: 10px;
     padding: 20px 12px;
-    border: 1px solid #ddd;
+    border: 1px solid ${(props) => props.theme.color.gray[1]};
     color: #414141;
-    font-size: 14px;
+    font-size: ${(props) => props.theme.fontSize.s};
   }
 
   button {
     width: 100%;
     padding: 15px 0;
     font-size: 16px;
-    background-color: #194368;
+    background-color: ${(props) => props.theme.color.blue[1]};
     color: white;
   }
 
   button:hover {
-    background-color: #25659c;
+    background-color: ${(props) => props.theme.color.blue[2]};
   }
 `;
 
@@ -42,13 +42,13 @@ const ActionLinks = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: ${(props) => props.theme.fontSize.s};
     font-weight: 300;
-    color: #414141;
+    color: ${(props) => props.theme.color.black[1]};
   }
 
   a {
-    color: #ff9702;
+    color: ${(props) => props.theme.color.orange};
   }
 `;
 

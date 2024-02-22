@@ -11,19 +11,20 @@ const Wrapper = styled.article`
   }
 
   h3 {
-    font-size: 24px;
+    font-size: ${props => props.theme.fontSize.xxl};
     font-weight: 400;
   }
 
   .more-btn {
     width: 60px;
     padding: 4px 0 1px;
+    transition: background-color 0.2s ease;
   }
 
   .more-btn:hover {
-    color: white;
-    background-color: #194368;
-    transition: background-color 0.2s ease;
+    color: ${props => props.theme.color.white};
+    background-color: ${props => props.theme.color.blue[1]};
+    border : 1px solid ${props => props.theme.color.blue[1]};
   }
 
   ul {
@@ -50,8 +51,8 @@ const ListItem = styled.li`
   }
 
   time {
-    color: #a0a0a0;
-    font-size: 13px;
+    color: ${props => props.theme.color.gray[0]};
+    font-size: ${props => props.theme.fontSize.s};
     font-weight: 300;
   }
 `;

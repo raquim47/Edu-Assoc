@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const FooterTop = styled.div`
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid ${(props) => props.theme.color.gray[1]};
+  border-bottom: 1px solid ${(props) => props.theme.color.gray[1]};
   margin-top: 50px;
+  
   ul {
     max-width: 1200px;
     margin: 0 auto;
@@ -20,11 +21,11 @@ const FooterBottom = styled.div`
   padding: 25px 0;
 
   strong {
-    color: #184368;
+    color: ${props => props.theme.color.blue[1]};
   }
 
   p {
-    margin-top: 8px;
+    margin-top: 6px;
     font-weight: 300;
   }
 `;

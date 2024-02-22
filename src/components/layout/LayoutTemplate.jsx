@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     height: 1000px;
     margin: 0 auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: ${props => props.theme.color.white};
   }
 
   .content-section {
@@ -23,39 +23,38 @@ const Wrapper = styled.div`
 const SideBar = styled.aside`
   width: 220px;
   height: 100%;
-  background-color: #eee;
+  background-color: ${props => props.theme.color.gray[2]};
 
   header {
     height: 120px;
-    background-color: #004071;
-    /* background: linear-gradient(to bottom, #184368 50%, #0d4c7c 50%); */
+    background-color: ${props => props.theme.color.blue[1]};
     line-height: 120px;
     text-align: center;
   }
 
-  header h2 {
-    color: white;
+  header strong {
+    color: ${props => props.theme.color.white};
     font-weight: 400;
-    font-size: 22px;
+    font-size: ${props => props.theme.fontSize.l};
   }
 
   ul {
-    background-color: #fafafa;
+    background-color: ${props => props.theme.color.gray[3]};
   }
 
-  ul li {
-    border-bottom: 1px solid #eee;
+  ul > li {
+    border-bottom: 1px solid ${props => props.theme.color.gray[2]};
   }
 
-  ul li a {
+  ul > li > a {
     font-weight: 300;
     display: block;
     padding: 12px 15px;
   }
 
   ul li a:hover {
-    background-color: #535f76;
-    color: #fff;
+    background-color: ${props => props.theme.color.black[2]};
+    color: ${props => props.theme.color.white};
   }
 `;
 
@@ -65,7 +64,7 @@ const LayoutTemplate = ({ sidebarContents, children }) => {
       <div className="inner">
         <SideBar>
           <header>
-            <h2>{sidebarContents.title}</h2>
+            <strong>{sidebarContents.title}</strong>
           </header>
           <ul>
             {sidebarContents.sideMenus.map((item) => (

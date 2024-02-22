@@ -12,7 +12,6 @@ export const GlobalStyle = createGlobalStyle`
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
-  line-height: 1.2;
   overflow-x: hidden;
 }
 

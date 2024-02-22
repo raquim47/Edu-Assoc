@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import contactBg from 'assets/contact-bg.png';
 
 const Wrapper = styled.section`
-  background-color: #f3f3f3;
+  background-color: ${props => props.theme.color.gray[2]};
 
   .inner {
     display: flex;
@@ -31,13 +31,13 @@ const Wrapper = styled.section`
   }
 
   h2 {
-    font-size: 30px;
-    color: #184368;
+    font-size: ${props => props.theme.fontSize['4xl']};
+    color: ${props => props.theme.color.blue[1]};
     margin-bottom: 25px;
   }
 
   p {
-    font-size: 20px;
+    font-size: ${props => props.theme.fontSize.xl};
     margin-bottom: 14px;
   }
 `;

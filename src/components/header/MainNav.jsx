@@ -9,10 +9,11 @@ const Wrapper = styled.nav`
   align-items: center;
   position: relative;
   padding-top: 40px;
+  z-index: ${(props) => props.theme.zIndex.header};
 
   h1 {
-    font-size: 30px;
-    color: #414547;
+    font-size: ${(props) => props.theme.fontSize['3xl']};
+    color: ${(props) => props.theme.color.blue[0]};
   }
 
   .main-list {
@@ -20,7 +21,7 @@ const Wrapper = styled.nav`
     justify-content: center;
     width: 100%;
     margin-top: 40px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid ${(props) => props.theme.color.gray[1]};
   }
 
   .main-list > li {
@@ -30,7 +31,7 @@ const Wrapper = styled.nav`
   .main-list > li > a {
     display: block;
     padding: 15px 50px;
-    font-size: 18px;
+    font-size: ${(props) => props.theme.fontSize.l};
   }
 `;
 
@@ -41,7 +42,6 @@ const DropMenuBg = styled.div`
   width: 100%;
   transition: height 0.3s ease;
   background-color: rgba(18, 43, 65, 0.85);
-  z-index: 1;
 `;
 
 const mainMenuItems = [

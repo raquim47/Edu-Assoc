@@ -12,14 +12,14 @@ const Wrapper = styled.header`
   justify-content: space-between;
   height: 120px;
   align-items: center;
-  border-bottom: 1px solid #004071;
+  border-bottom: 1px solid ${(props) => props.theme.color.blue[1]};
   margin-bottom: 40px;
 
-  h3 {
+  h2 {
     padding-left: 5px;
-    font-size: 34px;
+    font-size: ${(props) => props.theme.fontSize['4xl']};
     font-weight: 500;
-    color: #004071;
+    color: ${(props) => props.theme.color.blue[1]};
   }
 `;
 
@@ -39,8 +39,8 @@ const BreadScrumbs = styled.ul`
     transform: translateY(-50%);
     width: 10px;
     height: 10px;
-    border-top: solid 1px #ddd;
-    border-right: solid 1px #ddd;
+    border-top: solid 1px ${props => props.theme.color.gray[1]};
+    border-right: solid 1px ${props => props.theme.color.gray[1]};
     transform: rotate(45deg) translateY(-50%);
   }
 
@@ -58,7 +58,7 @@ const PageHeaderTemplate = () => {
 
   return (
     <Wrapper>
-      <h3>{segmentNames.at(-1)}</h3>
+      <h2>{segmentNames.at(-1)}</h2>
       <BreadScrumbs>
         <li>
           <Link to="/">홈</Link>
