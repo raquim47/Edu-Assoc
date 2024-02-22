@@ -1,4 +1,3 @@
-import useAuthInit from 'fb/hooks/useAuthInit';
 import styled from 'styled-components';
 import MainNav from './MainNav';
 import SubNav from './SubNav';
@@ -9,8 +8,6 @@ const Wrapper = styled.header`
 `;
 
 const Header = () => {
-  const { user, isSuccess } = useAuthInit();
-  console.log(user, isSuccess);
   return (
     <Wrapper>
       <SubNav />

@@ -1,4 +1,3 @@
-import useAuthInit from 'fb/hooks/useAuthInit';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,8 +21,6 @@ const Wrapper = styled.nav`
 `;
 
 const SubNav = () => {
-  const { user, isSuccess } = useAuthInit();
-  console.log(user, isSuccess);
   return (
     <Wrapper>
       <ul>
@@ -34,7 +31,7 @@ const SubNav = () => {
           <Link to="/accounts/login">로그인</Link>
         </li>
         <li>
-          <Link>회원가입</Link>
+          <Link to="/accounts/register">회원가입</Link>
         </li>
         <li>
           <Link>사이트맵</Link>

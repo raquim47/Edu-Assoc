@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -33,17 +34,17 @@ const Wrapper = styled.div`
   }
 `;
 
-const RegisterInput = ({ id, label, isRequired, children, ...props }) => {
+const RegisterInput = forwardRef(({ id, label, isRequired, children, ...props }, ref) => {
   return (
     <Wrapper>
       <label htmlFor={id}>
         {isRequired && <span className="required-mark">*</span>}
         {label}
       </label>
-      <input id={id} {...props} />
+      <input id={id} ref={ref} {...props} />
       {children}
     </Wrapper>
   );
-};
+});
 
 export default RegisterInput;

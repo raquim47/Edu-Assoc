@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -28,16 +29,16 @@ const AgreementText = styled.div`
   padding: 10px;
 `;
 
-const AgreementCheckBox = ({ agreementText, id, label, ...props }) => {
+const AgreementCheckBox = forwardRef(({ agreementText, id, label, ...props }, ref) => {
   return (
     <Wrapper>
       <AgreementText>{agreementText}</AgreementText>
       <div className="check">
-        <input type="checkbox" id={id} {...props} />
+        <input ref={ref} type="checkbox" id={id} {...props} />
         <label htmlFor={id}>{label}</label>
       </div>
     </Wrapper>
   );
-};
+});
 
 export default AgreementCheckBox;

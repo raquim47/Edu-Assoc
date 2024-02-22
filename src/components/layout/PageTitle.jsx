@@ -1,11 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-const PATH_NAMES = {
-  accounts: '회원서비스',
-  login: '로그인',
-  register: '회원가입',
-};
+import { NAVIGATION_DATA } from './constants';
 
 const Wrapper = styled.header`
   display: flex;
@@ -39,8 +34,8 @@ const BreadScrumbs = styled.ul`
     transform: translateY(-50%);
     width: 10px;
     height: 10px;
-    border-top: solid 1px ${props => props.theme.color.gray[1]};
-    border-right: solid 1px ${props => props.theme.color.gray[1]};
+    border-top: solid 1px ${(props) => props.theme.color.gray[1]};
+    border-right: solid 1px ${(props) => props.theme.color.gray[1]};
     transform: rotate(45deg) translateY(-50%);
   }
 
@@ -49,26 +44,26 @@ const BreadScrumbs = styled.ul`
   }
 `;
 
-const PageHeaderTemplate = () => {
+const PageTitle = ({ sideNavType }) => {
   const { pathname } = useLocation();
-  const segmentNames = pathname
-    .split('/')
-    .filter(Boolean)
-    .map((segment) => PATH_NAMES[segment] || segment);
+  const currentSection = NAVIGATION_DATA[sideNavType];
+  const currentPath = pathname.split('/').filter(Boolean).at(-1);
+  const currentPage = currentSection.children.find(
+    (page) => page.path === currentPath
+  );
 
   return (
     <Wrapper>
-      <h2>{segmentNames.at(-1)}</h2>
+      <h2>{currentPage.name}</h2>
       <BreadScrumbs>
         <li>
           <Link to="/">홈</Link>
         </li>
-        {segmentNames.map((name) => (
-          <li key={name}>{name}</li>
-        ))}
+        <li>{currentSection.title}</li>
+        {currentPage && <li>{currentPage.name}</li>}
       </BreadScrumbs>
     </Wrapper>
   );
 };
 
-export default PageHeaderTemplate;
+export default PageTitle;

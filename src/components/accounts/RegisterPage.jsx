@@ -1,5 +1,6 @@
-import AgreementCheckBox from 'components/accounts/AgreementCheckBox';
-import RegisterInput from 'components/accounts/RegisterInput';
+import AgreementCheckBox from './ui/AgreementCheckBox';
+import RegisterInput from './ui/RegisterInput';
+import { checkEmailDuplicate } from 'components/accounts/utils';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -11,15 +12,15 @@ const Form = styled.form`
 
   .submit-btn {
     padding: 15px 0;
-    background-color: ${props => props.theme.color.blue[1]};
-    color: ${props => props.theme.color.white};
+    background-color: ${(props) => props.theme.color.blue[1]};
+    color: ${(props) => props.theme.color.white};
 
     &:disabled {
-      background-color: ${props => props.theme.color.gray[2]};
+      background-color: ${(props) => props.theme.color.gray[2]};
       cursor: default;
     }
     &:hover {
-      background-color: ${props => props.theme.color.blue[2]};
+      background-color: ${(props) => props.theme.color.blue[2]};
     }
   }
 `;
@@ -30,15 +31,15 @@ const Fieldset = styled.fieldset`
   gap: 18px;
 
   legend {
-    font-size: ${props => props.theme.fontSize.xl};
+    font-size: ${(props) => props.theme.fontSize.xl};
     font-weight: 400;
     margin-bottom: 15px;
   }
 `;
 
 const CheckBtn = styled.button`
-  background-color: ${props => props.theme.color.black[2]};
-  color: ${props => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.black[2]};
+  color: ${(props) => props.theme.color.white};
   border: none;
   padding: 10px 15px;
 `;
@@ -52,14 +53,19 @@ const RegisterPage = () => {
   } = useForm();
   const onSubmit = (data) => console.log(data);
 
-  const termsAgreed = watch('termsAgreed');
+  const emailWatched = watch('email');
 
   return (
     <div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
           <legend>이용약관</legend>
-          <AgreementCheckBox agreementText={'이용약관 내용 '.repeat(150)} id="termsAgreement" label="이용약관에 동의합니다." {...register('termsAgreed', { required: true })}/>
+          <AgreementCheckBox
+            agreementText={'이용약관 내용 '.repeat(150)}
+            id="termsAgreement"
+            label="이용약관에 동의합니다."
+            {...register('termsAgreed', { required: true })}
+          />
         </Fieldset>
         <Fieldset>
           <legend>기본정보</legend>
@@ -70,7 +76,12 @@ const RegisterPage = () => {
             placeholder="ex) abc@google.com"
             {...register('email', { required: '이름은 필수 항목입니다.' })}
           >
-            <CheckBtn type="button">중복 확인</CheckBtn>
+            <CheckBtn
+              type="button"
+              onClick={() => checkEmailDuplicate(emailWatched)}
+            >
+              중복 확인
+            </CheckBtn>
           </RegisterInput>
           <RegisterInput
             id="username"
