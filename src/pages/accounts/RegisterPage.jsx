@@ -105,7 +105,7 @@ const RegisterPage = () => {
         </Fieldset>
 
         <button className="submit-btn" type="submit">
-          제출
+          회원가입
         </button>
       </Form>
     </div>

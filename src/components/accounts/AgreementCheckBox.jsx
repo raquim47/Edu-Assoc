@@ -12,6 +12,11 @@ const Wrapper = styled.div`
     height: 18px;
     margin-top: 5px;
     accent-color: ${props => props.theme.color.blue[1]};
+    cursor: pointer;
+  }
+  
+  label {
+    cursor: pointer;
   }
 `;
 

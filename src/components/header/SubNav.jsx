@@ -1,3 +1,4 @@
+import useAuthInit from 'fb/hooks/useAuthInit';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,6 +22,8 @@ const Wrapper = styled.nav`
 `;
 
 const SubNav = () => {
+  const { user, isSuccess } = useAuthInit();
+  console.log(user, isSuccess);
   return (
     <Wrapper>
       <ul>
