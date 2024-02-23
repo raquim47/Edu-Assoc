@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from 'fb/firebase-init';
 
@@ -30,4 +33,21 @@ export const useRegisterUser = () => {
   };
 
   return { register, isLoading };
+};
+
+export const useLogin = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const login = async (email, password) => {
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { login, isLoading };
 };

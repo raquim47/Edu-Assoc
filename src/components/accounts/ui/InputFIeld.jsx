@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   align-items: center;
   position: relative;
   border: 1px solid ${(props) => props.theme.color.gray[1]};
-  gap: 5px;
+  gap: 10px;
 
   label {
     display: flex;
