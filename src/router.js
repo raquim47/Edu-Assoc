@@ -5,6 +5,7 @@ import { action as logoutAction } from 'components/accounts/Logout';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
 import HomePage from './components/home/HomePage';
+import NavigationGuard from 'components/common/NavigationGuard';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
           { index: true, element: <Navigate to="login" replace /> },
           {
             path: 'login',
-            element: <LoginPage />,
+            element: (
+              <NavigationGuard>
+                <LoginPage />
+              </NavigationGuard>
+            ),
           },
           {
             path: 'register',

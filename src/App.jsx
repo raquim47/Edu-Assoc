@@ -5,8 +5,8 @@ import router from './router';
 
 const App = () => {
   useAutoLogout(14400000);
-  const { isSuccess } = useAuthInit();
-  return <>{isSuccess && <RouterProvider router={router} />}</>;
+  const { user } = useAuthInit();
+  return <>{user && <RouterProvider router={router} />}</>;
 };
 
 export default App;
