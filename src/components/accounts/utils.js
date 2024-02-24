@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from 'fb/firebase-init';
+import { db } from 'fb';
 
 export const checkEmailDuplicate = async (
   email,

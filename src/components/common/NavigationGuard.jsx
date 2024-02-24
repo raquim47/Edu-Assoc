@@ -1,9 +1,9 @@
-import { useAuthInit } from 'fb/hooks';
 import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 const NavigationGuard = ({ children }) => {
-  const { user } = useAuthInit();
+  const user = useSelector((state) => state.auth.user);
   const alertShownRef = useRef(false);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useAuthInit } from 'fb/hooks';
+import { useSelector } from 'react-redux';
 import { Link, useSubmit } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -30,7 +30,8 @@ const LogoutBtn = styled.button`
 
 const SubNav = () => {
   const submit = useSubmit();
-  const { user } = useAuthInit();
+  const user = useSelector((state) => state.auth.user);
+
   const handleOnLogout = () => {
     if (window.confirm('로그아웃하시겠습니까?')) {
       submit(null, { action: '/accounts/logout', method: 'post' });

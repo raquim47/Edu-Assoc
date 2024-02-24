@@ -17,7 +17,7 @@ const Wrapper = styled.article`
 
   .more-btn {
     width: 60px;
-    padding: 4px 0 1px;
+    padding: 2px 0;
     transition: background-color 0.2s ease;
   }
 

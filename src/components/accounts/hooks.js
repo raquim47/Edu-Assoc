@@ -2,10 +2,48 @@ import { useEffect, useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from 'fb/firebase-init';
+import { useQuery } from '@tanstack/react-query';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from 'fb';
 import { queryClient } from 'index';
+
+export const useFetchUser = () => {
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => {
+      return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            try {
+              const userInfoRef = doc(db, 'users', user.uid);
+              const userInfoSnap = await getDoc(userInfoRef);
+              const userInfo = userInfoSnap.data();
+              resolve({
+                uid: user.uid,
+                email: user.email,
+                phone: userInfo.phone,
+                username: userInfo.username,
+              });
+            } catch (error) {
+              reject(error);
+            }
+          } else {
+            resolve(null);
+          }
+        });
+        return () => unsubscribe();
+      });
+    },
+  });
+  return { user, isLoading, isError };
+};
 
 export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,11 +93,11 @@ export const useLogin = () => {
 
 export const useAutoLogout = (timeout) => {
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setTimeout(async () => {
           alert('자동 로그아웃 되었습니다');
-          await auth.signOut();
+          await signOut(auth);
           queryClient.invalidateQueries(['auth-init']);
         }, timeout);
       }

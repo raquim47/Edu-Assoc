@@ -1,9 +1,10 @@
-import { auth } from 'fb/firebase-init';
-import { queryClient } from 'index';
+import { auth } from 'fb';
+import { signOut } from 'firebase/auth';
 import { redirect } from 'react-router-dom';
+import { queryClient } from 'index';
 
 export const action = async () => {
-  await auth.signOut();
+  await signOut(auth);
   queryClient.invalidateQueries(['auth-init']);
   return redirect('/');
 };
