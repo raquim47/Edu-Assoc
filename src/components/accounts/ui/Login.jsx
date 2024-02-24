@@ -1,3 +1,4 @@
+import { queryClient } from 'index';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../hooks';
@@ -16,6 +17,7 @@ const Login = ({ basicMode }) => {
   const handleOnSubmit = async (data) => {
     try {
       await login(data.email, data.password);
+      queryClient.invalidateQueries(['auth-init']);
       navigate('/');
     } catch (error) {
       switch (error.code) {

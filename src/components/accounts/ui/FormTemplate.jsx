@@ -8,7 +8,7 @@ const FormTemplate = styled.form`
   fieldset {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
   }
 
   legend {

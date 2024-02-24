@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from 'fb/firebase-init';
+import { queryClient } from 'index';
 
 export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,4 +51,20 @@ export const useLogin = () => {
   };
 
   return { login, isLoading };
+};
+
+export const useAutoLogout = (timeout) => {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setTimeout(async () => {
+          alert('자동 로그아웃 되었습니다');
+          await auth.signOut();
+          queryClient.invalidateQueries(['auth-init']);
+        }, timeout);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [timeout]);
 };

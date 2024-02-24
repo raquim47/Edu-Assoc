@@ -59,6 +59,7 @@ a {
 }
 
 button {
+  font-family: 'Noto Sans KR', sans-serif;
   background: none;
   text-align: center;
   font-size: 14px;

@@ -49,6 +49,7 @@ const ErrorMassage = styled.p`
   left: ${props => props.$basicMode ? '10px' : '150px'};
   color: ${(props) => props.theme.color.red};
   font-size: ${(props) => props.theme.fontSize.xs};
+  font-weight: 300;
   white-space: nowrap;
 `;
 
