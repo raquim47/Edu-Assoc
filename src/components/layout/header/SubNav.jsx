@@ -30,8 +30,8 @@ const LogoutBtn = styled.button`
 
 const SubNav = () => {
   const submit = useSubmit();
-  const user = useSelector((state) => state.auth.user);
-
+  const user = useSelector((state) => state.user);
+  console.log(user);
   const handleOnLogout = () => {
     if (window.confirm('로그아웃하시겠습니까?')) {
       submit(null, { action: '/accounts/logout', method: 'post' });
