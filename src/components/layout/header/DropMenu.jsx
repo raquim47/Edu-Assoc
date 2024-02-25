@@ -6,7 +6,7 @@ const Wrapper = styled.ul`
   top: 100%;
   width: 100%;
   height: ${(props) => (props.$isDropMenuShow ? 'auto' : 0)};
-  padding-top: 15px;
+  padding-top: 10px;
   opacity: ${(props) => (props.$isDropMenuShow ? 1 : 0)};
   transition: height 0.3s ease, opacity 0.3s ease;
   overflow: hidden;
@@ -14,8 +14,9 @@ const Wrapper = styled.ul`
 
   li {
     text-align: center;
-    font-size: 15px;
-    color: white;
+    font-size: ${(props) => props.theme.fontSize.s};
+    font-weight: 300;
+    color: ${(props) => props.theme.color.white};
   }
 `;
 
@@ -24,13 +25,12 @@ const StyledLink = styled(Link)`
   padding: 6px 15px;
   position: relative;
   overflow: hidden;
-  /* border: 1px solid red; */
 
   &::before {
     content: '';
     display: block;
     position: absolute;
-    bottom: 4px;
+    bottom: 2px;
     left: 50%;
     width: 0;
     height: 1px;
@@ -38,10 +38,10 @@ const StyledLink = styled(Link)`
     background: rgba(255, 255, 255, 0.8);
     transition: width 0.2s ease;
   }
-  
+
   &:hover::before,
   &:focus::before {
-    width: 80%;
+    width: 75%;
   }
 `;
 

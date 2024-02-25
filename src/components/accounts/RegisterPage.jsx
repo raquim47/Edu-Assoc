@@ -25,13 +25,18 @@ const RegisterPage = () => {
     watch,
     setError,
     clearErrors,
+    setFocus,
     formState: { errors },
   } = useForm();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const termsAgreementChecked = watch('termsAgreement');
-    if (!termsAgreementChecked) return alert('이용약관에 동의해주세요');
+    if (!termsAgreementChecked) {
+      alert('이용약관에 동의해주세요');
+      setFocus('termsAgreement');
+      return;
+    }
     if (!emailDupChecked) {
       alert('이메일 중복체크가 완료되지 않았습니다.');
       setError('email', { message: '이메일 중복체크가 완료되지 않았습니다.' });

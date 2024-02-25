@@ -47,9 +47,8 @@ const BreadScrumbs = styled.ul`
 const PageTitle = ({ sideNavType }) => {
   const { pathname } = useLocation();
   const currentSection = NAVIGATION_DATA[sideNavType];
-  const currentPath = pathname.split('/').filter(Boolean).at(-1);
   const currentPage = currentSection.children.find(
-    (page) => page.path === currentPath
+    page => pathname.endsWith(page.path)
   );
 
   return (
