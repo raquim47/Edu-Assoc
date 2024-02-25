@@ -1,11 +1,11 @@
 import PageLayout from 'components/layout/PageLayout';
 import LoginPage from 'components/accounts/LoginPage';
 import RegisterPage from 'components/accounts/RegisterPage';
-import { action as logoutAction } from 'components/accounts/Logout';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
 import HomePage from './components/home/HomePage';
 import NavigationGuard from 'components/common/NavigationGuard';
+import MyPage from 'components/accounts/MyPage';
 
 const router = createBrowserRouter([
   {
@@ -28,9 +28,16 @@ const router = createBrowserRouter([
           },
           {
             path: 'register',
-            element: <RegisterPage />,
+            element: (
+              <NavigationGuard>
+                <RegisterPage />
+              </NavigationGuard>
+            ),
           },
-          { path: 'logout', action: logoutAction },
+          {
+            path: 'mypage',
+            element: <MyPage />,
+          },
         ],
       },
     ],

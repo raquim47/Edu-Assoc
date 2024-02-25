@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Link, useSubmit } from 'react-router-dom';
+import { useFetchUser, useLogout } from 'components/accounts/hooks';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.nav`
@@ -29,14 +29,8 @@ const LogoutBtn = styled.button`
 `;
 
 const SubNav = () => {
-  const submit = useSubmit();
-  const user = useSelector((state) => state.user);
-  console.log(user);
-  const handleOnLogout = () => {
-    if (window.confirm('로그아웃하시겠습니까?')) {
-      submit(null, { action: '/accounts/logout', method: 'post' });
-    }
-  };
+  const { user } = useFetchUser();
+  const logout = useLogout();
   return (
     <Wrapper>
       <ul>
@@ -46,10 +40,10 @@ const SubNav = () => {
         {user ? (
           <>
             <li>
-              <Link to="/accounts/login">마이페이지</Link>
+              <Link to="/accounts/mypage">마이페이지</Link>
             </li>
             <li>
-              <LogoutBtn onClick={handleOnLogout}>로그아웃</LogoutBtn>
+              <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
             </li>
           </>
         ) : (

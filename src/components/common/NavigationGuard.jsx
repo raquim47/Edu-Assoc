@@ -1,9 +1,9 @@
+import { useFetchUser } from 'components/accounts/hooks';
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 const NavigationGuard = ({ children }) => {
-  const user = useSelector((state) => state.user);
+  const { user } = useFetchUser();
   const alertShownRef = useRef(false);
 
   useEffect(() => {

@@ -4,11 +4,14 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from 'firebase/auth';
 import { useQuery } from '@tanstack/react-query';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from 'fb';
 import { queryClient } from 'index';
+import { useNavigate } from 'react-router-dom';
 
 export const useFetchUser = () => {
   const {
@@ -74,6 +77,35 @@ export const useRegisterUser = () => {
   return { register, isLoading };
 };
 
+export const useUpdateUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const updateUser = async (data) => {
+    setIsLoading(true);
+
+    try {
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        data.password
+      );
+
+      await reauthenticateWithCredential(user, credential);
+
+      await updateDoc(doc(db, 'users', user.uid), {
+        username: data.username,
+        phone: data.phone,
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { updateUser, isLoading };
+};
+
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -89,6 +121,20 @@ export const useLogin = () => {
   };
 
   return { login, isLoading };
+};
+
+export const useLogout = () => {
+  const navigate = useNavigate();
+
+  const onLogout = async () => {
+    if (window.confirm('로그아웃하시겠습니까?')) {
+      await signOut(auth);
+      queryClient.invalidateQueries(['user']);
+      navigate('/');
+    }
+  };
+
+  return onLogout;
 };
 
 export const useAutoLogout = (timeout) => {

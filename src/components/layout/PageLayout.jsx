@@ -3,6 +3,7 @@ import PageTitle from './PageTitle';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { NAVIGATION_DATA } from './constants';
+import { useFetchUser } from 'components/accounts/hooks';
 
 const Wrapper = styled.div`
   padding: 80px 0;
@@ -62,6 +63,10 @@ const SideBar = styled.aside`
 `;
 
 const PageLayout = ({ sideNavType }) => {
+  const { user } = useFetchUser();
+  const filteredNavItems = NAVIGATION_DATA[sideNavType].children.filter(
+    (item) => (user ? item.requiredLogin : !item.requiredLogin)
+  );
   return (
     <Wrapper>
       <div className="inner">
@@ -70,7 +75,7 @@ const PageLayout = ({ sideNavType }) => {
             <strong>{NAVIGATION_DATA[sideNavType].title}</strong>
           </header>
           <ul>
-            {NAVIGATION_DATA[sideNavType].children.map((item) => (
+            {filteredNavItems.map((item) => (
               <li key={item.name}>
                 <NavLink to={item.path}>{item.name}</NavLink>
               </li>

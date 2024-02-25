@@ -5,6 +5,7 @@ export const NAVIGATION_DATA = {
     children: [
       { name: '로그인', path: 'login' },
       { name: '회원가입', path: 'register' },
+      { name: '마이페이지', path: 'mypage', requiredLogin: true },
     ],
   },
 };
