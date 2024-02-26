@@ -110,7 +110,7 @@ const Pagination = styled.nav`
   }
 `;
 
-const Announcements = () => {
+const AnnouncementsPage = () => {
   const handleSearch = () => {
     console.log('Search');
   };
@@ -182,8 +182,9 @@ const Announcements = () => {
           </ul>
         </Pagination>
       </section>
+      <Link to='new'>글쓰기</Link>
     </Wrapper>
   );
 };
 
-export default Announcements;
+export default AnnouncementsPage;

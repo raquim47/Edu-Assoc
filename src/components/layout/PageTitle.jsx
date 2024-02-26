@@ -47,8 +47,9 @@ const BreadScrumbs = styled.ul`
 const PageTitle = ({ sideNavType }) => {
   const { pathname } = useLocation();
   const currentSection = NAVIGATION_DATA[sideNavType];
+  const segment = pathname.split('/')[2];
   const currentPage = currentSection.children.find((page) =>
-    pathname.endsWith(page.path)
+    page.path.endsWith(segment)
   );
   return (
     <Wrapper>

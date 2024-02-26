@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   .inner {
     display: flex;
     max-width: 1200px;
-    height: 1000px;
+    min-height: 700px;
     margin: 0 auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     background-color: ${(props) => props.theme.color.white};
@@ -19,13 +19,12 @@ const Wrapper = styled.div`
 
   .content-section {
     flex: 1;
-    padding: 0 30px;
+    padding: 0 30px 100px;
   }
 `;
 
 const SideBar = styled.aside`
   width: 220px;
-  height: 100%;
   background-color: ${(props) => props.theme.color.gray[2]};
 
   header {
