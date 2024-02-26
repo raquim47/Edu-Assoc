@@ -1,24 +1,41 @@
-import { db } from "fb";
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { useState } from "react";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from 'fb';
+import {
+  deleteFromStorage,
+  uploadContentToStorage,
+  uploadFileToStorage,
+} from './utils';
 
-export const usePost = () => {
-  const [isLoading, setIsLoading] = useState(false);
+export const useAddPost = () => {
+  const queryClient = useQueryClient();
 
-  const createPost = async (postData) => {
-    setIsLoading(true);
-    try {
+  return useMutation({
+    mutationFn: async (postData) => {
+      const contentUrl = await uploadContentToStorage(postData.content);
+      const fileUrl = postData.file
+        ? await uploadFileToStorage(postData.file)
+        : null;
+
       await addDoc(collection(db, 'posts'), {
-        ...postData,
-        createdAt: serverTimestamp(), 
+        title: postData.title,
+        author: postData.author,
+        authorId: postData.authorId,
+        contentUrl,
+        fileUrl,
+        createdAt: serverTimestamp(),
       });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return { createPost, isLoading };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+    onError: async (_0, _, context) => {
+      if (context.contentUrl) {
+        await deleteFromStorage(context.contentUrl);
+      }
+      if (context.fileUrl) {
+        await deleteFromStorage(context.fileUrl);
+      }
+    },
+  });
 };

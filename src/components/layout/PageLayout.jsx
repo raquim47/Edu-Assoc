@@ -64,8 +64,15 @@ const SideBar = styled.aside`
 const PageLayout = ({ sideNavType }) => {
   const { user } = useFetchUser();
   const filteredNavItems = NAVIGATION_DATA[sideNavType].children.filter(
-    (item) => (user ? item.requiredLogin : !item.requiredLogin)
+    (item) => {
+      if (!user) {
+        return item.requiredLogin !== true;
+      } else {
+        return item.requiredLogin !== false;
+      }
+    }
   );
+
   return (
     <Wrapper>
       <div className="inner">

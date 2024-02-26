@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import NewForm from './ui/NewForm';
 import FormBtns from './ui/FormBtns';
 import { useNavigate } from 'react-router-dom';
+import { useAddPost } from './hooks';
+import { useFetchUser } from 'components/accounts/hooks';
 
 const modules = {
   toolbar: [
@@ -26,6 +28,7 @@ const modules = {
 
 const NewPostPage = () => {
   const navigate = useNavigate();
+  const { user } = useFetchUser();
   const {
     register,
     handleSubmit,
@@ -34,10 +37,17 @@ const NewPostPage = () => {
     formState: { errors },
   } = useForm();
   const [file, setFile] = useState(null);
+  const addPost = useAddPost();
+
   const handleFileChange = (event) => {
     const files = event.target.files;
     if (files.length > 0) {
-      setFile(files[0]);
+      const file = files[0];
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        return alert('파일 크기는 10MB를 초과할 수 없습니다.');
+      }
+      setFile(file);
     }
   };
 
@@ -47,24 +57,34 @@ const NewPostPage = () => {
     setValue('content', content, { shouldValidate: true });
   };
 
-  const handleOnSubmit = (data) => {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('author', data.author);
-    formData.append('content', data.content);
-    if (file) {
-      formData.append('file', file);
-    }
-
-    console.log([...formData]);
+  const handleOnSubmit = async (data) => {
+    addPost.mutate(
+      {
+        ...data,
+        author: user.username,
+        authorId: user.uid,
+        content: editorContent,
+        file,
+      },
+      {
+        onSuccess: () => {
+          alert('게시글이 성공적으로 등록되었습니다.');
+          navigate('..');
+        },
+        onError: (error) => {
+          console.error('Error saving the post: ', error);
+          alert('게시글 등록 중 문제가 발생했습니다.');
+        },
+      }
+    );
   };
 
   useEffect(() => {
     register('content', {
-      validate: value => value !== '<p><br></p>' || '내용을 입력해주세요.'
+      validate: (value) => value !== '<p><br></p>' || '내용을 입력해주세요.',
     });
   }, [register]);
-  
+
   return (
     <NewForm
       onSubmit={handleSubmit(handleOnSubmit, () =>
@@ -78,7 +98,6 @@ const NewPostPage = () => {
         <div className="input-field">
           <input
             id="title"
-            type="text"
             {...register('title', { required: '제목을 입력해주세요.' })}
           />
           {errors.title && (
@@ -92,11 +111,9 @@ const NewPostPage = () => {
         </label>
         <div className="input-field">
           <input
-            {...register('author')}
             className="author-input"
             id="author"
-            type="text"
-            defaultValue="관리자"
+            defaultValue={user.username}
             readOnly
           />
         </div>

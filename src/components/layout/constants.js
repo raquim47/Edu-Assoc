@@ -39,8 +39,8 @@ export const NAVIGATION_DATA = {
     name: '회원 서비스',
     path: '/accounts',
     children: [
-      { name: '로그인', path: '/accounts/login' },
-      { name: '회원가입', path: '/accounts/register' },
+      { name: '로그인', path: '/accounts/login', requiredLogin: false },
+      { name: '회원가입', path: '/accounts/register', requiredLogin: false },
       { name: '마이페이지', path: '/accounts/mypage', requiredLogin: true },
     ],
   },
