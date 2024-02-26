@@ -47,19 +47,18 @@ const BreadScrumbs = styled.ul`
 const PageTitle = ({ sideNavType }) => {
   const { pathname } = useLocation();
   const currentSection = NAVIGATION_DATA[sideNavType];
-  const currentPage = currentSection.children.find(
-    page => pathname.endsWith(page.path)
+  const currentPage = currentSection.children.find((page) =>
+    pathname.endsWith(page.path)
   );
-
   return (
     <Wrapper>
-      <h2>{currentPage.name}</h2>
+      <h2>{currentPage?.name}</h2>
       <BreadScrumbs>
         <li>
           <Link to="/">홈</Link>
         </li>
-        <li>{currentSection.title}</li>
-        {currentPage && <li>{currentPage.name}</li>}
+        <li>{currentSection.name}</li>
+        {currentPage && <li>{currentPage?.name}</li>}
       </BreadScrumbs>
     </Wrapper>
   );

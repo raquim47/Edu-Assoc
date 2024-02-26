@@ -53,6 +53,10 @@ table {
   border-spacing: 0;
 }
 
+input, select {
+  outline: none;
+}
+
 a {
   text-decoration:none;
   color:inherit;

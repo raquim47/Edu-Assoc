@@ -7,6 +7,7 @@ import HomePage from './components/home/HomePage';
 import NavigationGuard from 'components/common/NavigationGuard';
 import MyPage from 'components/accounts/MyPage';
 import ErrorPage from 'components/common/ErrorPage';
+import Announcements from 'components/notices/Announcements';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,17 @@ const router = createBrowserRouter([
           {
             path: 'mypage',
             element: <MyPage />,
+          },
+        ],
+      },
+      {
+        path: 'notices',
+        element: <PageLayout sideNavType="notices" />,
+        children: [
+          { index: true, element: <Navigate to="announcements" replace /> },
+          {
+            path: 'announcements',
+            element: <Announcements />,
           },
         ],
       },

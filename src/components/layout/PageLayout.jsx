@@ -72,7 +72,7 @@ const PageLayout = ({ sideNavType }) => {
       <div className="inner">
         <SideBar>
           <header>
-            <strong>{NAVIGATION_DATA[sideNavType].title}</strong>
+            <strong>{NAVIGATION_DATA[sideNavType].name}</strong>
           </header>
           <ul>
             {filteredNavItems.map((item) => (

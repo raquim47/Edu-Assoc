@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .admin {
+        padding: 60px 50px 0;
+      }
+
+      .admin__title {
+        font-size: 32px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 80px;
+      }
+
+      .admin__content {
+        display: flex;
+        gap: 35px;
+      }
+
+      /* nav */
+      .admin__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 150px;
+        font-weight: 500;
+      }
+
+      .admin__nav a {
+        font-size: 18px;
+        color: #303030;
+      }
+
+      .admin__nav a:hover,
+      .admin__nav a.active {
+        color: #7156ed;
+      }
+
+      .btn {
+        padding: 4px 10px;
+        border: none;
+        background-color: #ddd;
+        border-radius: 3px;
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+
+      .btn:hover {
+        background-color: #919191;
+        color: #fff;
+      }
+
+      /* admin__sections */
+      .admin__sections {
+        flex: 1px;
+        width: 100%;
+      }
+
+      .admin-section__header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 15px;
+      }
+
+      .admin-section__title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .admin-section__title span {
+        font-size: 14px;
+        font-weight: 400;
+        margin-left: 5px;
+      }
+
+      .admin-section__options {
+        display: flex;
+        gap: 5px;
+        font-size: 12px;
+      }
+
+      .product-search form {
+        display: flex;
+      }
+
+      .product-search input {
+        width: 120px;
+        outline: none;
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        border-radius: 4px 0 0 4px;
+      }
+
+      .product-search button {
+        border-radius: 0 4px 4px 0;
+      }
+
+      .add-product-btn {
+        background-color: #7156ed;
+        color: #fff;
+      }
+
+      .add-product-btn:hover {
+        background-color: #7156ed;
+      }
+
+      /* table */
+      .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      .product-table th {
+        font-size: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .product-table__th--image {
+        width: 100px;
+      }
+
+      .product-table__th--edit,
+      .product-table__th--category {
+        width: 80px;
+      }
+
+      .product-table__th--checkbox input {
+        accent-color: #7156ed;
+      }
+
+      .product-table__row > td {
+        padding: 14px 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+
+      .cell-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .product-category__main {
+        color: #7156ed;
+        margin-bottom: 5px;
+      }
+
+      .product-category__sub {
+        border: 1px solid #ddd;
+        margin: 4px;
+        padding: 4px 8px;
+        font-size: 12px;
+        display: inline-block;
+        border-radius: 10px;
+      }
+
+      .product-info__title,
+      .product-info__description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        margin-bottom: 6px;
+      }
+
+      .product-info__title {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .product-image {
+        height: auto;
+      }
+
+      .edit-btn {
+        margin-bottom: 6px;
+      }
+
+      .product-form {
+        padding: 15px 0;
+        max-width: 600px;
+      }
+
+      .product-form__list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .product-form__row {
+        display: flex;
+        gap: 5px;
+      }
+
+      .product-form__row-title {
+        display: block;
+        width: 150px;
+        padding: 14px;
+        font-size: 14px;
+        background-color: #f3f3f3;
+      }
+
+      .product-form__row > input {
+        flex: 1;
+        border: 1px solid #ddd;
+        outline: none;
+        border-radius: 4px;
+      }
+
+      .product-form__row > select {
+        width: 150px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+      }
+
+      .subCategories {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .subCategories__item {
+        display: flex;
+        align-items: center;
+      }
+
+      .subCategories__item > input {
+        accent-color: #7156ed;
+      }
+
+      .subCategories__item > label {
+        font-size: 13px;
+      }
+
+      .product-form__btns {
+        display: flex;
+        margin-top: 10px;
+        gap: 10px;
+      }
+
+      .product-form__btns button {
+        flex-grow: 1;
+        padding: 12px 0;
+        border-radius: 4px;
+      }
+
+      .product-form__cancle-btn {
+        background-color: #f3f3f3;
+      }
+
+      .product-form__submit-btn {
+        background-color: #7156ed;
+        color: #fff;
+      }
+
+      @media screen and (max-width: 1024px) {
+        .admin {
+          padding: 60px 0 0;
+        }
+
+        .admin__title {
+          margin-bottom: 40px;
+        }
+
+        .admin__content {
+          flex-direction: column;
+        }
+
+        .admin__nav {
+          flex-direction: row;
+          width: auto;
+        }
+      }
+
+      @media screen and (max-width: 900px) {
+        .admin__title {
+          margin-bottom: 40px;
+        }
+
+        .admin__content {
+          flex-direction: column;
+        }
+
+        .admin__nav {
+          flex-direction: row;
+          width: auto;
+        }
+      }
+      .main {
+        width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th class="product-table__th--category">카테고리</th>
+            <th class="product-table__th--info">상품 정보</th>
+            <th class="product-table__th--image">이미지</th>
+            <th class="product-table__th--edit">관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="product-table__row"
+            data-product-id="64b80954434a4773a2ff913e"
+          >
+            <td>
+              <div class="cell-wrapper product-category">
+                <strong class="product-category__main">BackEnd</strong>
+                <span class="product-category__sub">Node.js</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-info">
+                <h4 class="product-info__title">
+                  한 권으로 끝내는 아두이노와 파이썬으로 52개 작품 만들기
+                </h4>
+                <p class="product-info__description">
+                  이 책은 아두이노를 사용하여 하드웨어를 만들고 파이썬을 이용하여
+                  PC에서 프로그램을 만든 후 서로 통신 및 융합하여 52가지 다양한
+                  작품 만들기를 통해 재미와 학습 두 가지를 모두 할 수 있게
+                  구성하였습니다!
+                </p>
+                <span>장문철 , 박준원 저 / 24,000원 / 432p</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper">
+                <img
+                  class="product-image"
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193059067.jpg"
+                  alt="한 권으로 끝내는 아두이노와 파이썬으로 52개 작품 만들기"
+                />
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-management">
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+              </div>
+            </td>
+          </tr>
+  
+          <tr
+            class="product-table__row"
+            data-product-id="64b80954434a4773a2ff913c"
+          >
+            <td>
+              <div class="cell-wrapper product-category">
+                <strong class="product-category__main">BackEnd</strong>
+                <span class="product-category__sub">Node.js</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-info">
+                <h4 class="product-info__title">웹디자이너를 위한 SASS</h4>
+                <p class="product-info__description">
+                  이 책은 Sass는 무엇인지, 이를 작업에 어떻게 적용하여 사용할 수
+                  있는지, 더 나아가 반응형이면서 고해상도를 지원하는 웹사…
+                </p>
+                <span>댄 시더홈 저 / 13,000원 / 124p</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper">
+                <img
+                  class="product-image"
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791185885216.jpg"
+                  alt="웹디자이너를 위한 SASS"
+                />
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-management">
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+              </div>
+            </td>
+          </tr>
+  
+          <tr
+            class="product-table__row"
+            data-product-id="64b80954434a4773a2ff913d"
+          >
+            <td>
+              <div class="cell-wrapper product-category">
+                <strong class="product-category__main">BackEnd</strong>
+                <span class="product-category__sub">Node.js</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-info">
+                <h4 class="product-info__title">유니티 모바일 게임 개발</h4>
+                <p class="product-info__description">
+                  유니티 엔진으로 모바일 게임을 개발할 때 반드시 알아야 할 기본
+                  사항을 예제와 함께 세심하게 다룬다.
+                </p>
+                <span>존 도란 저 / 36,000원 / 472p</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper">
+                <img
+                  class="product-image"
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791161755526.jpg"
+                  alt="유니티 모바일 게임 개발"
+                />
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-management">
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+              </div>
+            </td>
+          </tr>
+  
+          <tr
+            class="product-table__row"
+            data-product-id="64b80954434a4773a2ff913b"
+          >
+            <td>
+              <div class="cell-wrapper product-category">
+                <strong class="product-category__main">FrontEnd</strong>
+                <span class="product-category__sub">React</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-info">
+                <h4 class="product-info__title">
+                  알고리즘 구현으로 배우는 선형대수 with 파이썬
+                </h4>
+                <p class="product-info__description">
+                  『선형대수와 통계학으로 배우는 머신러닝 with 파이썬』의장철원
+                  저자가 선형대수 기초를 다잡고 싶은 독자를 위해 집필한 선형대…
+                </p>
+                <span>댄 시더홈 저 / 34,000원 / 592p</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper">
+                <img
+                  class="product-image"
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791165921125.jpg"
+                  alt="알고리즘 구현으로 배우는 선형대수 with 파이썬"
+                />
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-management">
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+              </div>
+            </td>
+          </tr>
+  
+          <tr
+            class="product-table__row"
+            data-product-id="64b80954434a4773a2ff913a"
+          >
+            <td>
+              <div class="cell-wrapper product-category">
+                <strong class="product-category__main">FrontEnd</strong>
+                <span class="product-category__sub">Javascript</span
+                ><span class="product-category__sub">React</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-info">
+                <h4 class="product-info__title">
+                  자바스크립트로 하는 자료 구조와 알고리즘
+                </h4>
+                <p class="product-info__description">
+                  자료 구조와 알고리즘의 개념을 이해하고 이를 자바스크립트로
+                  구현하기 위한 책이다.
+                </p>
+                <span>배세민 저 / 27,000원 / 412p</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper">
+                <img
+                  class="product-image"
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791161753447.jpg"
+                  alt="자바스크립트로 하는 자료 구조와 알고리즘"
+                />
+              </div>
+            </td>
+            <td>
+              <div class="cell-wrapper product-management">
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

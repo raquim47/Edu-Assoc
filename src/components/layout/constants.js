@@ -23,7 +23,7 @@ export const NAVIGATION_DATA = {
     renderInMainNav: true,
     children: [
       { name: '회원동정', path: '/community/news' },
-      { name: '게시판', path: '/community/forum' },
+      { name: '자유게시판', path: '/community/forum' },
     ],
   },
   notices: {
@@ -36,7 +36,7 @@ export const NAVIGATION_DATA = {
     ],
   },
   accounts: {
-    title: '회원 서비스',
+    name: '회원 서비스',
     path: '/accounts',
     children: [
       { name: '로그인', path: '/accounts/login' },
