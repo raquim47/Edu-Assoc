@@ -1,6 +1,6 @@
+import Fieldset from 'components/common/form/Fieldset';
+import InputField from 'components/common/form/InputField';
 import { useForm } from 'react-hook-form';
-import FormTemplate from './FormTemplate';
-import InputFIeld from './InputFIeld';
 
 const LoginForm = ({ onSubmit, basicMode, children }) => {
   const {
@@ -10,9 +10,9 @@ const LoginForm = ({ onSubmit, basicMode, children }) => {
   } = useForm();
 
   return (
-    <FormTemplate onSubmit={handleSubmit(onSubmit)}>
-      <fieldset>
-        <InputFIeld
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Fieldset>
+        <InputField
           id="email"
           label="아이디(이메일)"
           basicMode={basicMode}
@@ -25,8 +25,8 @@ const LoginForm = ({ onSubmit, basicMode, children }) => {
               message: '이메일이 형식에 맞지 않습니다',
             },
           })}
-        ></InputFIeld>
-        <InputFIeld
+        />
+        <InputField
           id="password"
           label="비밀번호"
           type="password"
@@ -37,9 +37,9 @@ const LoginForm = ({ onSubmit, basicMode, children }) => {
             required: '비밀번호를 입력하세요',
           })}
         />
-      </fieldset>
+      </Fieldset>
       {children}
-    </FormTemplate>
+    </form>
   );
 };
 

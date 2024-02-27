@@ -68,7 +68,7 @@ const HomeLogin = () => {
         <>
           <h3>로그인</h3>
           <LoginForm basicMode={true} onSubmit={handleOnSubmit}>
-            <Button theme="blue" type="submit" disabled={login.isPending}>
+            <Button theme="blue" type="submit" width="100%" disabled={login.isPending}>
               {login.isPending ? '요청중' : '로그인'}
             </Button>
           </LoginForm>

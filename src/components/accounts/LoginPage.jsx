@@ -15,7 +15,7 @@ const LoginPage = () => {
   return (
     <Wrapper>
       <LoginForm onSubmit={handleOnSubmit}>
-        <Button theme="blue" type="submit" disabled={login.isPending}>
+        <Button theme="blue" type="submit" width="100%" disabled={login.isPending}>
           {login.isPending ? '요청중' : '로그인'}
         </Button>
       </LoginForm>

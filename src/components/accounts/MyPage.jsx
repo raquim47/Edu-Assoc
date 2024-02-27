@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useFetchUser, useUpdateUser } from './hooks';
-import FormTemplate from './ui/FormTemplate';
-import InputFIeld from './ui/InputFIeld';
 import Button from 'components/common/Button';
+import InputField from 'components/common/form/InputField';
+import Fieldset from 'components/common/form/Fieldset';
 
 const MyPage = () => {
   const { data: user } = useFetchUser();
@@ -24,19 +24,20 @@ const MyPage = () => {
   };
 
   return (
-    <FormTemplate onSubmit={handleSubmit(handleOnSubmit)}>
-      <fieldset>
-        <legend>회원정보 수정</legend>
-        <InputFIeld
+    <form onSubmit={handleSubmit(handleOnSubmit)}>
+      <Fieldset legend="회원정보 수정">
+        <InputField
           label="아이디(이메일)"
           id="email"
           defaultValue={user.email}
           disabled
+          width="300px"
         />
-        <InputFIeld
+        <InputField
           id="username"
           label="이름"
           defaultValue={user.username}
+          width="300px"
           error={errors['username']}
           {...register('username', {
             required: '이름을 입력하세요.',
@@ -46,12 +47,13 @@ const MyPage = () => {
             },
           })}
         />
-        <InputFIeld
+        <InputField
           id="password"
           label="비밀번호"
           isRequired
           type="password"
           placeholder="8자리 이상 입력해주세요"
+          width="300px"
           error={errors['password']}
           {...register('password', {
             required: '비밀번호를 입력하세요',
@@ -61,10 +63,11 @@ const MyPage = () => {
             },
           })}
         />
-        <InputFIeld
+        <InputField
           id="phone"
           label="전화번호"
           placeholder="000-0000-0000"
+          width="300px"
           error={errors['phone']}
           {...register('phone', {
             pattern: {
@@ -73,11 +76,11 @@ const MyPage = () => {
             },
           })}
         />
-      </fieldset>
-      <Button theme="blue" type="submit" disabled={updateUser.isLoading}>
+      </Fieldset>
+      <Button theme="blue" type="submit" width="100%" disabled={updateUser.isLoading}>
         {updateUser.isLoading ? '요청중' : '회원정보 수정'}
       </Button>
-    </FormTemplate>
+    </form>
   );
 };
 

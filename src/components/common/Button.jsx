@@ -5,6 +5,7 @@ const Btn = styled.button`
   font-size: ${(props) => props.$fontSize};
   border: 1px solid ${(props) => props.theme.color.gray[1]};
   transition: all 0.2s ease;
+  width : ${(props) => props.$width};
 
   &:hover {
     color: ${(props) => props.theme.color.white};
@@ -42,6 +43,7 @@ const Button = ({
   fontSize = '14px',
   size = 'm',
   theme = 'default',
+  width = 'auto',
   ...props
 }) => {
   const SIZES = {
@@ -51,7 +53,7 @@ const Button = ({
 
   if (theme === 'default') {
     return (
-      <Btn $fontSize={fontSize} $size={SIZES[size]} {...props}>
+      <Btn $fontSize={fontSize} $size={SIZES[size]} $width={width} {...props}>
         {children}
       </Btn>
     );
@@ -59,7 +61,7 @@ const Button = ({
 
   if (theme === 'blue') {
     return (
-      <BlueBtn $fontSize={fontSize} $size={SIZES[size]} {...props}>
+      <BlueBtn $fontSize={fontSize} $size={SIZES[size]} $width={width} {...props}>
         {children}
       </BlueBtn>
     );
@@ -67,7 +69,7 @@ const Button = ({
 
   if (theme === 'gray') {
     return (
-      <GrayBtn $fontSize={fontSize} $size={SIZES[size]} {...props}>
+      <GrayBtn $fontSize={fontSize} $size={SIZES[size]} $width={width} {...props}>
         {children}
       </GrayBtn>
     );

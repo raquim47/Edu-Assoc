@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const NewForm = styled.div`
-  border: 1px solid #d1d5db;
-  border-top: 1px solid ${(props) => props.theme.color.gray[0]};
+const NewForm = styled.form`
+  /* border: 1px solid #d1d5db; */
+  /* border-top: 1px solid ${(props) => props.theme.color.gray[0]}; */
 
   .row {
     display: flex;

@@ -8,7 +8,7 @@ const Wrapper = styled.header`
   height: 120px;
   align-items: center;
   border-bottom: 1px solid ${(props) => props.theme.color.blue[1]};
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   h2 {
     padding-left: 5px;

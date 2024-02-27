@@ -2,40 +2,24 @@ import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 import { useForm } from 'react-hook-form';
-import NewForm from './ui/NewForm';
-import FormBtns from './ui/FormBtns';
 import { useNavigate } from 'react-router-dom';
 import { useAddPost } from './hooks';
 import { useFetchUser } from 'components/accounts/hooks';
-
-const modules = {
-  toolbar: [
-    [{ font: [] }, { size: [] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ color: [] }, { background: [] }],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ header: [1, 2, 3, 4, 5, 6, false] }, { align: [] }],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-};
+import NewForm from './ui/NewForm';
+import BoardBtns from './ui/BoardBtns';
+import { editorModules } from './utils';
+import InputField from 'components/common/form/InputField';
 
 const NewPostPage = () => {
   const navigate = useNavigate();
-  const { data : user } = useFetchUser();
+  const { data: user } = useFetchUser();
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: 'onSubmit' });
   const [file, setFile] = useState(null);
   const addPost = useAddPost();
 
@@ -54,6 +38,7 @@ const NewPostPage = () => {
   const editorContent = watch('content');
 
   const handleQuillChange = (content) => {
+    console.log(content);
     setValue('content', content, { shouldValidate: true });
   };
 
@@ -81,43 +66,15 @@ const NewPostPage = () => {
 
   useEffect(() => {
     register('content', {
+      // getText()
       validate: (value) => value !== '<p><br></p>' || '내용을 입력해주세요.',
     });
   }, [register]);
 
   return (
-    <NewForm
-      onSubmit={handleSubmit(handleOnSubmit, () =>
-        alert('입력사항을 확인하세요')
-      )}
-    >
-      <div className="row">
-        <label htmlFor="title">
-          <span>제목</span>
-        </label>
-        <div className="input-field">
-          <input
-            id="title"
-            {...register('title', { required: '제목을 입력해주세요.' })}
-          />
-          {errors.title && (
-            <p className="error-message">{errors.title.message}</p>
-          )}
-        </div>
-      </div>
-      <div className="row">
-        <label htmlFor="author">
-          <span>작성자</span>
-        </label>
-        <div className="input-field">
-          <input
-            className="author-input"
-            id="author"
-            defaultValue={user.username}
-            readOnly
-          />
-        </div>
-      </div>
+    <NewForm onSubmit={handleSubmit(handleOnSubmit)}>
+      <InputField id="title" label="제목"/>
+      <InputField id="title" label="작성자" inputWidth="300px" readOnly defaultValue="awfwef"/>
       <div className="row">
         <label htmlFor="contents">
           <span>내용</span>
@@ -125,7 +82,7 @@ const NewPostPage = () => {
         <div className="input-field quill">
           <ReactQuill
             theme="snow"
-            modules={modules}
+            modules={editorModules}
             value={editorContent}
             onChange={handleQuillChange}
           ></ReactQuill>
@@ -156,14 +113,7 @@ const NewPostPage = () => {
           </label>
         </div>
       </div>
-      <FormBtns>
-        <button type="button" onClick={() => navigate('..')}>
-          취소
-        </button>
-        <button className="save" type="submit">
-          저장
-        </button>
-      </FormBtns>
+      <BoardBtns />
     </NewForm>
   );
 };

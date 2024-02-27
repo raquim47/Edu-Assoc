@@ -1,7 +1,7 @@
-import AgreeField from './ui/AgreeField';
 import { useSignup } from './hooks';
-import SignupForm from './ui/SignupForm';
 import { useState } from 'react';
+import SignupForm from './ui/SignupForm';
+import AgreeField from 'components/common/form/AgreeField';
 import Button from 'components/common/Button';
 
 const SignupPage = () => {
@@ -25,7 +25,7 @@ const SignupPage = () => {
   return (
     <>
       <AgreeField
-        agreementText={'이용약관 내용 '.repeat(150)}
+        content={'이용약관 내용 '.repeat(150)}
         id="termsAgreement"
         label="이용약관"
         onChange={handleTermsAccepted}
@@ -34,7 +34,12 @@ const SignupPage = () => {
         beforeOnSubmit={handleBeforeSubmit}
         afterOnSubmit={handleAfterSubmit}
       >
-        <Button theme="blue" type="submit" disabled={signup.isPending}>
+        <Button
+          theme="blue"
+          type="submit"
+          width="100%"
+          disabled={signup.isPending}
+        >
           {signup.isPending ? '요청중' : '가입하기'}
         </Button>
       </SignupForm>
