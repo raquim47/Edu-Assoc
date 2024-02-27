@@ -35,7 +35,6 @@ const SignupPage = () => {
         afterOnSubmit={handleAfterSubmit}
       >
         <Button
-          theme="blue"
           type="submit"
           width="100%"
           disabled={signup.isPending}

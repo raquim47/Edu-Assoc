@@ -56,10 +56,10 @@ const HomeLogin = () => {
             <strong>{user.username}</strong>님 안녕하세요
           </h3>
           <ActionBtns>
-            <Button theme="blue" onClick={() => navigate('/accounts/mypage')}>
+            <Button color="blue" onClick={() => navigate('/accounts/mypage')}>
               마이페이지
             </Button>
-            <Button theme="blue" onClick={logout}>
+            <Button color="blue" onClick={logout}>
               로그아웃
             </Button>
           </ActionBtns>
@@ -68,7 +68,7 @@ const HomeLogin = () => {
         <>
           <h3>로그인</h3>
           <LoginForm basicMode={true} onSubmit={handleOnSubmit}>
-            <Button theme="blue" type="submit" width="100%" disabled={login.isPending}>
+            <Button color="blue" type="submit" width="100%" disabled={login.isPending}>
               {login.isPending ? '요청중' : '로그인'}
             </Button>
           </LoginForm>

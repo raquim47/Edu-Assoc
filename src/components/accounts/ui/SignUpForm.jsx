@@ -53,7 +53,7 @@ const SignupForm = ({
           })}
         >
           <Button
-            theme="gray"
+            color="gray"
             size="s"
             type="button"
             onClick={() =>

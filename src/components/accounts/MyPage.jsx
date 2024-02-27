@@ -77,7 +77,7 @@ const MyPage = () => {
           })}
         />
       </Fieldset>
-      <Button theme="blue" type="submit" width="100%" disabled={updateUser.isLoading}>
+      <Button type="submit" width="100%" disabled={updateUser.isLoading}>
         {updateUser.isLoading ? '요청중' : '회원정보 수정'}
       </Button>
     </form>

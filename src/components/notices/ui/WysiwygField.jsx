@@ -1,7 +1,7 @@
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 
-const WysiwygFIield = () => {
+const WysiwygField = () => {
   return (
     <div className="row">
       <label htmlFor="contents">
@@ -20,4 +20,4 @@ const WysiwygFIield = () => {
   );
 };
 
-export default WysiwygFIield;
+export default WysiwygField;

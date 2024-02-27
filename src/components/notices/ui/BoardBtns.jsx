@@ -15,14 +15,14 @@ const BoardBtns = () => {
   return (
     <Wrapper>
       <Button
-        theme="gray"
+        color="gray"
         width="110px"
         type="button"
         onClick={() => navigate('..')}
       >
         취소
       </Button>
-      <Button theme="blue" width="110px" type="submit">
+      <Button color="blue" width="110px" type="submit">
         저장
       </Button>
     </Wrapper>
