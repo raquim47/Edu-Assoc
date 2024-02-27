@@ -22,16 +22,6 @@ const ActionBtns = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-
-  button {
-    padding: 15px 0;
-    background-color: ${(props) => props.theme.color.blue[1]};
-    color: ${(props) => props.theme.color.white};
-
-    &:hover {
-      background-color: ${(props) => props.theme.color.blue[2]};
-    }
-  }
 `;
 
 const ActionLinks = styled.div`
@@ -66,10 +56,12 @@ const HomeLogin = () => {
             <strong>{user.username}</strong>님 안녕하세요
           </h3>
           <ActionBtns>
-            <button onClick={() => navigate('/accounts/mypage')}>
+            <Button theme="blue" onClick={() => navigate('/accounts/mypage')}>
               마이페이지
-            </button>
-            <button onClick={logout}>로그아웃</button>
+            </Button>
+            <Button theme="blue" onClick={logout}>
+              로그아웃
+            </Button>
           </ActionBtns>
         </>
       ) : (
