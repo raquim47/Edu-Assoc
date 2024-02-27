@@ -1,12 +1,12 @@
 import AgreeField from './ui/AgreeField';
-import { useRegisterUser } from './hooks';
-import SignUpForm from './ui/SignUpForm';
+import { useSignup } from './hooks';
+import SignupForm from './ui/SignupForm';
 import { useState } from 'react';
 import Button from 'components/common/Button';
 
-const SignUpPage = () => {
+const SignupPage = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const registerUser = useRegisterUser();
+  const signup = useSignup();
 
   const handleTermsAccepted = (state) => setTermsAccepted(state);
 
@@ -19,7 +19,7 @@ const SignUpPage = () => {
   };
 
   const handleAfterSubmit = (data) => {
-    registerUser.mutate(data);
+    signup.mutate(data);
   };
 
   return (
@@ -30,16 +30,15 @@ const SignUpPage = () => {
         label="이용약관"
         onChange={handleTermsAccepted}
       />
-      <SignUpForm
+      <SignupForm
         beforeOnSubmit={handleBeforeSubmit}
         afterOnSubmit={handleAfterSubmit}
       >
-        <Button theme="blue" type="submit" disabled={registerUser.isPending}>
-          {registerUser.isPending ? '요청중' : '가입하기'}
+        <Button theme="blue" type="submit" disabled={signup.isPending}>
+          {signup.isPending ? '요청중' : '가입하기'}
         </Button>
-      </SignUpForm>
+      </SignupForm>
     </>
   );
 };
-
-export default SignUpPage;
+export default SignupPage;

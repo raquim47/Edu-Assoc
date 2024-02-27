@@ -5,7 +5,7 @@ import InputFIeld from './InputFIeld';
 import FormTemplate from './FormTemplate';
 import Button from 'components/common/Button';
 
-const SignUpForm = ({
+const SignupForm = ({
   beforeOnSubmit = () => true,
   afterOnSubmit = () => {},
   children,
@@ -133,4 +133,4 @@ const SignUpForm = ({
   );
 };
 
-export default SignUpForm;
+export default SignupForm;

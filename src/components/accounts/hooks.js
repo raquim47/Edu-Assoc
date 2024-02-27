@@ -43,7 +43,7 @@ export const useFetchUser = () => {
   });
 };
 
-export const useRegisterUser = () => {
+export const useSignup = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: async (data) => {
@@ -137,16 +137,19 @@ export const useLogout = () => {
 
 export const useAutoLogout = (timeout) => {
   useEffect(() => {
+    const handleAutoLogout = async () => {
+      await signOut(auth);
+      queryClient.invalidateQueries(['user']);
+      alert('로그아웃되었습니다.');
+    };
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setTimeout(async () => {
-          alert('자동 로그아웃 되었습니다');
-          await signOut(auth);
-          queryClient.invalidateQueries(['auth-init']);
-        }, timeout);
+        const timer = setTimeout(handleAutoLogout, timeout);
+        return () => clearTimeout(timer);
       }
     });
 
-    return () => unsubscribe();
+    return unsubscribe;
   }, [timeout]);
 };
