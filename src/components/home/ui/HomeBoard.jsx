@@ -1,3 +1,4 @@
+import Button from 'components/common/Button';
 import styled from 'styled-components';
 
 const Wrapper = styled.article`
@@ -13,18 +14,6 @@ const Wrapper = styled.article`
   h3 {
     font-size: ${props => props.theme.fontSize.xxl};
     font-weight: 400;
-  }
-
-  .more-btn {
-    width: 60px;
-    padding: 2px 0;
-    transition: background-color 0.2s ease;
-  }
-
-  .more-btn:hover {
-    color: ${props => props.theme.color.white};
-    background-color: ${props => props.theme.color.blue[1]};
-    border : 1px solid ${props => props.theme.color.blue[1]};
   }
 
   ul {
@@ -62,7 +51,7 @@ const HomeBoard = ({ title, content, path }) => {
     <Wrapper>
       <header>
         <h3>{title}</h3>
-        <button className="more-btn">더보기</button>
+        <Button size="s">더보기</Button>
       </header>
       <ul>
         <ListItem>

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const NavigationGuard = ({ children }) => {
-  const { user } = useFetchUser();
+  const { data : user } = useFetchUser();
   const alertShownRef = useRef(false);
 
   useEffect(() => {

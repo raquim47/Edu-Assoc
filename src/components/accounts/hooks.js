@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,18 +7,14 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from 'firebase/auth';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from 'fb';
 import { queryClient } from 'index';
 import { useNavigate } from 'react-router-dom';
 
 export const useFetchUser = () => {
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
+  return useQuery({
     queryKey: ['user'],
     queryFn: () => {
       return new Promise((resolve, reject) => {
@@ -45,15 +41,12 @@ export const useFetchUser = () => {
       });
     },
   });
-  return { user, isLoading, isError };
 };
 
 export const useRegisterUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const register = async (data) => {
-    setIsLoading(true);
-    try {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async (data) => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -66,61 +59,66 @@ export const useRegisterUser = () => {
         phone: data.phone,
         email: data.email,
       });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return { register, isLoading };
-};
-
-export const useUpdateUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const updateUser = async (data) => {
-    setIsLoading(true);
-
-    try {
-      const user = auth.currentUser;
-      const credential = EmailAuthProvider.credential(
-        user.email,
-        data.password
-      );
-
-      await reauthenticateWithCredential(user, credential);
-
-      await updateDoc(doc(db, 'users', user.uid), {
-        username: data.username,
-        phone: data.phone,
-      });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return { updateUser, isLoading };
+    },
+    onSuccess: () => {
+      alert('가입이 완료되었습니다');
+      navigate('/accounts/login');
+    },
+    onError: (error) => {
+      alert(`계정 등록 중 오류가 발생했습니다: ${error.message}`);
+    },
+  });
 };
 
 export const useLogin = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const login = async (email, password) => {
-    setIsLoading(true);
-    try {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async ({ email, password }) => {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['user']);
+      navigate('/');
+    },
+    onError: (error) => {
+      switch (error.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          alert('이메일 또는 비밀번호가 유효하지 않습니다');
+          break;
+        default:
+          alert('로그인하는 동안 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+    },
+  });
+};
 
-  return { login, isLoading };
+export const useUpdateUser = () => {
+  return useMutation({
+    mutationFn: async ({ username, phone, password }) => {
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(user.email, password);
+
+      await reauthenticateWithCredential(user, credential);
+      await updateDoc(doc(db, 'users', user.uid), {
+        username,
+        phone,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['user']);
+    },
+    onError: (error) => {
+      switch (error.code) {
+        case 'auth/missing-password':
+          alert('비밀번호가 유효하지 않습니다');
+          break;
+        default:
+          alert(`정보 변경 중 오류가 발생했습니다: ${error.message}`);
+      }
+    },
+  });
 };
 
 export const useLogout = () => {

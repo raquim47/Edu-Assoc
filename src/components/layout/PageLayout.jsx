@@ -62,7 +62,7 @@ const SideBar = styled.aside`
 `;
 
 const PageLayout = ({ sideNavType }) => {
-  const { user } = useFetchUser();
+  const { data : user } = useFetchUser();
   const filteredNavItems = NAVIGATION_DATA[sideNavType].children.filter(
     (item) => {
       if (!user) {

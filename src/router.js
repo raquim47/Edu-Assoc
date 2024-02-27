@@ -1,6 +1,6 @@
 import PageLayout from 'components/layout/PageLayout';
 import LoginPage from 'components/accounts/LoginPage';
-import RegisterPage from 'components/accounts/RegisterPage';
+import SignUpPage from 'components/accounts/SignUpPage';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
 import HomePage from './components/home/HomePage';
@@ -31,10 +31,10 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'register',
+            path: 'signup',
             element: (
               <NavigationGuard>
-                <RegisterPage />
+                <SignUpPage />
               </NavigationGuard>
             ),
           },

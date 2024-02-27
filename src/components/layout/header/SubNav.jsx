@@ -29,7 +29,7 @@ const LogoutBtn = styled.button`
 `;
 
 const SubNav = () => {
-  const { user } = useFetchUser();
+  const { data : user } = useFetchUser();
   const logout = useLogout();
   return (
     <Wrapper>
@@ -52,7 +52,7 @@ const SubNav = () => {
               <Link to="/accounts/login">로그인</Link>
             </li>
             <li>
-              <Link to="/accounts/register">회원가입</Link>
+              <Link to="/accounts/signup">회원가입</Link>
             </li>
           </>
         )}

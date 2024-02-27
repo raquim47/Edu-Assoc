@@ -1,71 +1,41 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import AgreementCheckBox from './ui/AgreementCheckBox';
-import InputFIeld from './ui/InputFIeld';
 import { checkEmailDuplicate } from 'components/accounts/utils';
-import { useRegisterUser } from './hooks';
-import FormTemplate from './ui/FormTemplate';
+import InputFIeld from './InputFIeld';
+import FormTemplate from './FormTemplate';
+import Button from 'components/common/Button';
 
-const CheckBtn = styled.button`
-  background-color: ${(props) => props.theme.color.black[2]};
-  color: ${(props) => props.theme.color.white};
-  border: none;
-  padding: 10px 15px;
-`;
-
-const RegisterPage = () => {
-  const navigate = useNavigate();
+const SignUpForm = ({
+  beforeOnSubmit = () => true,
+  afterOnSubmit = () => {},
+  children,
+}) => {
   const [emailDupChecked, setEmailDupChecked] = useState(false);
-  const { register: registerUser, isLoading } = useRegisterUser();
   const {
     register,
     handleSubmit,
     watch,
     setError,
     clearErrors,
-    setFocus,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: 'onBlur' });
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const termsAgreementChecked = watch('termsAgreement');
-    if (!termsAgreementChecked) {
-      alert('이용약관에 동의해주세요');
-      setFocus('termsAgreement');
+
+    if (!beforeOnSubmit()) {
       return;
     }
+
     if (!emailDupChecked) {
       alert('이메일 중복체크가 완료되지 않았습니다.');
       setError('email', { message: '이메일 중복체크가 완료되지 않았습니다.' });
       return;
     }
-    handleSubmit(
-      async (data) => {
-        try {
-          await registerUser(data);
-          alert('가입이 완료되었습니다');
-          navigate('/accounts/login');
-        } catch (error) {
-          alert(`계정 등록 중 오류가 발생했습니다: ${error.message}`);
-        }
-      },
-      () => alert('입력사항을 확인해주세요')
-    )(e);
+    handleSubmit(afterOnSubmit)(e);
   };
   return (
     <FormTemplate onSubmit={handleFormSubmit}>
-      <fieldset>
-        <legend>이용약관</legend>
-        <AgreementCheckBox
-          agreementText={'이용약관 내용 '.repeat(150)}
-          id="termsAgreement"
-          label="이용약관에 동의합니다."
-          {...register('termsAgreement', { required: true })}
-        />
-      </fieldset>
       <fieldset>
         <legend>기본정보</legend>
         <InputFIeld
@@ -73,6 +43,7 @@ const RegisterPage = () => {
           label="아이디(이메일)"
           isRequired
           placeholder="ex) abc@google.com"
+          inputWidth="300px"
           error={errors['email']}
           {...register('email', {
             required: '이메일을 입력하세요.',
@@ -82,11 +53,13 @@ const RegisterPage = () => {
             },
           })}
         >
-          <CheckBtn
+          <Button
+            theme="gray"
+            size="s"
             type="button"
             onClick={() =>
               checkEmailDuplicate(
-                watch().email,
+                watch('email'),
                 setError,
                 setEmailDupChecked,
                 clearErrors
@@ -94,12 +67,13 @@ const RegisterPage = () => {
             }
           >
             중복 확인
-          </CheckBtn>
+          </Button>
         </InputFIeld>
         <InputFIeld
           id="username"
           label="이름"
           isRequired
+          inputWidth="300px"
           error={errors['username']}
           {...register('username', {
             required: '이름을 입력하세요.',
@@ -114,6 +88,7 @@ const RegisterPage = () => {
           label="비밀번호"
           isRequired
           type="password"
+          inputWidth="300px"
           placeholder="8자리 이상 입력해주세요"
           error={errors['password']}
           {...register('password', {
@@ -129,11 +104,12 @@ const RegisterPage = () => {
           label="비밀번호 확인"
           isRequired
           type="password"
+          inputWidth="300px"
           error={errors['passwordConfirm']}
           {...register('passwordConfirm', {
             required: '비밀번호 확인을 입력해주세요',
             validate: (value) =>
-              watch().password !== value
+              watch('password') !== value
                 ? '비밀번호 확인란이 일치하지 않습니다'
                 : true,
           })}
@@ -142,6 +118,7 @@ const RegisterPage = () => {
           id="phone"
           label="전화번호"
           placeholder="000-0000-0000"
+          inputWidth="300px"
           error={errors['phone']}
           {...register('phone', {
             pattern: {
@@ -151,12 +128,9 @@ const RegisterPage = () => {
           })}
         />
       </fieldset>
-
-      <button className="submit-btn" type="submit" disabled={isLoading}>
-        {isLoading ? '요청중' : '가입하기'}
-      </button>
+      {children}
     </FormTemplate>
   );
 };
 
-export default RegisterPage;
+export default SignUpForm;

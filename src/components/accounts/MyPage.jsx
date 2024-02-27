@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form';
 import { useFetchUser, useUpdateUser } from './hooks';
 import FormTemplate from './ui/FormTemplate';
 import InputFIeld from './ui/InputFIeld';
+import Button from 'components/common/Button';
 
 const MyPage = () => {
-  const { user } = useFetchUser();
-  const { updateUser, isLoading } = useUpdateUser();
+  const { data: user } = useFetchUser();
+  const updateUser = useUpdateUser();
   const {
     register,
     handleSubmit,
@@ -13,28 +14,17 @@ const MyPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleOnSubmit = async (data) => {
-    try {
-      await updateUser(data);
-      alert('변경이 완료되었습니다');
-      setValue('password', '', { shouldValidate: false });
-    } catch (error) {
-      switch (error.code) {
-        case 'auth/missing-password':
-          alert('비밀번호가 유효하지 않습니다');
-          break;
-        default:
-          alert(`정보 변경 중 오류가 발생했습니다: ${error.message}`);
+  const handleOnSubmit =  (data) => {
+    updateUser.mutate(data, {
+      onSuccess : () => {
+        setValue('password', '', { shouldValidate: false });
+        alert('변경이 완료되었습니다');
       }
-    }
+    })
   };
 
   return (
-    <FormTemplate
-      onSubmit={handleSubmit(handleOnSubmit, () =>
-        alert('입력사항을 확인해주세요')
-      )}
-    >
+    <FormTemplate onSubmit={handleSubmit(handleOnSubmit)}>
       <fieldset>
         <legend>회원정보 수정</legend>
         <InputFIeld
@@ -84,9 +74,9 @@ const MyPage = () => {
           })}
         />
       </fieldset>
-      <button className="submit-btn" type="submit" disabled={isLoading}>
-        {isLoading ? '요청중' : '회원정보 수정'}
-      </button>
+      <Button theme="blue" type="submit" disabled={updateUser.isLoading}>
+        {updateUser.isLoading ? '요청중' : '회원정보 수정'}
+      </Button>
     </FormTemplate>
   );
 };

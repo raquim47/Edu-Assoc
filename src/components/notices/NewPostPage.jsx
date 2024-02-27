@@ -28,7 +28,7 @@ const modules = {
 
 const NewPostPage = () => {
   const navigate = useNavigate();
-  const { user } = useFetchUser();
+  const { data : user } = useFetchUser();
   const {
     register,
     handleSubmit,
