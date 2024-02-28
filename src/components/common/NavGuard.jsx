@@ -2,7 +2,7 @@ import { useFetchUser } from 'components/accounts/hooks';
 import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const NavigationGuard = ({ children, requireAuth = false }) => {
+const NavGuard = ({ element, requireAuth = false }) => {
   const { data: user } = useFetchUser();
   const alertShownRef = useRef(false);
 
@@ -23,7 +23,7 @@ const NavigationGuard = ({ children, requireAuth = false }) => {
     return <Navigate to={'/accounts/login'} replace />;
   }
 
-  return <>{children}</>;
+  return <>{element}</>;
 };
 
-export default NavigationGuard;
+export default NavGuard;

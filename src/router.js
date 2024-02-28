@@ -4,11 +4,11 @@ import SignupPage from 'components/accounts/SignupPage';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
 import HomePage from './components/home/HomePage';
-import NavigationGuard from 'components/common/NavigationGuard';
+import NavGuard from 'components/common/NavGuard';
 import MyPage from 'components/accounts/MyPage';
 import ErrorPage from 'components/common/ErrorPage';
-import NewPostPage from 'components/notices/NewPostPage';
 import BoardPage from 'components/board/BoardPage';
+import NewBoard from 'components/board/NewBoard';
 
 const router = createBrowserRouter([
   {
@@ -24,27 +24,15 @@ const router = createBrowserRouter([
           { index: true, element: <Navigate to="login" replace /> },
           {
             path: 'login',
-            element: (
-              <NavigationGuard>
-                <LoginPage />
-              </NavigationGuard>
-            ),
+            element: <NavGuard element={<LoginPage />} />,
           },
           {
             path: 'signup',
-            element: (
-              <NavigationGuard>
-                <SignupPage />
-              </NavigationGuard>
-            ),
+            element: <NavGuard element={<SignupPage />} />,
           },
           {
             path: 'mypage',
-            element: (
-              <NavigationGuard requireAuth={true}>
-                <MyPage />
-              </NavigationGuard>
-            ),
+            element: <NavGuard requireAuth={true} element={<MyPage />} />,
           },
         ],
       },
@@ -57,7 +45,10 @@ const router = createBrowserRouter([
             path: 'announcements',
             children: [
               { index: true, element: <BoardPage /> },
-              { path: 'new', element: <NewPostPage /> },
+              {
+                path: 'new',
+                element: <NavGuard requireAuth={true} element={<NewBoard />} />,
+              },
             ],
           },
         ],

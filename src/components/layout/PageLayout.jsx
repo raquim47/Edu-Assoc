@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 
   .content-section {
     flex: 1;
-    padding: 0 30px 100px;
+    padding: 0 30px 60px;
   }
 `;
 
@@ -44,18 +44,15 @@ const SideBar = styled.aside`
     background-color: ${(props) => props.theme.color.gray[3]};
   }
 
-  ul > li {
-    border-bottom: 1px solid ${(props) => props.theme.color.gray[2]};
-  }
-
   ul > li > a {
     font-weight: 300;
     display: block;
     padding: 12px 15px;
+    border-bottom: 1px solid ${(props) => props.theme.color.gray[2]};
   }
 
-  ul li a:hover,
-  ul li a.active {
+  ul > li > a:hover,
+  ul > li > a.active {
     background-color: ${(props) => props.theme.color.black[2]};
     color: ${(props) => props.theme.color.white};
   }

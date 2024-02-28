@@ -1,5 +1,4 @@
 import Button from 'components/common/Button';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BoardList from './ui/BoardList';
 import Pagination from './ui/Pagination';
@@ -14,7 +13,6 @@ const BtnsSection = styled.section`
 `
 
 const BoardPage = () => {
-  const navigate = useNavigate();
   return (
     <>
       <SectionBlock>
@@ -27,7 +25,7 @@ const BoardPage = () => {
         <Pagination />
       </SectionBlock>
       <BtnsSection>
-        <Button width="100px">글쓰기</Button>
+        <Button to="new" width="100px" >글쓰기</Button>
       </BtnsSection>
     </>
   );

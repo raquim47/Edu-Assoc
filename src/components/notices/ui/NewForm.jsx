@@ -61,19 +61,7 @@ const NewForm = styled.form`
       background-color: ${props => props.theme.color.gray[2]};
     }
     
-    .file-label {
-      padding: 0;
-      justify-content: center;
-      background-color: ${(props) => props.theme.color.black[2]};
-      color: ${(props) => props.theme.color.white};
-      border: none;
-      text-align: center;
-      cursor: pointer;
-
-      &:hover {
-        background-color: ${(props) => props.theme.color.blue[0]};
-      }
-    }
+    
   }
 
   .quill {

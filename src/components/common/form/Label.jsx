@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.label`
+const LabelBlock = styled.label`
   text-align: right;
   width: 130px;
   padding: 15px;
@@ -19,10 +19,10 @@ const Wrapper = styled.label`
 
 const Label = ({ label, id, basicMode, isRequired }) => {
   return (
-    <Wrapper htmlFor={id} className={basicMode ? 'sr-only' : ''}>
+    <LabelBlock htmlFor={id} className={basicMode ? 'sr-only' : ''}>
       {isRequired && <span className="required-mark">*</span>}
       {label}
-    </Wrapper>
+    </LabelBlock>
   );
 };
 

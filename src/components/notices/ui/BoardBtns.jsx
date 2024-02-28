@@ -22,7 +22,7 @@ const BoardBtns = () => {
       >
         취소
       </Button>
-      <Button color="blue" width="110px" type="submit">
+      <Button width="110px" type="submit">
         저장
       </Button>
     </Wrapper>

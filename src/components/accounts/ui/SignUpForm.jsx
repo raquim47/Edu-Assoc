@@ -44,7 +44,7 @@ const SignupForm = ({
           placeholder="ex) abc@google.com"
           width="300px"
           error={errors['email']}
-          {...register('email', {
+          registerOption={register('email', {
             required: '이메일을 입력하세요.',
             pattern: {
               value: /^[a-zA-Z0-9+-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
@@ -74,7 +74,7 @@ const SignupForm = ({
           isRequired
           width="300px"
           error={errors['username']}
-          {...register('username', {
+          registerOption={register('username', {
             required: '이름을 입력하세요.',
             pattern: {
               value: /^[가-힣a-zA-Z]{2,8}$/,
@@ -90,7 +90,7 @@ const SignupForm = ({
           width="300px"
           placeholder="8자리 이상 입력해주세요"
           error={errors['password']}
-          {...register('password', {
+          registerOption={register('password', {
             required: '비밀번호를 입력하세요',
             pattern: {
               value: /^.{8,}$/,
@@ -105,7 +105,7 @@ const SignupForm = ({
           type="password"
           width="300px"
           error={errors['passwordConfirm']}
-          {...register('passwordConfirm', {
+          registerOption={register('passwordConfirm', {
             required: '비밀번호 확인을 입력해주세요',
             validate: (value) =>
               watch('password') !== value
@@ -119,7 +119,7 @@ const SignupForm = ({
           placeholder="000-0000-0000"
           width="300px"
           error={errors['phone']}
-          {...register('phone', {
+          registerOption={register('phone', {
             pattern: {
               value: /^(\d{3}-\d{4}-\d{4})$/,
               message: '형식이 올바르지 않습니다(010-0000-0000)',

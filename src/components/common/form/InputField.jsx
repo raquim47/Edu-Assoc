@@ -1,6 +1,5 @@
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
-import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -39,32 +38,37 @@ const InputArea = styled.div`
   }
 `;
 
-const InputField = forwardRef(
-  (
-    { id, width, label, isRequired, children, basicMode, error, ...props },
-    ref
-  ) => {
-    return (
-      <Wrapper>
-        <Label
-          label={label}
+const InputField = ({
+  id,
+  label,
+  isRequired,
+  error,
+  registerOption,
+  basicMode,
+  width,
+  children,
+  ...props
+}) => {
+  return (
+    <Wrapper>
+      <Label
+        label={label}
+        id={id}
+        basicMode={basicMode}
+        isRequired={isRequired}
+      />
+      <InputArea $width={width}>
+        <input
           id={id}
-          basicMode={basicMode}
-          isRequired={isRequired}
+          className={basicMode ? 'basic-mode' : ''}
+          {...registerOption}
+          {...props}
         />
-        <InputArea $width={width}>
-          <input
-            id={id}
-            ref={ref}
-            className={basicMode ? 'basic-mode' : ''}
-            {...props}
-          />
-          {children}
-          {error && <ErrorMessage message={error.message} />}
-        </InputArea>
-      </Wrapper>
-    );
-  }
-);
+        {children}
+        {error && <ErrorMessage message={error.message} />}
+      </InputArea>
+    </Wrapper>
+  );
+};
 
 export default InputField;

@@ -14,13 +14,13 @@ const MyPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleOnSubmit =  (data) => {
+  const handleOnSubmit = (data) => {
     updateUser.mutate(data, {
-      onSuccess : () => {
+      onSuccess: () => {
         setValue('password', '', { shouldValidate: false });
         alert('변경이 완료되었습니다');
-      }
-    })
+      },
+    });
   };
 
   return (
@@ -39,7 +39,7 @@ const MyPage = () => {
           defaultValue={user.username}
           width="300px"
           error={errors['username']}
-          {...register('username', {
+          registerOption={register('username', {
             required: '이름을 입력하세요.',
             pattern: {
               value: /^[가-힣a-zA-Z]{2,8}$/,
@@ -55,7 +55,7 @@ const MyPage = () => {
           placeholder="8자리 이상 입력해주세요"
           width="300px"
           error={errors['password']}
-          {...register('password', {
+          registerOption={register('password', {
             required: '비밀번호를 입력하세요',
             pattern: {
               value: /^.{8,}$/,
@@ -69,7 +69,7 @@ const MyPage = () => {
           placeholder="000-0000-0000"
           width="300px"
           error={errors['phone']}
-          {...register('phone', {
+          registerOption={register('phone', {
             pattern: {
               value: /^(\d{3}-\d{4}-\d{4})$/,
               message: '형식이 올바르지 않습니다(010-0000-0000)',
@@ -77,8 +77,8 @@ const MyPage = () => {
           })}
         />
       </Fieldset>
-      <Button type="submit" width="100%" disabled={updateUser.isLoading}>
-        {updateUser.isLoading ? '요청중' : '회원정보 수정'}
+      <Button type="submit" width="100%" disabled={updateUser.isPending}>
+        {updateUser.isPending ? '요청중' : '회원정보 수정'}
       </Button>
     </form>
   );

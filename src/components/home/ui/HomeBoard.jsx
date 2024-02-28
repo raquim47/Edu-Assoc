@@ -51,7 +51,7 @@ const HomeBoard = ({ title, content, path }) => {
     <Wrapper>
       <header>
         <h3>{title}</h3>
-        <Button size="s" color="white">더보기</Button>
+        <Button to="/" size="s" color="white">더보기</Button>
       </header>
       <ul>
         <ListItem>

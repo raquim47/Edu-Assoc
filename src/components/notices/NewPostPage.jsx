@@ -20,25 +20,14 @@ const NewPostPage = () => {
     watch,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
-  const [file, setFile] = useState(null);
+  
   const addPost = useAddPost();
 
-  const handleFileChange = (event) => {
-    const files = event.target.files;
-    if (files.length > 0) {
-      const file = files[0];
-      const maxSize = 10 * 1024 * 1024;
-      if (file.size > maxSize) {
-        return alert('파일 크기는 10MB를 초과할 수 없습니다.');
-      }
-      setFile(file);
-    }
-  };
+ 
 
   const editorContent = watch('content');
 
   const handleQuillChange = (content) => {
-    console.log(content);
     setValue('content', content, { shouldValidate: true });
   };
 

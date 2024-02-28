@@ -6,9 +6,11 @@ import {
   uploadContentToStorage,
   uploadFileToStorage,
 } from './utils';
+import { useNavigate } from 'react-router-dom';
 
 export const useAddPost = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: async (postData) => {
@@ -27,9 +29,12 @@ export const useAddPost = () => {
       });
     },
     onSuccess: () => {
+      alert('등록되었습니다.');
       queryClient.invalidateQueries('posts');
+      navigate('..');
     },
-    onError: async (_0, _1, context) => {
+    onError: async (error, _, context) => {
+      alert(`에러가 발생했습니다 : ${error.message}`);
       if (context.contentUrl) {
         await deleteFromStorage(context.contentUrl);
       }

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from 'components/accounts/ui/LoginForm';
 import { useFetchUser, useLogin, useLogout } from 'components/accounts/hooks';
@@ -43,7 +43,6 @@ const HomeLogin = () => {
   const { data: user } = useFetchUser();
   const login = useLogin();
   const logout = useLogout();
-  const navigate = useNavigate();
 
   const handleOnSubmit = (data) => {
     login.mutate(data);
@@ -56,19 +55,15 @@ const HomeLogin = () => {
             <strong>{user.username}</strong>님 안녕하세요
           </h3>
           <ActionBtns>
-            <Button color="blue" onClick={() => navigate('/accounts/mypage')}>
-              마이페이지
-            </Button>
-            <Button color="blue" onClick={logout}>
-              로그아웃
-            </Button>
+            <Button to="/accounts/mypage">마이페이지</Button>
+            <Button onClick={logout}>로그아웃</Button>
           </ActionBtns>
         </>
       ) : (
         <>
           <h3>로그인</h3>
           <LoginForm basicMode={true} onSubmit={handleOnSubmit}>
-            <Button color="blue" type="submit" width="100%" disabled={login.isPending}>
+            <Button type="submit" width="100%" disabled={login.isPending}>
               {login.isPending ? '요청중' : '로그인'}
             </Button>
           </LoginForm>
