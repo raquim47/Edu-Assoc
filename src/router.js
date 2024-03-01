@@ -1,5 +1,4 @@
 import PageLayout from 'components/layout/PageLayout';
-import LoginPage from 'components/accounts/LoginPage';
 import SignupPage from 'components/accounts/SignupPage';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
@@ -9,6 +8,7 @@ import MyPage from 'components/accounts/MyPage';
 import ErrorPage from 'components/common/ErrorPage';
 import BoardPage from 'components/board/BoardPage';
 import NewBoard from 'components/board/NewBoard';
+import LoginForm from 'components/accounts/ui/LoginForm';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
           { index: true, element: <Navigate to="login" replace /> },
           {
             path: 'login',
-            element: <NavGuard element={<LoginPage />} />,
+            element: <NavGuard element={<LoginForm />} />,
           },
           {
             path: 'signup',
@@ -36,23 +36,23 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: 'notices',
-        element: <PageLayout sideNavType="notices" />,
-        children: [
-          { index: true, element: <Navigate to="announcements" replace /> },
-          {
-            path: 'announcements',
-            children: [
-              { index: true, element: <BoardPage /> },
-              {
-                path: 'new',
-                element: <NavGuard requireAuth={true} element={<NewBoard />} />,
-              },
-            ],
-          },
-        ],
-      },
+      // {
+      //   path: 'notices',
+      //   element: <PageLayout sideNavType="notices" />,
+      //   children: [
+      //     { index: true, element: <Navigate to="announcements" replace /> },
+      //     {
+      //       path: 'announcements',
+      //       children: [
+      //         { index: true, element: <BoardPage /> },
+      //         {
+      //           path: 'new',
+      //           element: <NavGuard requireAuth={true} element={<NewBoard />} />,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
     ],
   },
 ]);

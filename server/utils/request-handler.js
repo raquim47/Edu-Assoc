@@ -8,6 +8,7 @@ module.exports = (fn) => async (req, res, next) => {
   } catch (err) {
     console.error(err.message || ERROR.INTERNAL_ERROR);
     const statusCode = err.statusCode || 500;
+    
     res
       .status(statusCode)
       .json(

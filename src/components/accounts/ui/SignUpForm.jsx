@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { checkEmailDuplicate } from 'components/accounts/utils';
 import Button from 'components/common/Button';
 import InputField from 'components/common/form/InputField';
 import Fieldset from 'components/common/form/Fieldset';
+import useEmailCheck from 'hooks/user/useEmailCheck';
 
 const SignupForm = ({
   beforeOnSubmit = () => true,
   afterOnSubmit = () => {},
   children,
 }) => {
-  const [emailDupChecked, setEmailDupChecked] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false);
+  const { checkEmail, isLoading } = useEmailCheck();
   const {
     register,
     handleSubmit,
@@ -27,13 +28,32 @@ const SignupForm = ({
       return;
     }
 
-    if (!emailDupChecked) {
+    if (!emailChecked) {
       alert('이메일 중복체크가 완료되지 않았습니다.');
       setError('email', { message: '이메일 중복체크가 완료되지 않았습니다.' });
       return;
     }
     handleSubmit(afterOnSubmit)(e);
   };
+
+  const handleCheckEmail = async () => {
+    const email = watch('email');
+
+    if (!email) return alert('이메일을 입력해주세요');
+    const emailRegex = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i;
+    if (!emailRegex.test(email)) return alert('이메일 형식에 맞지 않습니다.');
+
+    const isAvailable = await checkEmail(email);
+    if (isAvailable) {
+      setEmailChecked(true);
+      alert('사용가능한 이메일입니다.');
+      clearErrors('email');
+    } else {
+      setError('email', { message: '이미 존재하는 이메일입니다.' });
+      alert('이미 존재하는 이메일입니다.');
+    }
+  };
+
   return (
     <form onSubmit={handleFormSubmit}>
       <Fieldset legend="기본정보">
@@ -56,14 +76,8 @@ const SignupForm = ({
             color="gray"
             size="s"
             type="button"
-            onClick={() =>
-              checkEmailDuplicate(
-                watch('email'),
-                setError,
-                setEmailDupChecked,
-                clearErrors
-              )
-            }
+            onClick={handleCheckEmail}
+            disabled={isLoading}
           >
             중복 확인
           </Button>

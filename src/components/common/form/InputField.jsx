@@ -24,7 +24,6 @@ const InputArea = styled.div`
     padding: 10px 10px;
     height: 100%;
     font-size: ${(props) => props.theme.fontSize.m};
-    border: none;
     border: 1px solid ${(props) => props.theme.color.gray[1]};
   }
 
@@ -33,7 +32,7 @@ const InputArea = styled.div`
     color: ${(props) => props.theme.color.black[2]};
   }
 
-  input.basic-mode {
+  input.mini-mode {
     border: none;
   }
 `;
@@ -44,7 +43,7 @@ const InputField = ({
   isRequired,
   error,
   registerOption,
-  basicMode,
+  miniMode,
   width,
   children,
   ...props
@@ -54,15 +53,16 @@ const InputField = ({
       <Label
         label={label}
         id={id}
-        basicMode={basicMode}
+        miniMode={miniMode}
         isRequired={isRequired}
       />
       <InputArea $width={width}>
         <input
           id={id}
-          className={basicMode ? 'basic-mode' : ''}
+          className={miniMode ? 'mini-mode' : ''}
           {...registerOption}
           {...props}
+          autoComplete={id === ('password' || 'passwordConfirm') ? 'off' : id}
         />
         {children}
         {error && <ErrorMessage message={error.message} />}

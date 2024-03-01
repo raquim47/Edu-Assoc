@@ -1,4 +1,6 @@
-module.exports = (data, error) => ({
-  data: data ?? null,
-  error: error ?? null,
-});
+module.exports = (data, errorMessage = null) => {
+  if (errorMessage) {
+    return { error: errorMessage };
+  }
+  return data;
+};

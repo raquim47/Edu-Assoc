@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from 'components/accounts/ui/LoginForm';
-import { useFetchUser, useLogin, useLogout } from 'components/accounts/hooks';
 import Button from 'components/common/Button';
+import useFetchUser from 'hooks/user/useFetchUser';
+import useLogout from 'hooks/user/useLogout';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -40,13 +41,11 @@ const ActionLinks = styled.div`
 `;
 
 const HomeLogin = () => {
-  const { data: user } = useFetchUser();
-  const login = useLogin();
+  const {
+    data: { user },
+  } = useFetchUser();
   const logout = useLogout();
 
-  const handleOnSubmit = (data) => {
-    login.mutate(data);
-  };
   return (
     <Wrapper>
       {user ? (
@@ -62,20 +61,12 @@ const HomeLogin = () => {
       ) : (
         <>
           <h3>로그인</h3>
-          <LoginForm basicMode={true} onSubmit={handleOnSubmit}>
-            <Button type="submit" width="100%" disabled={login.isPending}>
-              {login.isPending ? '요청중' : '로그인'}
-            </Button>
-          </LoginForm>
+          <LoginForm miniMode />
           <ActionLinks>
             <p>
               <span>회원이 아니신가요?</span>
               <Link to="/accounts/signup">회원가입</Link>
             </p>
-            {/* <p>
-            <span>회원 정보를 잊으셨나요?</span>
-            <Link>정보찾기</Link>
-          </p> */}
           </ActionLinks>
         </>
       )}

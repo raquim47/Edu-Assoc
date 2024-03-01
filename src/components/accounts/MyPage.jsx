@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { useFetchUser, useUpdateUser } from './hooks';
 import Button from 'components/common/Button';
 import InputField from 'components/common/form/InputField';
 import Fieldset from 'components/common/form/Fieldset';
+import useFetchUser from 'hooks/user/useFetchUser';
+import useUpdateUser from 'hooks/user/useUpdateUser';
 
 const MyPage = () => {
-  const { data: user } = useFetchUser();
+  const {
+    data: { user },
+  } = useFetchUser();
   const updateUser = useUpdateUser();
   const {
     register,

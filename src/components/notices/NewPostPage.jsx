@@ -12,7 +12,7 @@ import InputField from 'components/common/form/InputField';
 
 const NewPostPage = () => {
   const navigate = useNavigate();
-  const { data: user } = useFetchUser();
+  const { data: { user } } = useFetchUser();
   const {
     register,
     handleSubmit,

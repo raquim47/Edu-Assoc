@@ -1,21 +1,38 @@
+import Button from 'components/common/Button';
 import Fieldset from 'components/common/form/Fieldset';
 import InputField from 'components/common/form/InputField';
+import useLogin from 'hooks/user/useLogin';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-const LoginForm = ({ onSubmit, basicMode, children }) => {
+const FormBlock = styled.form`
+  width: ${(props) => (props.$miniMode ? '100%' : '478px')};
+`;
+
+const LoginForm = ({ miniMode }) => {
+  const login = useLogin();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const handleOnSubmit = (data) => {
+    login.mutate(data, {
+      onSuccess: () => navigate('/'),
+    });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <FormBlock onSubmit={handleSubmit(handleOnSubmit)} $miniMode={miniMode}>
       <Fieldset>
         <InputField
           id="email"
           label="아이디(이메일)"
-          basicMode={basicMode}
+          miniMode={miniMode}
           error={errors['email']}
           placeholder="abc@google.com"
           registerOption={register('email', {
@@ -31,15 +48,18 @@ const LoginForm = ({ onSubmit, basicMode, children }) => {
           label="비밀번호"
           type="password"
           placeholder="●●●●●●●●"
-          basicMode={basicMode}
+          miniMode={miniMode}
+          autoComplete="new-password"
           error={errors['password']}
           registerOption={register('password', {
             required: '비밀번호를 입력하세요',
           })}
         />
       </Fieldset>
-      {children}
-    </form>
+      <Button type="submit" width="100%" disabled={login.isPending}>
+        {login.isPending ? '요청중' : '로그인'}
+      </Button>
+    </FormBlock>
   );
 };
 

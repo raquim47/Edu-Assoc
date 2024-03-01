@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useFetchUser } from 'components/accounts/hooks';
 import InputField from 'components/common/form/InputField';
 import Button from 'components/common/Button';
 import FileField from './ui/FileField';
 import WysiwygField from './ui/WysiwygField';
 import { useAddPost } from './hooks';
+import { useState } from 'react';
+import useFetchUser from 'hooks/user/useFetchUser';
 
 const BtnsBlock = styled.div`
   display: flex;
@@ -15,7 +16,8 @@ const BtnsBlock = styled.div`
 `;
 
 const NewBoard = () => {
-  const { data: user } = useFetchUser();
+  const { data: { user } } = useFetchUser();
+  const [count, setCount] = useState(0);
   const addPost = useAddPost();
   const {
     register,
@@ -34,7 +36,7 @@ const NewBoard = () => {
       alert('내용을 입력해주세요.');
       return;
     }
-    
+
     const fileData = data.file && data.file.length > 0 ? data.file[0] : null;
     const postData = {
       title: data.title,
@@ -48,6 +50,20 @@ const NewBoard = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <button
+        onClick={() => {
+          addPost.mutate({
+            title: `테스트 제목 ${count}`,
+            content: `<p>테스트 내용 ${count}<p>`,
+            author: user.username,
+            authorId: user.uid,
+          });
+          setCount((p) => p + 1);
+        }}
+        type="button"
+      >
+        dummy
+      </button>
       <InputField
         id="title"
         label="제목"

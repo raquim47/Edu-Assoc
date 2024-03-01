@@ -3,7 +3,7 @@ import PageTitle from './PageTitle';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { NAVIGATION_DATA } from './constants';
-import { useFetchUser } from 'components/accounts/hooks';
+import useFetchUser from 'hooks/user/useFetchUser';
 
 const Wrapper = styled.div`
   padding: 80px 0;
@@ -59,7 +59,7 @@ const SideBar = styled.aside`
 `;
 
 const PageLayout = ({ sideNavType }) => {
-  const { data : user } = useFetchUser();
+  const { data : { user } } = useFetchUser();
   const filteredNavItems = NAVIGATION_DATA[sideNavType].children.filter(
     (item) => {
       if (!user) {

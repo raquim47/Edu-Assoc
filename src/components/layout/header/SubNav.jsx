@@ -1,4 +1,5 @@
-import { useFetchUser, useLogout } from 'components/accounts/hooks';
+import useFetchUser from 'hooks/user/useFetchUser';
+import useLogout from 'hooks/user/useLogout';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -29,7 +30,7 @@ const LogoutBtn = styled.button`
 `;
 
 const SubNav = () => {
-  const { data : user } = useFetchUser();
+  const { data : { user } } = useFetchUser();
   const logout = useLogout();
   return (
     <Wrapper>

@@ -1,5 +1,7 @@
 const ERROR = {
+  CREDENTIALS_INVALID : '이메일 또는 비밀번호가 틀렸습니다.',
   AUTH_REQUIRED: '로그인이 필요합니다',
+  USER_NOT_FOUND : '사용자를 찾을 수 없습니다',
   USERNAME_INVALID: '한글로 이름을 입력해주세요.',
   USERNAME_REQUIRED: '이름은 필수 입력사항입니다.',
   PASSWORD_REQUIRED: '비밀번호를 입력해주세요.',

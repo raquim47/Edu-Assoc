@@ -1,24 +1,20 @@
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const User = require('../models/User');
+const passport = require('passport');
+const { Strategy: JwtStrategy } = require('passport-jwt');
+require('dotenv').config();
 
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'your_secret_key',
+const cookieExtractor = (req) => {
+  return req.cookies.myAssocToken;
 };
 
-module.exports = (passport) => {
-  passport.use(
-    new JwtStrategy(options, async (jwt_payload, done) => {
-      try {
-        const user = await User.findById(jwt_payload.id);
-        if (user) {
-          return done(null, user);
-        }
-        return done(null, false);
-      } catch (error) {
-        console.error(error);
-        done(error, false);
-      }
-    })
-  );
+const opts = {
+  secretOrKey: process.env.JWT_SECRET,
+  jwtFromRequest: cookieExtractor,
+};
+
+const jwtStrategy = new JwtStrategy(opts, (user, done) => {
+  done(null, user);
+});
+
+module.exports = () => {
+  passport.use(jwtStrategy);
 };

@@ -55,7 +55,15 @@ const Table = styled.table`
   }
 `;
 
-const BoardList = () => {
+const formatCreatedAtToDate = (createdAt) => {
+  const date = new Date(createdAt.seconds * 1000);
+  const isoString = date.toISOString();
+  const formattedDate = isoString.split('T')[0];
+
+  return formattedDate;
+};
+
+const BoardList = ({ posts, startNumber }) => {
   return (
     <Table>
       <thead>
@@ -68,30 +76,18 @@ const BoardList = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td className="td-title ellipsis">
-            <Link>
-              게시글 제목게시글 제목게시글 제목게시글 제목게시글
-              제목afwefawf게시글 제목게시글 제목게시글 제목게시글 제목게시글
-              제목afwefawf
-            </Link>
-          </td>
-          <td className="ellipsis">관리자</td>
-          <td>2024.02.26</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td className="td-title ellipsis">
-            <Link>
-              게시글 제목게시글 제목게시글 제목게시글 제목게시글 제목afwefawf
-            </Link>
-          </td>
-          <td className="ellipsis">관리자</td>
-          <td>2024.02.26</td>
-          <td>100</td>
-        </tr>
+        {posts.length > 0 &&
+          posts.map((post, i) => (
+            <tr key={post.id}>
+              <td>{startNumber - i}</td>
+              <td className="td-title ellipsis">
+                <Link>{post.title}</Link>
+              </td>
+              <td className="ellipsis">{post.author}</td>
+              <td>{formatCreatedAtToDate(post.createdAt)}</td>
+              <td>0</td>
+            </tr>
+          ))}
       </tbody>
     </Table>
   );

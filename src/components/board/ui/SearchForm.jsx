@@ -28,9 +28,8 @@ const SearchForm = () => {
   return (
     <Wrapper>
       <select>
-        <option value="title">제목</option>
-        <option value="views">조회수</option>
-        <option value="date">등록일</option>
+        <option value="content">제목 + 내용</option>
+        <option value="author">작성자</option>
       </select>
       <input placeholder="검색" />
       <Button onClick={handleSearch} width="100px">

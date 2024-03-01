@@ -1,11 +1,11 @@
-import { useFetchUser } from 'components/accounts/hooks';
+import useFetchUser from 'hooks/user/useFetchUser';
 import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const NavGuard = ({ element, requireAuth = false }) => {
-  const { data: user } = useFetchUser();
+  const { data: { user } } = useFetchUser();
   const alertShownRef = useRef(false);
-
+  
   useEffect(() => {
     if (!alertShownRef.current) {
       if (!requireAuth && user) {

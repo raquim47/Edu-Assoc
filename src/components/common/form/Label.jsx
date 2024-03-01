@@ -17,9 +17,9 @@ const LabelBlock = styled.label`
   }
 `;
 
-const Label = ({ label, id, basicMode, isRequired }) => {
+const Label = ({ label, id, miniMode, isRequired }) => {
   return (
-    <LabelBlock htmlFor={id} className={basicMode ? 'sr-only' : ''}>
+    <LabelBlock htmlFor={id} className={miniMode ? 'sr-only' : ''}>
       {isRequired && <span className="required-mark">*</span>}
       {label}
     </LabelBlock>
