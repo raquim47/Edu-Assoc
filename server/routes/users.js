@@ -1,7 +1,7 @@
 const express = require('express');
-const User = require('../models/user');
-const requestHandler = require('../utils/request-handler');
 const router = express.Router();
+const User = require('../models/User');
+const requestHandler = require('../utils/request-handler');
 const bcrypt = require('bcrypt');
 const setUserToken = require('../utils/set-user-token');
 const { ERROR } = require('../utils/constants');

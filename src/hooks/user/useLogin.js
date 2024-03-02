@@ -1,14 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from 'index';
 import api from 'utils/api';
 
 const useLogin = () => {
   return useMutation({
     mutationFn: async (loginData) => {
-      await api.post(`/user/login`, loginData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['user']);
+      await api.post(`/users/login`, loginData);
     },
     onError: (error) => {
       alert(error.message);

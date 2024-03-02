@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import api from 'utils/api';
 
-const useFetchUser = () => {
+const useFetchPosts = (category, limit, page = 1) => {
   return useQuery({
-    queryKey: ['users'],
+    queryKey: ['posts', category, page],
     queryFn: async () => {
       try {
-        const { data } = await api.get(`/users`);
+        const { data } = await api.get(
+          `/posts/${category}?limit=${limit}&page=${page}`
+        );
         return data;
       } catch (error) {
         alert(error.message);
@@ -15,4 +17,4 @@ const useFetchUser = () => {
   });
 };
 
-export default useFetchUser;
+export default useFetchPosts;

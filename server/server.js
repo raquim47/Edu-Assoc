@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const getUserFromJWT = require('./middlewares/get-user-from-jwt');
 const cors = require('cors');
-const userRoutes = require('./routes/user');
 const initPassport = require('./passport');
 const passport = require('passport');
+const usersRoutes = require('./routes/users');
+const postsRoutes = require('./routes/posts');
 
 const corsOptions = {
   origin: 'http://localhost:3000', 
@@ -23,7 +24,8 @@ server.use(cookieParser());
 
 server.use(passport.initialize());
 server.use(getUserFromJWT);
-server.use('/api/user', userRoutes);
+server.use('/api/users', usersRoutes);
+server.use('/api/posts', postsRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

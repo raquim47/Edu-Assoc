@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import fileIcon from 'assets/file-icon.png';
 
 const Table = styled.table`
   width: 100%;
@@ -40,6 +41,20 @@ const Table = styled.table`
     td.td-title {
       padding: 12px 15px;
       text-align: left;
+
+      span {
+        position: relative;
+        pointer-events: none;
+      }
+
+      img {
+        position: absolute;
+        top: 4px;
+        left: 8px;
+        width: 14px;
+        height: 18px;
+        object-fit: cover;
+      }
     }
 
     td.td-title a:hover {
@@ -55,19 +70,23 @@ const Table = styled.table`
   }
 `;
 
-const formatCreatedAtToDate = (createdAt) => {
-  const date = new Date(createdAt.seconds * 1000);
-  const isoString = date.toISOString();
-  const formattedDate = isoString.split('T')[0];
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date
+    .toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    .replace(/\. /g, '-')
+    .replace('.', '');
+}
 
-  return formattedDate;
-};
-
-const BoardList = ({ posts, startNumber }) => {
+const PostList = ({ posts, startNumber }) => {
   return (
     <Table>
       <thead>
-        <tr>
+        <tr key="head">
           <th className="th-number">No.</th>
           <th>제목</th>
           <th className="th-author">작성자</th>
@@ -78,13 +97,14 @@ const BoardList = ({ posts, startNumber }) => {
       <tbody>
         {posts.length > 0 &&
           posts.map((post, i) => (
-            <tr key={post.id}>
+            <tr key={post._id}>
               <td>{startNumber - i}</td>
               <td className="td-title ellipsis">
                 <Link>{post.title}</Link>
+                { post.file && <span><img src={fileIcon} /></span>}
               </td>
               <td className="ellipsis">{post.author}</td>
-              <td>{formatCreatedAtToDate(post.createdAt)}</td>
+              <td>{formatDate(post.createdAt)}</td>
               <td>0</td>
             </tr>
           ))}
@@ -93,4 +113,4 @@ const BoardList = ({ posts, startNumber }) => {
   );
 };
 
-export default BoardList;
+export default PostList;

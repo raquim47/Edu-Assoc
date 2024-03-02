@@ -6,8 +6,8 @@ import HomePage from './components/home/HomePage';
 import NavGuard from 'components/common/NavGuard';
 import MyPage from 'components/accounts/MyPage';
 import ErrorPage from 'components/common/ErrorPage';
-import BoardPage from 'components/board/BoardPage';
-import NewBoard from 'components/board/NewBoard';
+import PostsPage from 'components/posts/PostsPage';
+import NewPost from 'components/posts/NewPost';
 import LoginForm from 'components/accounts/ui/LoginForm';
 
 const router = createBrowserRouter([
@@ -36,23 +36,23 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: 'notices',
-      //   element: <PageLayout sideNavType="notices" />,
-      //   children: [
-      //     { index: true, element: <Navigate to="announcements" replace /> },
-      //     {
-      //       path: 'announcements',
-      //       children: [
-      //         { index: true, element: <BoardPage /> },
-      //         {
-      //           path: 'new',
-      //           element: <NavGuard requireAuth={true} element={<NewBoard />} />,
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
+      {
+        path: 'notices',
+        element: <PageLayout sideNavType="notices" />,
+        children: [
+          { index: true, element: <Navigate to="announcements" replace /> },
+          {
+            path: 'announcements',
+            children: [
+              { index: true, element: <PostsPage /> },
+              {
+                path: 'new',
+                element: <NavGuard requireAuth={true} element={<NewPost />} />,
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 ]);

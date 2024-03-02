@@ -7,7 +7,7 @@ const useEmailCheck = () => {
   const checkEmail = async (email) => {
     setIsLoading(true);
     try {
-      const { data } = await api.get(`/user/check-email?email=${email}`);
+      const { data } = await api.get(`/users/check-email?email=${email}`);
       return data.isAvailable;
     } catch (error) {
       alert(error.message);

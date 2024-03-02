@@ -7,8 +7,8 @@ const useLogout = () => {
 
   return async () => {
     try {
-      await api.post('/user/logout');
-      queryClient.setQueryData(['user'], { user: null });
+      await api.post('/users/logout');
+      queryClient.setQueryData(['users'], { user: null });
       navigate('/');
     } catch (error) {
       alert(error.message);

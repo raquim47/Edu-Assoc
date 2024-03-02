@@ -4,9 +4,10 @@ import InputField from 'components/common/form/InputField';
 import Button from 'components/common/Button';
 import FileField from './ui/FileField';
 import WysiwygField from './ui/WysiwygField';
-import { useAddPost } from './hooks';
 import { useState } from 'react';
 import useFetchUser from 'hooks/user/useFetchUser';
+import useNewPost from 'hooks/posts/useNewPost';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const BtnsBlock = styled.div`
   display: flex;
@@ -15,48 +16,56 @@ const BtnsBlock = styled.div`
   gap: 20px;
 `;
 
-const NewBoard = () => {
-  const { data: { user } } = useFetchUser();
+const NewPost = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/').filter(Boolean); // 공백 제거
+  const category = pathSegments.at(-2);
+
+  const {
+    data: { user },
+  } = useFetchUser();
   const [count, setCount] = useState(0);
-  const addPost = useAddPost();
+  const newPost = useNewPost();
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
     setError,
     clearErrors,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
 
   const onSubmit = (data) => {
-    const content = watch('content');
-    if (!content) {
+    if (!data.content) {
       setError('content', { message: '내용을 작성해주세요' });
       alert('내용을 입력해주세요.');
       return;
     }
 
-    const fileData = data.file && data.file.length > 0 ? data.file[0] : null;
-    const postData = {
-      title: data.title,
-      content: data.content,
-      author: user.username,
-      authorId: user.uid,
-      file: fileData,
-    };
-    addPost.mutate(postData);
+    const postData = new FormData();
+    postData.append('title', data.title);
+    postData.append('content', data.content);
+    postData.append('authorName', user.username);
+    postData.append('authorId', user.uid);
+    postData.append('category', category);
+
+    if (data.file?.length > 0) {
+      postData.append('file', data.file[0]);
+    }
+    newPost.mutate(postData, { onSuccess: () => navigate('..') });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <button
         onClick={() => {
-          addPost.mutate({
+          newPost.mutate({
             title: `테스트 제목 ${count}`,
             content: `<p>테스트 내용 ${count}<p>`,
             author: user.username,
             authorId: user.uid,
+            category,
           });
           setCount((p) => p + 1);
         }}
@@ -89,12 +98,12 @@ const NewBoard = () => {
         <Button to=".." width="120px" color="gray">
           취소
         </Button>
-        <Button width="120px" disabled={addPost.isPending}>
-          {addPost.isPending ? '요청중' : '저장'}
+        <Button width="120px" disabled={newPost.isPending}>
+          {newPost.isPending ? '요청중' : '저장'}
         </Button>
       </BtnsBlock>
     </form>
   );
 };
 
-export default NewBoard;
+export default NewPost;
