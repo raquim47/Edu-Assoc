@@ -9,6 +9,7 @@ import ErrorPage from 'components/common/ErrorPage';
 import PostsPage from 'components/posts/PostsPage';
 import NewPost from 'components/posts/NewPost';
 import LoginForm from 'components/accounts/ui/LoginForm';
+import PostDetail from 'components/posts/PostDetail';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             path: 'announcements',
             children: [
               { index: true, element: <PostsPage /> },
+              {
+                path: ':postId',
+                element: <PostDetail/>,
+              },
               {
                 path: 'new',
                 element: <NavGuard requireAuth={true} element={<NewPost />} />,

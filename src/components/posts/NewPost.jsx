@@ -31,15 +31,13 @@ const NewPost = () => {
     register,
     handleSubmit,
     setValue,
-    setError,
     clearErrors,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
 
   const onSubmit = (data) => {
     if (!data.content) {
-      setError('content', { message: '내용을 작성해주세요' });
-      alert('내용을 입력해주세요.');
+      alert('본문 내용을 입력해주세요.');
       return;
     }
 
@@ -47,7 +45,7 @@ const NewPost = () => {
     postData.append('title', data.title);
     postData.append('content', data.content);
     postData.append('authorName', user.username);
-    postData.append('authorId', user.uid);
+    postData.append('authorId', user._id);
     postData.append('category', category);
 
     if (data.file?.length > 0) {
@@ -58,7 +56,7 @@ const NewPost = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <button
+      {/* <button
         onClick={() => {
           newPost.mutate({
             title: `테스트 제목 ${count}`,
@@ -72,7 +70,7 @@ const NewPost = () => {
         type="button"
       >
         dummy
-      </button>
+      </button> */}
       <InputField
         id="title"
         label="제목"

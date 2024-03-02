@@ -11,7 +11,10 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     content: { type: String, required: true },
-    file: { type: String, required: false },
+    file: {
+      url: String,
+      originalName: String,
+    },
     views: { type: Number, default: 0 },
   },
   {

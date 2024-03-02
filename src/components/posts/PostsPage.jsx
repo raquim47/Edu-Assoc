@@ -17,7 +17,7 @@ const BtnsSection = styled.section`
 const PostsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const pathSegments = location.pathname.split('/').filter(Boolean); 
+  const pathSegments = location.pathname.split('/').filter(Boolean);
   const searchParams = new URLSearchParams(location.search);
   const category = pathSegments.at(-1);
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
@@ -30,7 +30,6 @@ const PostsPage = () => {
       totalPosts: 0,
       totalPages: 0,
     },
-    isSuccess,
   } = useFetchPosts(category, PAGE_SIZE, currentPage);
 
   const handlePageChange = (newPage) => {
@@ -45,16 +44,14 @@ const PostsPage = () => {
         <SearchForm />
       </SectionBlock>
       <SectionBlock>
-        {isSuccess && <PostList posts={posts} startNumber={startNumber} />}
+        <PostList posts={posts} startNumber={startNumber} />
       </SectionBlock>
       <SectionBlock>
-        {isSuccess && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </SectionBlock>
       <BtnsSection>
         <Button to="new" width="100px">

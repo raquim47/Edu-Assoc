@@ -30,17 +30,6 @@ const DivBlock = styled.div`
   .quill-wrap {
     flex: 1;
     display: flex;
-    position: relative;
-  }
-
-  .error {
-    position: absolute;
-    top: 55%;
-    transform: translateY(-50%);
-    margin-left: 24px;
-    font-size: ${(props) => props.theme.fontSize.xxl};
-    color: ${(props) => props.theme.color.gray[1]};
-    pointer-events: none;
   }
 `;
 
@@ -67,22 +56,18 @@ const CustomStyledQuill = styled(ReactQuill)`
   }
 `;
 
-const WysiwygField = ({ id, setValue, clearErrors, basicMode, error }) => {
+const WysiwygField = ({ id, setValue, miniMode }) => {
   const quillRef = useRef();
 
   const handleQuillChange = (htmlText) => {
     const isEmpty = !quillRef.current.unprivilegedEditor.getText().trim();
     const content = !isEmpty ? htmlText : '';
     setValue(id, !isEmpty ? content : '', { shouldValidate: true });
-
-    if (error && !isEmpty) {
-      clearErrors('content');
-    }
   };
 
   return (
     <DivBlock>
-      <Label label="내용" className={basicMode ? 'sr-only' : ''} />
+      <Label label="내용" className={miniMode ? 'sr-only' : ''} />
       <div className="quill-wrap">
         <CustomStyledQuill
           theme="snow"
@@ -90,7 +75,6 @@ const WysiwygField = ({ id, setValue, clearErrors, basicMode, error }) => {
           onChange={handleQuillChange}
           ref={quillRef}
         />
-        {error && <p className="error">{error.message}</p>}
       </div>
     </DivBlock>
   );

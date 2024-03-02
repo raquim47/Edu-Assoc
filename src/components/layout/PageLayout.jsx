@@ -20,12 +20,14 @@ const Wrapper = styled.div`
   .content-section {
     flex: 1;
     padding: 0 30px 60px;
+    min-width: 0
   }
 `;
 
 const SideBar = styled.aside`
   width: 220px;
   background-color: ${(props) => props.theme.color.gray[2]};
+  flex-shrink: 0;
 
   header {
     height: 120px;

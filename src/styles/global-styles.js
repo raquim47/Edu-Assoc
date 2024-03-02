@@ -84,4 +84,10 @@ img {
 	border: 0;
 	clip: rect(0 0 0 0);
 }
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 `;

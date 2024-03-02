@@ -7,7 +7,7 @@ const useFetchPosts = (category, limit, page = 1) => {
     queryFn: async () => {
       try {
         const { data } = await api.get(
-          `/posts/${category}?limit=${limit}&page=${page}`
+          `/posts/?category=${category}&limit=${limit}&page=${page}`
         );
         return data;
       } catch (error) {

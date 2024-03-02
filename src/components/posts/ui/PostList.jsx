@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import fileIcon from 'assets/file-icon.png';
+import {formatDate} from 'utils/format';
 
 const Table = styled.table`
   width: 100%;
@@ -49,11 +50,9 @@ const Table = styled.table`
 
       img {
         position: absolute;
-        top: 4px;
+        top: 2px;
         left: 8px;
-        width: 14px;
-        height: 18px;
-        object-fit: cover;
+        width: 20px;
       }
     }
 
@@ -61,26 +60,7 @@ const Table = styled.table`
       text-decoration: underline;
     }
   }
-
-  .ellipsis {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 `;
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date
-    .toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
-    .replace(/\. /g, '-')
-    .replace('.', '');
-}
 
 const PostList = ({ posts, startNumber }) => {
   return (
@@ -100,12 +80,16 @@ const PostList = ({ posts, startNumber }) => {
             <tr key={post._id}>
               <td>{startNumber - i}</td>
               <td className="td-title ellipsis">
-                <Link>{post.title}</Link>
-                { post.file && <span><img src={fileIcon} /></span>}
+                <Link to={post._id}>{post.title}</Link>
+                {post.file && (
+                  <span>
+                    <img src={fileIcon} alt="file" />
+                  </span>
+                )}
               </td>
-              <td className="ellipsis">{post.author}</td>
+              <td className="ellipsis">{post.authorName}</td>
               <td>{formatDate(post.createdAt)}</td>
-              <td>0</td>
+              <td>{post.views}</td>
             </tr>
           ))}
       </tbody>
