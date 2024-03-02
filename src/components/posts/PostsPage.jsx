@@ -11,7 +11,10 @@ const SectionBlock = styled.section`
 `;
 
 const BtnsSection = styled.section`
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 30px;
 `;
 
 const PostsPage = () => {
@@ -21,8 +24,10 @@ const PostsPage = () => {
   const searchParams = new URLSearchParams(location.search);
   const category = pathSegments.at(-1);
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
-
   const PAGE_SIZE = 8;
+
+  const searchType = searchParams.get('searchType');
+  const keyword = searchParams.get('keyword');
 
   const {
     data: { posts, totalPosts, totalPages } = {
@@ -30,7 +35,7 @@ const PostsPage = () => {
       totalPosts: 0,
       totalPages: 0,
     },
-  } = useFetchPosts(category, PAGE_SIZE, currentPage);
+  } = useFetchPosts(category, PAGE_SIZE, currentPage, searchType, keyword);
 
   const handlePageChange = (newPage) => {
     navigate(`?page=${newPage}`);
@@ -54,6 +59,15 @@ const PostsPage = () => {
         />
       </SectionBlock>
       <BtnsSection>
+        {searchType && keyword && (
+          <Button
+            to={`${location.pathname}?page=1`}
+            color="gray"
+            width="100px"
+          >
+            전체 목록
+          </Button>
+        )}
         <Button to="new" width="100px">
           글쓰기
         </Button>

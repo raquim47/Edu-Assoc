@@ -64,14 +64,24 @@ router.post(
 router.get(
   '/',
   requestHandler(async (req) => {
-    const { category, page = 1, limit = 10 } = req.query;
+    const { category, page = 1, limit = 10, searchType, keyword } = req.query;
+    
+    let filter = { category: category };
+    if (keyword) {
+      if (searchType === 'title' || !searchType) {
+        filter.title = new RegExp(keyword, 'i');
+      }
+      else if (searchType === 'author') {
+        filter.authorName = new RegExp(keyword, 'i');
+      }
+    }
 
-    const posts = await Post.find({ category: category })
+    const posts = await Post.find(filter)
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
       .exec();
-    const totalPosts = await Post.countDocuments({ category: category });
+    const totalPosts = await Post.countDocuments(filter);
 
     return { posts, totalPosts, totalPages: Math.ceil(totalPosts / limit) };
   })
