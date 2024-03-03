@@ -38,13 +38,15 @@ const PostInfo = styled.ul`
 const ContentBlock = styled.div`
   padding: 30px 10px;
   color: ${(props) => props.theme.color.black[1]};
+  border-bottom: 1px solid ${(props) => props.theme.color.black[2]};
 
   .file {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin: 30px 0;
+    margin-top: 30px;
     padding: 10px 0;
+    background-color: ${(props) => props.theme.color.gray[3]};
     border-top: 1px solid ${(props) => props.theme.color.gray[2]};
     border-bottom: 1px solid ${(props) => props.theme.color.gray[2]};
 
@@ -63,6 +65,7 @@ const ContentBlock = styled.div`
 `;
 
 const ActionBlock = styled.div`
+  padding: 20px 0;
   a {
     display: block;
     margin-left: auto;
@@ -70,7 +73,7 @@ const ActionBlock = styled.div`
   }
 `;
 
-const PostDetail = () => {
+const PostDetailPage = () => {
   const { postId } = useParams();
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
@@ -147,4 +150,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostDetailPage;

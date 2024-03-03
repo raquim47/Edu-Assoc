@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SignupForm from './ui/SignupForm';
+import SignupForm from './features/SignupForm';
 import AgreeField from 'components/common/form/AgreeField';
 import Button from 'components/common/Button';
 import useSignup from 'hooks/user/useSignup';

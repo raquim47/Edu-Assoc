@@ -4,11 +4,6 @@ import InputField from 'components/common/form/InputField';
 import useLogin from 'hooks/user/useLogin';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-
-const FormBlock = styled.form`
-  width: ${(props) => (props.$miniMode ? '100%' : '478px')};
-`;
 
 const LoginForm = ({ miniMode }) => {
   const login = useLogin();
@@ -27,7 +22,7 @@ const LoginForm = ({ miniMode }) => {
   };
 
   return (
-    <FormBlock onSubmit={handleSubmit(handleOnSubmit)} $miniMode={miniMode}>
+    <form onSubmit={handleSubmit(handleOnSubmit)}>
       <Fieldset>
         <InputField
           id="email"
@@ -59,7 +54,7 @@ const LoginForm = ({ miniMode }) => {
       <Button type="submit" width="100%" disabled={login.isPending}>
         {login.isPending ? '요청중' : '로그인'}
       </Button>
-    </FormBlock>
+    </form>
   );
 };
 

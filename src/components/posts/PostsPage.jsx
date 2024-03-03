@@ -1,9 +1,9 @@
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'components/common/Button';
-import PostList from './ui/PostList';
-import Pagination from './ui/Pagination';
-import SearchForm from './ui/SearchForm';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import PostList from './features/PostList';
+import Pagination from './features/Pagination';
+import SearchForm from './features/SearchForm';
 import useFetchPosts from 'hooks/posts/useFetchPosts';
 import { PAGE_SIZE } from 'utils/constants';
 
@@ -18,7 +18,7 @@ const BtnsSection = styled.section`
   margin-top: 30px;
 `;
 
-const Posts = () => {
+const PostsPage = () => {
   const navigate = useNavigate();
   const { category } = useParams();
   const location = useLocation();
@@ -71,4 +71,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default PostsPage;

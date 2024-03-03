@@ -1,5 +1,5 @@
 import useFetchUser from 'hooks/user/useFetchUser';
-import { RouterProvider } from 'react-router-dom';
+import { Navigate, RouterProvider } from 'react-router-dom';
 import router from './router';
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
   }
 
   if (isError) {
-    return <div>에러</div>;
+    return <Navigate to="/error" replace />;
   }
 
   return <RouterProvider router={router} />;

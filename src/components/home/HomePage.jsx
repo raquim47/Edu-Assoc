@@ -1,12 +1,12 @@
 import bannerImage from 'assets/banner.jpeg';
-import BoardsSection from './ui/BoardsSection';
-import ContactSection from './ui/ContactSection';
+import BoardsSection from './features/BoardsSection';
+import ContactSection from './features/ContactSection';
 
 const HomePage = () => {
   return (
     <>
       <section>
-        <img src={bannerImage} alt="banner" />
+        <img src={bannerImage} alt="배너" />
       </section>
       <BoardsSection/>
       <ContactSection/>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import LoginForm from 'components/accounts/ui/LoginForm';
+import LoginForm from 'components/users/features/LoginForm';
 import Button from 'components/common/Button';
 import useFetchUser from 'hooks/user/useFetchUser';
 import useLogout from 'hooks/user/useLogout';

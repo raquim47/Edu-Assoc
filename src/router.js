@@ -1,16 +1,16 @@
-import PageLayout from 'components/layout/PageLayout';
-import SignupPage from 'components/accounts/SignupPage';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import RootLayout from './components/layout/RootLayout';
+import PageLayout from 'components/layout/PageLayout';
+import ErrorPage from 'components/common/ErrorPage';
 import HomePage from './components/home/HomePage';
 import NavGuard from 'components/common/NavGuard';
-import MyPage from 'components/accounts/MyPage';
-import ErrorPage from 'components/common/ErrorPage';
-import LoginForm from 'components/accounts/ui/LoginForm';
-import Posts from 'components/posts/Posts';
-import PostDetail from 'components/posts/PostDetail';
-import NewPost from 'components/posts/NewPost';
+import LoginPage from 'components/users/LoginPage';
+import SignupPage from 'components/users/SignupPage';
+import MyPage from 'components/users/MyPage';
 import PostGuard from 'components/common/PostGuard';
+import PostsPage from 'components/posts/PostsPage';
+import PostDetailPage from 'components/posts/PostDetailPage';
+import NewPostPage from 'components/posts/NewPostPage';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <PageLayout />,
         children: [
           // auth
-          { path: 'login', element: <NavGuard element={<LoginForm />} /> },
+          { path: 'login', element: <NavGuard element={<LoginPage />} /> },
           { path: 'signup', element: <NavGuard element={<SignupPage />} /> },
           {
             path: 'mypage',
@@ -38,9 +38,9 @@ const router = createBrowserRouter([
               {
                 path: ':category',
                 children: [
-                  { index: true, element: <Posts /> },
-                  { path: 'new', element: <NewPost /> },
-                  { path: ':postId', element: <PostDetail /> },
+                  { index: true, element: <PostsPage /> },
+                  { path: 'new', element: <NewPostPage /> },
+                  { path: ':postId', element: <PostDetailPage /> },
                 ],
               },
             ],

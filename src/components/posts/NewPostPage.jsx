@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 import InputField from 'components/common/form/InputField';
 import Button from 'components/common/Button';
-import FileField from './ui/FileField';
-import WysiwygField from './ui/WysiwygField';
-import { useState } from 'react';
+import FileField from './features/FileField';
+import WysiwygField from './features/WysiwygField';
 import useFetchUser from 'hooks/user/useFetchUser';
 import useNewPost from 'hooks/posts/useNewPost';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ const BtnsBlock = styled.div`
   gap: 20px;
 `;
 
-const NewPost = () => {
+const NewPostPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean); // 공백 제거
@@ -104,4 +104,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default NewPostPage;

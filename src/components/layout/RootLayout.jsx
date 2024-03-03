@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Header from './header/Header';
-import Footer from './footer/Footer';
 import useAutoLogout from 'hooks/user/useAutoLogout';
+import Header from 'components/common/header/Header';
+import Footer from 'components/common/footer/Footer';
 
 const RootLayout = () => {
   useAutoLogout();
