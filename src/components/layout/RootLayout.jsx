@@ -7,11 +7,11 @@ const RootLayout = () => {
   useAutoLogout();
   return (
     <>
-      <Header/>
+      <Header />
       <main>
         <Outlet />
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 };

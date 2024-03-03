@@ -41,7 +41,7 @@ const SubNav = () => {
         {user ? (
           <>
             <li>
-              <Link to="/accounts/mypage">마이페이지</Link>
+              <Link to="/mypage">마이페이지</Link>
             </li>
             <li>
               <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
@@ -50,10 +50,10 @@ const SubNav = () => {
         ) : (
           <>
             <li>
-              <Link to="/accounts/login">로그인</Link>
+              <Link to="/login">로그인</Link>
             </li>
             <li>
-              <Link to="/accounts/signup">회원가입</Link>
+              <Link to="/signup">회원가입</Link>
             </li>
           </>
         )}

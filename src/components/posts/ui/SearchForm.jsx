@@ -23,14 +23,14 @@ const Wrapper = styled.form`
 
 const SearchForm = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const searchType = formData.get('searchType');
     const keyword = formData.get('keyword');
-    navigate(`${location.pathname}?page=1&searchType=${searchType}&keyword=${keyword}`);
+    navigate(`${pathname}?page=1&searchType=${searchType}&keyword=${keyword}`);
   };
 
   return (
@@ -39,11 +39,7 @@ const SearchForm = () => {
         <option value="title">제목</option>
         <option value="author">작성자</option>
       </select>
-      <input
-        placeholder="검색"
-        required
-        name="keyword"
-      />
+      <input placeholder="검색" required name="keyword" />
       <Button width="100px">검색</Button>
     </Wrapper>
   );

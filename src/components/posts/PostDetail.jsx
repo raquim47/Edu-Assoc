@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import fileIcon from 'assets/file-icon.png';
 import Button from 'components/common/Button';
 import useFetchPost from 'hooks/posts/useFetchPost';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { formatDate, formatHtml } from 'utils/format';
 import useCountPostViews from 'hooks/posts/useCountPostViews';
 import { useEffect } from 'react';
+import useScrollToTop from 'hooks/common/useScrollTop';
 
 const HeaderBlock = styled.div`
   border-top: 1px solid ${(props) => props.theme.color.gray[1]};
@@ -71,17 +72,32 @@ const ActionBlock = styled.div`
 
 const PostDetail = () => {
   const { postId } = useParams();
-  const { data: { post } = { post: {} }, refetch} = useFetchPost(postId);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const beforePage = queryParams.get('beforePage');
+
+  const {
+    data: { post } = { post: {} },
+    isSuccess,
+    refetch,
+  } = useFetchPost(postId);
   const countPostViews = useCountPostViews();
 
+  useScrollToTop();
+
   useEffect(() => {
+    if (!isSuccess) return;
+
     const viewedPosts = localStorage.getItem('viewedPosts')
       ? JSON.parse(localStorage.getItem('viewedPosts'))
       : {};
     const now = new Date().getTime();
-    const oneDay = 24 * 60 * 60 * 1000; 
-  
-    if (postId && (!viewedPosts[postId] || now - viewedPosts[postId] > oneDay)) {
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    if (
+      postId &&
+      (!viewedPosts[postId] || now - viewedPosts[postId] > oneDay)
+    ) {
       countPostViews.mutate(postId, {
         onSuccess: () => {
           refetch();
@@ -90,7 +106,8 @@ const PostDetail = () => {
         },
       });
     }
-  }, [postId]);
+  }, [postId, isSuccess]);
+
   return (
     <>
       <HeaderBlock>
@@ -122,7 +139,7 @@ const PostDetail = () => {
         )}
       </ContentBlock>
       <ActionBlock>
-        <Button to=".." color="gray" width="100px">
+        <Button to={`../?page=${beforePage || 1}`} color="gray" width="100px">
           목록
         </Button>
       </ActionBlock>

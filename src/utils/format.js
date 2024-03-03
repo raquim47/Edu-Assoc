@@ -13,3 +13,13 @@ export const formatDate = (dateString) => {
 export const formatHtml = (htmlString) => {
   return <div dangerouslySetInnerHTML={{ __html: htmlString }} />;
 };
+
+export const getNavDataFromUrl = (data, pathname) => {
+  for (const category of Object.values(data)) {
+    const child = category.children?.find((child) => child.path === pathname);
+    if (child) {
+      return { categoryPath: category, currentPathName: child.name };
+    }
+  }
+  return { categoryPath: null, currentPathName: null };
+};

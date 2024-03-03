@@ -1,6 +1,5 @@
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NAVIGATION_DATA } from './constants';
 
 const Wrapper = styled.header`
   display: flex;
@@ -44,22 +43,16 @@ const BreadScrumbs = styled.ul`
   }
 `;
 
-const PageTitle = ({ sideNavType }) => {
-  const { pathname } = useLocation();
-  const currentSection = NAVIGATION_DATA[sideNavType];
-  const segment = pathname.split('/')[2];
-  const currentPage = currentSection.children.find((page) =>
-    page.path.endsWith(segment)
-  );
+const PageTitle = ({ categoryName, currentPathName }) => {
   return (
     <Wrapper>
-      <h2>{currentPage?.name}</h2>
+      <h2>{currentPathName}</h2>
       <BreadScrumbs>
         <li>
           <Link to="/">홈</Link>
         </li>
-        <li>{currentSection.name}</li>
-        {currentPage && <li>{currentPage?.name}</li>}
+        <li>{categoryName}</li>
+        <li>{currentPathName}</li>
       </BreadScrumbs>
     </Wrapper>
   );

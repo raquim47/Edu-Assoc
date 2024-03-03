@@ -20,7 +20,7 @@ const NavGuard = ({ element, requireAuth = false }) => {
   if (!requireAuth && user) {
     return <Navigate to={'/'} replace />;
   } else if (requireAuth && !user) {
-    return <Navigate to={'/accounts/login'} replace />;
+    return <Navigate to={'/login'} replace />;
   }
 
   return <>{element}</>;

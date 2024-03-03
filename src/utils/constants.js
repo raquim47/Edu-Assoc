@@ -6,8 +6,6 @@ export const NAVIGATION_DATA = {
     children: [
       { name: '인사말', path: '/about/greetings' },
       { name: '연혁', path: '/about/history' },
-      { name: '정관', path: '/about/constitution' },
-      { name: '임원진', path: '/about/executives' },
       { name: '오시는길', path: '/about/location' },
     ],
   },
@@ -31,17 +29,19 @@ export const NAVIGATION_DATA = {
     path: '/notices',
     renderInMainNav: true,
     children: [
-      { name: '공지사항', path: '/notices/announcements' },
-      { name: 'QnA', path: '/notices/qna' },
+      { name: '공지사항', path: '/posts/announcements' },
+      { name: 'QnA', path: '/posts/qna' },
     ],
   },
-  accounts: {
+  users: {
     name: '회원 서비스',
-    path: '/accounts',
     children: [
-      { name: '로그인', path: '/accounts/login', requiredLogin: false },
-      { name: '회원가입', path: '/accounts/signup', requiredLogin: false },
-      { name: '마이페이지', path: '/accounts/mypage', requiredLogin: true },
+      { name: '로그인', path: '/login', requiredLogin: false },
+      { name: '회원가입', path: '/signup', requiredLogin: false },
+      { name: '마이페이지', path: '/mypage', requiredLogin: true },
     ],
   },
 };
+export const VALID_POST_CATEGORIES = ['qna', 'announcements'];
+
+export const PAGE_SIZE = 8;

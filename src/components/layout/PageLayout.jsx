@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { NavLink, useLocation, Outlet } from 'react-router-dom';
 import PageTitle from './PageTitle';
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { NAVIGATION_DATA } from './constants';
+import { NAVIGATION_DATA } from 'utils/constants';
 import useFetchUser from 'hooks/user/useFetchUser';
+import { getNavDataFromUrl } from 'utils/format';
 
 const Wrapper = styled.div`
   padding: 80px 0;
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   .content-section {
     flex: 1;
     padding: 0 30px 60px;
-    min-width: 0
+    min-width: 0;
   }
 `;
 
@@ -56,28 +56,37 @@ const SideBar = styled.aside`
   ul > li > a:hover,
   ul > li > a.active {
     background-color: ${(props) => props.theme.color.black[2]};
+    border-bottom: 1px solid ${(props) => props.theme.color.black[2]};
     color: ${(props) => props.theme.color.white};
   }
 `;
 
-const PageLayout = ({ sideNavType }) => {
-  const { data : { user } } = useFetchUser();
-  const filteredNavItems = NAVIGATION_DATA[sideNavType].children.filter(
-    (item) => {
+const PageLayout = () => {
+  const {
+    data: { user },
+  } = useFetchUser();
+  const location = useLocation();
+  const keyPath = location.pathname.split('/').slice(0, 3).join('/');
+  const { categoryPath, currentPathName } = getNavDataFromUrl(
+    NAVIGATION_DATA,
+    keyPath
+  );
+
+  const filteredNavItems =
+    categoryPath?.children.filter((item) => {
       if (!user) {
         return item.requiredLogin !== true;
       } else {
         return item.requiredLogin !== false;
       }
-    }
-  );
+    }) || [];
 
   return (
     <Wrapper>
       <div className="inner">
         <SideBar>
           <header>
-            <strong>{NAVIGATION_DATA[sideNavType].name}</strong>
+            <strong>{categoryPath?.name}</strong>
           </header>
           <ul>
             {filteredNavItems.map((item) => (
@@ -88,7 +97,10 @@ const PageLayout = ({ sideNavType }) => {
           </ul>
         </SideBar>
         <section className="content-section">
-          <PageTitle sideNavType={sideNavType} />
+          <PageTitle
+            categoryName={categoryPath?.name}
+            currentPathName={currentPathName}
+          />
           <Outlet />
         </section>
       </div>

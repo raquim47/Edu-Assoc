@@ -3,8 +3,9 @@ import Button from 'components/common/Button';
 import PostList from './ui/PostList';
 import Pagination from './ui/Pagination';
 import SearchForm from './ui/SearchForm';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useFetchPosts from 'hooks/posts/useFetchPosts';
+import { PAGE_SIZE } from 'utils/constants';
 
 const SectionBlock = styled.section`
   margin-bottom: 20px;
@@ -17,17 +18,15 @@ const BtnsSection = styled.section`
   margin-top: 30px;
 `;
 
-const PostsPage = () => {
-  const location = useLocation();
+const Posts = () => {
   const navigate = useNavigate();
-  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const { category } = useParams();
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const category = pathSegments.at(-1);
-  const currentPage = parseInt(searchParams.get('page') || '1', 10);
-  const PAGE_SIZE = 8;
-
+  
   const searchType = searchParams.get('searchType');
   const keyword = searchParams.get('keyword');
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   const {
     data: { posts, totalPosts, totalPages } = {
@@ -49,7 +48,7 @@ const PostsPage = () => {
         <SearchForm />
       </SectionBlock>
       <SectionBlock>
-        <PostList posts={posts} startNumber={startNumber} />
+        <PostList posts={posts} startNumber={startNumber} currentPage={currentPage} />
       </SectionBlock>
       <SectionBlock>
         <Pagination
@@ -60,11 +59,7 @@ const PostsPage = () => {
       </SectionBlock>
       <BtnsSection>
         {searchType && keyword && (
-          <Button
-            to={`${location.pathname}?page=1`}
-            color="gray"
-            width="100px"
-          >
+          <Button to={`${location.pathname}?page=1`} color="gray" width="100px">
             전체 목록
           </Button>
         )}
@@ -76,4 +71,4 @@ const PostsPage = () => {
   );
 };
 
-export default PostsPage;
+export default Posts;

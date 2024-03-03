@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NAVIGATION_DATA } from '../constants';
+import { NAVIGATION_DATA } from 'utils/constants';
 import DropMenu from './DropMenu';
 
 const Wrapper = styled.nav`
@@ -69,7 +69,7 @@ const MainNav = () => {
           .filter((menuItem) => menuItem.renderInMainNav)
           .map((menuItem) => (
             <li key={menuItem.name}>
-              <NavLink to={menuItem.path}>{menuItem.name}</NavLink>
+              <Link to={menuItem.children[0].path}>{menuItem.name}</Link>
               <DropMenu
                 subMenus={menuItem.children}
                 isDropMenuShow={isDropMenuShow}

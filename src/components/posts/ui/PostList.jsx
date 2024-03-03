@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import fileIcon from 'assets/file-icon.png';
-import {formatDate} from 'utils/format';
+import { formatDate } from 'utils/format';
 
 const Table = styled.table`
   width: 100%;
@@ -62,7 +62,7 @@ const Table = styled.table`
   }
 `;
 
-const PostList = ({ posts, startNumber }) => {
+const PostList = ({ posts, startNumber, currentPage }) => {
   return (
     <Table>
       <thead>
@@ -80,7 +80,7 @@ const PostList = ({ posts, startNumber }) => {
             <tr key={post._id}>
               <td>{startNumber - i}</td>
               <td className="td-title ellipsis">
-                <Link to={post._id}>{post.title}</Link>
+                <Link to={`${post._id}/?beforePage=${currentPage}`}>{post.title}</Link>
                 {post.file && (
                   <span>
                     <img src={fileIcon} alt="file" />

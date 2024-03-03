@@ -54,7 +54,7 @@ const HomeLogin = () => {
             <strong>{user.username}</strong>님 안녕하세요
           </h3>
           <ActionBtns>
-            <Button to="/accounts/mypage">마이페이지</Button>
+            <Button to="/mypage">마이페이지</Button>
             <Button onClick={logout}>로그아웃</Button>
           </ActionBtns>
         </>
@@ -65,7 +65,7 @@ const HomeLogin = () => {
           <ActionLinks>
             <p>
               <span>회원이 아니신가요?</span>
-              <Link to="/accounts/signup">회원가입</Link>
+              <Link to="/signup">회원가입</Link>
             </p>
           </ActionLinks>
         </>

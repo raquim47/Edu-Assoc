@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const fs = require('fs');
+const { isValidObjectId } = require('mongoose');
 const { upload, bucket } = require('../middlewares/file-uplode');
 const requestHandler = require('../utils/request-handler');
 const { ERROR } = require('../utils/constants');
-
+const throwError = require('../utils/throw-error')
 // 새 post 등록
 router.post(
   '/',
@@ -65,13 +66,12 @@ router.get(
   '/',
   requestHandler(async (req) => {
     const { category, page = 1, limit = 10, searchType, keyword } = req.query;
-    
+
     let filter = { category: category };
     if (keyword) {
       if (searchType === 'title' || !searchType) {
         filter.title = new RegExp(keyword, 'i');
-      }
-      else if (searchType === 'author') {
+      } else if (searchType === 'author') {
         filter.authorName = new RegExp(keyword, 'i');
       }
     }
@@ -92,6 +92,11 @@ router.get(
   '/:postId',
   requestHandler(async (req) => {
     const { postId } = req.params;
+
+    if (!isValidObjectId(postId)) {
+      throwError(`${postId} : ${ERROR.INVALID_VALUE}`, 400);
+    }
+
     const post = await Post.findById(postId);
     if (!post) throwError(ERROR.POST_NOT_FOUND, 404);
 
@@ -104,6 +109,9 @@ router.post(
   '/:postId/views',
   requestHandler(async (req) => {
     const { postId } = req.params;
+    if (!isValidObjectId(postId)) {
+      throwError(`${postId} : ${ERROR.INVALID_VALUE}`, 400);
+    }
     await Post.findByIdAndUpdate(postId, { $inc: { views: 1 } });
   })
 );

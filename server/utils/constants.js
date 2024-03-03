@@ -4,6 +4,7 @@ const ERROR = {
   USER_NOT_FOUND : '사용자를 찾을 수 없습니다',
   FILE_UPLOAD_FAILED : '파일 업로드에 실패했습니다',
   POST_NOT_FOUND : '게시글을 찾을 수 없습니다.',
+  INVALID_VALUE : '유효하지 않은 값입니다.',
   USERNAME_INVALID: '한글로 이름을 입력해주세요.',
   USERNAME_REQUIRED: '이름은 필수 입력사항입니다.',
   PASSWORD_REQUIRED: '비밀번호를 입력해주세요.',
