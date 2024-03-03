@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import api from 'utils/api';
 
-const useFetchPosts = (category, limit, page = 1, searchType, keyword) => {
-  let queryKey = ['posts', category, page];
+const useFetchPosts = (category, limit = 5, page = 1, searchType, keyword) => {
+  let queryKey = ['posts', category, page, limit];
   let url = `/posts/?category=${category}&limit=${limit}&page=${page}`;
 
   if (searchType && keyword) {

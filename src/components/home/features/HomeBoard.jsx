@@ -1,5 +1,7 @@
 import Button from 'components/common/Button';
+import useFetchPosts from 'hooks/posts/useFetchPosts';
 import styled from 'styled-components';
+import { formatDate } from 'utils/format';
 
 const Wrapper = styled.article`
   padding: 20px;
@@ -12,7 +14,7 @@ const Wrapper = styled.article`
   }
 
   h3 {
-    font-size: ${props => props.theme.fontSize.xxl};
+    font-size: ${(props) => props.theme.fontSize.xxl};
     font-weight: 400;
   }
 
@@ -40,43 +42,32 @@ const ListItem = styled.li`
   }
 
   time {
-    color: ${props => props.theme.color.gray[0]};
-    font-size: ${props => props.theme.fontSize.s};
+    color: ${(props) => props.theme.color.gray[0]};
+    font-size: ${(props) => props.theme.fontSize.s};
     font-weight: 300;
   }
 `;
 
-const HomeBoard = ({ title, content, path }) => {
+const HomeBoard = ({ title, category }) => {
+  const { data: { posts } = { posts: [] } } = useFetchPosts(category);
   return (
     <Wrapper>
       <header>
         <h3>{title}</h3>
-        <Button to="/" size="s" color="white">더보기</Button>
+        <Button to={`/posts/${category}`} size="s" color="white">
+          더보기
+        </Button>
       </header>
       <ul>
-        <ListItem>
-          <p>
-            열린교육연구 32권1호 투고마감연장 (~11/23,목)열린교육연구 32권1호
-            투고마감연장 (~11/23,목)
-          </p>
-          <time dateTime="2023-11-20">2023-11-20</time>
-        </ListItem>
-        <ListItem>
-          <p>열린교육연구 32권1호 투고마감 (~11/20)</p>
-          <time dateTime="2023-11-08">2023-11-08</time>
-        </ListItem>
-        <ListItem>
-          <p>열린교육연구 31권6호 투고마감 연장 (~9/24)</p>
-          <time dateTime="2023-09-20">2023-09-20</time>
-        </ListItem>
-        <ListItem>
-          <p>2023 국제공동학술대회 (9/23, 태국)</p>
-          <time dateTime="2023-09-15">2023-09-15</time>
-        </ListItem>
-        <ListItem>
-          <p>열린교육연구 31권6호 투고마감 (~9/20)</p>
-          <time dateTime="2023-09-15">2023-09-15</time>
-        </ListItem>
+        {posts.map((post) => {
+          const date = formatDate(post.createdAt);
+          return (
+            <ListItem key={post._id}>
+              <p>{post.title}</p>
+              <time dateTime={date}>{date}</time>
+            </ListItem>
+          );
+        })}
       </ul>
     </Wrapper>
   );

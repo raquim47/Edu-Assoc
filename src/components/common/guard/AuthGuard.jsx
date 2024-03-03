@@ -2,7 +2,7 @@ import useFetchUser from 'hooks/user/useFetchUser';
 import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const NavGuard = ({ element, requireAuth = false }) => {
+const AuthGuard = ({ element, requireAuth = false }) => {
   const { data: { user } } = useFetchUser();
   const alertShownRef = useRef(false);
   
@@ -26,4 +26,4 @@ const NavGuard = ({ element, requireAuth = false }) => {
   return <>{element}</>;
 };
 
-export default NavGuard;
+export default AuthGuard;

@@ -3,14 +3,17 @@ import RootLayout from './components/layout/RootLayout';
 import PageLayout from 'components/layout/PageLayout';
 import ErrorPage from 'components/common/ErrorPage';
 import HomePage from './components/home/HomePage';
-import NavGuard from 'components/common/NavGuard';
+import AuthGuard from 'components/common/guard/AuthGuard';
 import LoginPage from 'components/users/LoginPage';
 import SignupPage from 'components/users/SignupPage';
 import MyPage from 'components/users/MyPage';
-import PostGuard from 'components/common/PostGuard';
+import PostGuard from 'components/common/guard/PostGuard';
 import PostsPage from 'components/posts/PostsPage';
 import PostDetailPage from 'components/posts/PostDetailPage';
 import NewPostPage from 'components/posts/NewPostPage';
+import GreetingsPage from 'components/about/GreetingsPage';
+import LocationPage from 'components/about/LocationPage';
+import HistoryPage from 'components/about/HistoryPage';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +27,11 @@ const router = createBrowserRouter([
         element: <PageLayout />,
         children: [
           // auth
-          { path: 'login', element: <NavGuard element={<LoginPage />} /> },
-          { path: 'signup', element: <NavGuard element={<SignupPage />} /> },
+          { path: 'login', element: <AuthGuard element={<LoginPage />} /> },
+          { path: 'signup', element: <AuthGuard element={<SignupPage />} /> },
           {
             path: 'mypage',
-            element: <NavGuard element={<MyPage />} requireAuth />,
+            element: <AuthGuard element={<MyPage />} requireAuth />,
           },
           // posts
           {
@@ -45,6 +48,10 @@ const router = createBrowserRouter([
               },
             ],
           },
+          // about
+          { path: 'greetings', element: <GreetingsPage /> },
+          { path: 'location', element: <LocationPage /> },
+          { path: 'history', element: <HistoryPage /> },
         ],
       },
     ],

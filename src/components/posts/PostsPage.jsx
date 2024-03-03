@@ -5,7 +5,7 @@ import PostList from './features/PostList';
 import Pagination from './features/Pagination';
 import SearchForm from './features/SearchForm';
 import useFetchPosts from 'hooks/posts/useFetchPosts';
-import { PAGE_SIZE } from 'utils/constants';
+import { POSTS_LIMIT } from 'utils/constants';
 
 const SectionBlock = styled.section`
   margin-bottom: 20px;
@@ -34,13 +34,13 @@ const PostsPage = () => {
       totalPosts: 0,
       totalPages: 0,
     },
-  } = useFetchPosts(category, PAGE_SIZE, currentPage, searchType, keyword);
+  } = useFetchPosts(category, POSTS_LIMIT, currentPage, searchType, keyword);
 
   const handlePageChange = (newPage) => {
     navigate(`?page=${newPage}`);
   };
 
-  const startNumber = totalPosts - (currentPage - 1) * PAGE_SIZE;
+  const startNumber = totalPosts - (currentPage - 1) * POSTS_LIMIT;
 
   return (
     <>
