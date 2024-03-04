@@ -2,14 +2,13 @@ import { useForm } from 'react-hook-form';
 import Button from 'components/common/Button';
 import InputField from 'components/common/form/InputField';
 import Fieldset from 'components/common/form/Fieldset';
-import useFetchUser from 'hooks/user/useFetchUser';
-import useUpdateUser from 'hooks/user/useUpdateUser';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const MyPage = () => {
   const {
     data: { user },
-  } = useFetchUser();
-  const updateUser = useUpdateUser();
+  } = useApiRequest({ url: `/users` });
+  const updateUser = useApiRequest({ url: `/users/update`, method: 'PATCH' });
   const {
     register,
     handleSubmit,

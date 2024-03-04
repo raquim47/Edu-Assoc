@@ -1,5 +1,5 @@
 import Button from 'components/common/Button';
-import useFetchPosts from 'hooks/posts/useFetchPosts';
+import useApiRequest from 'hooks/common/useApiRequest';
 import styled from 'styled-components';
 import { formatDate } from 'utils/format';
 
@@ -49,7 +49,9 @@ const ListItem = styled.li`
 `;
 
 const HomeBoard = ({ title, category }) => {
-  const { data: { posts } = { posts: [] } } = useFetchPosts(category);
+  const { data: { posts } = { posts: [] } } = useApiRequest({
+    url: `/posts/?category=${category}`,
+  });
   return (
     <Wrapper>
       <header>

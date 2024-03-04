@@ -1,13 +1,15 @@
+import useApiRequest from 'hooks/common/useApiRequest';
 import { useEffect } from 'react';
-import useFetchUser from './useFetchUser';
 import useLogout from './useLogout';
 
 const useAutoLogout = () => {
   const logout = useLogout();
-  const { data : { user } } = useFetchUser(); 
+  const {
+    data: { user },
+  } = useApiRequest({ url: `/users` });
 
   useEffect(() => {
-    const events = ['mousemove', 'keydown']; 
+    const events = ['mousemove', 'keydown'];
     let timer;
     const resetTimer = () => {
       clearTimeout(timer);

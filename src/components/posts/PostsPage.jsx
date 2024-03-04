@@ -4,8 +4,8 @@ import Button from 'components/common/Button';
 import PostList from './features/PostList';
 import Pagination from './features/Pagination';
 import SearchForm from './features/SearchForm';
-import useFetchPosts from 'hooks/posts/useFetchPosts';
 import { POSTS_LIMIT } from 'utils/constants';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const SectionBlock = styled.section`
   margin-bottom: 20px;
@@ -23,7 +23,7 @@ const PostsPage = () => {
   const { category } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  
+
   const searchType = searchParams.get('searchType');
   const keyword = searchParams.get('keyword');
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
@@ -34,7 +34,13 @@ const PostsPage = () => {
       totalPosts: 0,
       totalPages: 0,
     },
-  } = useFetchPosts(category, POSTS_LIMIT, currentPage, searchType, keyword);
+  } = useApiRequest({
+    url: `/posts/?category=${category}&limit=${POSTS_LIMIT}&page=${currentPage}${
+      searchType && keyword
+        ? `&searchType=${searchType}&keyword=${encodeURIComponent(keyword)}`
+        : ''
+    }`,
+  });
 
   const handlePageChange = (newPage) => {
     navigate(`?page=${newPage}`);
@@ -48,7 +54,11 @@ const PostsPage = () => {
         <SearchForm />
       </SectionBlock>
       <SectionBlock>
-        <PostList posts={posts} startNumber={startNumber} currentPage={currentPage} />
+        <PostList
+          posts={posts}
+          startNumber={startNumber}
+          currentPage={currentPage}
+        />
       </SectionBlock>
       <SectionBlock>
         <Pagination

@@ -5,9 +5,8 @@ import InputField from 'components/common/form/InputField';
 import Button from 'components/common/Button';
 import FileField from './features/FileField';
 import WysiwygField from './features/WysiwygField';
-import useFetchUser from 'hooks/user/useFetchUser';
-import useNewPost from 'hooks/posts/useNewPost';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const BtnsBlock = styled.div`
   display: flex;
@@ -24,9 +23,9 @@ const NewPostPage = () => {
 
   const {
     data: { user },
-  } = useFetchUser();
+  } = useApiRequest({ url: '/users' });
   const [count, setCount] = useState(0);
-  const newPost = useNewPost();
+  const newPost = useApiRequest({ url: `/posts`, method: 'POST' });
   const {
     register,
     handleSubmit,

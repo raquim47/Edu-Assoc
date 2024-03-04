@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import fileIcon from 'assets/file-icon.png';
 import Button from 'components/common/Button';
-import useFetchPost from 'hooks/posts/useFetchPost';
 import { useLocation, useParams } from 'react-router-dom';
 import { formatDate, formatHtml } from 'utils/format';
-import useCountPostViews from 'hooks/posts/useCountPostViews';
 import { useEffect } from 'react';
 import useScrollToTop from 'hooks/common/useScrollTop';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const HeaderBlock = styled.div`
   border-top: 1px solid ${(props) => props.theme.color.gray[1]};
@@ -83,8 +82,11 @@ const PostDetailPage = () => {
     data: { post } = { post: {} },
     isSuccess,
     refetch,
-  } = useFetchPost(postId);
-  const countPostViews = useCountPostViews();
+  } = useApiRequest({ url: `posts/${postId}`, gcTime: 60000 });
+  const countPostViews = useApiRequest({
+    url: `/posts/${postId}/views`,
+    method: 'POST',
+  });
 
   useScrollToTop();
 

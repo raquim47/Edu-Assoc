@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from 'components/users/features/LoginForm';
 import Button from 'components/common/Button';
-import useFetchUser from 'hooks/user/useFetchUser';
 import useLogout from 'hooks/user/useLogout';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -43,7 +43,7 @@ const ActionLinks = styled.div`
 const HomeLogin = () => {
   const {
     data: { user },
-  } = useFetchUser();
+  } = useApiRequest({ url: '/users' });
   const logout = useLogout();
 
   return (

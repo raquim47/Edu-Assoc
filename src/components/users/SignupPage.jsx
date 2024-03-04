@@ -2,13 +2,13 @@ import { useState } from 'react';
 import SignupForm from './features/SignupForm';
 import AgreeField from 'components/common/form/AgreeField';
 import Button from 'components/common/Button';
-import useSignup from 'hooks/user/useSignup';
 import { useNavigate } from 'react-router-dom';
+import useApiRequest from 'hooks/common/useApiRequest';
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const signup = useSignup();
+  const signup = useApiRequest({ url: `/users/signup`, method: 'POST' });
 
   const handleTermsAccepted = (state) => setTermsAccepted(state);
 

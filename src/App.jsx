@@ -1,9 +1,9 @@
-import useFetchUser from 'hooks/user/useFetchUser';
+import useApiRequest from 'hooks/common/useApiRequest';
 import { Navigate, RouterProvider } from 'react-router-dom';
 import router from './router';
 
 const App = () => {
-  const { isLoading, isError } = useFetchUser();
+  const { isLoading, isError } = useApiRequest({ url: '/users' });
   if (isLoading) {
     return <div></div>;
   }

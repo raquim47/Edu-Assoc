@@ -65,7 +65,7 @@ router.post(
 router.get(
   '/',
   requestHandler(async (req) => {
-    const { category, page = 1, limit = 10, searchType, keyword } = req.query;
+    const { category, page = 1, limit = 5, searchType, keyword } = req.query;
 
     let filter = { category: category };
     if (keyword) {

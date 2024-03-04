@@ -1,12 +1,12 @@
 import Button from 'components/common/Button';
 import Fieldset from 'components/common/form/Fieldset';
 import InputField from 'components/common/form/InputField';
-import useLogin from 'hooks/user/useLogin';
+import useApiRequest from 'hooks/common/useApiRequest';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ miniMode }) => {
-  const login = useLogin();
+  const login = useApiRequest({ url: `/users/login`, method: 'POST' });
   const navigate = useNavigate();
 
   const {

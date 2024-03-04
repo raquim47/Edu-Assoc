@@ -1,4 +1,4 @@
-import useFetchUser from 'hooks/user/useFetchUser';
+import useApiRequest from 'hooks/common/useApiRequest';
 import useLogout from 'hooks/user/useLogout';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ const LogoutBtn = styled.button`
 `;
 
 const SubNav = () => {
-  const { data : { user } } = useFetchUser();
+  const { data : { user } } = useApiRequest({ url: '/users' });
   const logout = useLogout();
   return (
     <Wrapper>

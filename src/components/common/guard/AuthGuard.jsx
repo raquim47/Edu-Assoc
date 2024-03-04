@@ -1,9 +1,9 @@
-import useFetchUser from 'hooks/user/useFetchUser';
+import useApiRequest from 'hooks/common/useApiRequest';
 import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AuthGuard = ({ element, requireAuth = false }) => {
-  const { data: { user } } = useFetchUser();
+  const { data: { user } } = useApiRequest({ url: '/users' });
   const alertShownRef = useRef(false);
   
   useEffect(() => {
