@@ -39,14 +39,13 @@ const NewPostPage = () => {
       alert('본문 내용을 입력해주세요.');
       return;
     }
-
     const postData = new FormData();
     postData.append('title', data.title);
     postData.append('content', data.content);
     postData.append('authorName', user.username);
     postData.append('authorId', user._id);
     postData.append('category', category);
-
+    
     if (data.file?.length > 0) {
       postData.append('file', data.file[0]);
     }

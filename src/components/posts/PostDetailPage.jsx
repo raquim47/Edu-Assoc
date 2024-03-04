@@ -64,11 +64,13 @@ const ContentBlock = styled.div`
 `;
 
 const ActionBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 20px 0;
-  a {
-    display: block;
-    margin-left: auto;
-    margin-right: 0;
+  .edit {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
   }
 `;
 
@@ -144,9 +146,14 @@ const PostDetailPage = () => {
         )}
       </ContentBlock>
       <ActionBlock>
-        <Button to={`../?page=${beforePage || 1}`} color="gray" width="100px">
+      <Button size="s" to={`../?page=${beforePage || 1}`} color="gray" width="100px">
           목록
         </Button>
+        <div className='edit'>
+          <Button size="s" width="65px">수정</Button>
+          <Button size="s" width="65px">삭제</Button>
+        </div>
+        
       </ActionBlock>
     </>
   );

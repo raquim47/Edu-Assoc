@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
     cb(null, os.tmpdir());
   },
   filename: function (req, file, cb) {
+    console.log('multer: ', file.originalname);
     const newFilename = `${Date.now()}-${file.originalname}`;
     cb(null, newFilename);
   },
