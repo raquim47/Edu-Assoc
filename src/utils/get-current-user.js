@@ -1,7 +1,7 @@
 import { queryClient } from 'index';
 
 const getCurrentUser = () => {
-  const data = queryClient.getQueryData([`/users`, 'GET']);
+  const data = queryClient.getQueryData([`/users/me`, 'GET']);
   return data.user;
 };
 

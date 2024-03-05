@@ -15,7 +15,6 @@ const DivBlock = styled.div`
 `;
 
 const WysiwygField = ({ control, defaultValue }) => {
-  console.log(defaultValue)
   return (
     <Controller
       name="content"

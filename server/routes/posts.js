@@ -174,8 +174,34 @@ router.patch(
   })
 );
 
+// post 삭제
+router.delete(
+  '/:postId',
+  requestHandler(async (req, res) => {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (!post) throwError(ERROR.POST_NOT_FOUND, 404);
+
+    // Firebase Storage에서 파일 삭제
+    if (post.files && post.files.length > 0) {
+      await Promise.all(
+        post.files.map(async (file) => {
+          const blob = bucket.file(file.name);
+          try {
+            await blob.delete();
+          } catch (error) {
+            console.error(`Failed to delete file ${file.name}: ${error}`);
+          }
+        })
+      );
+    }
+
+    await Post.findByIdAndDelete(postId);
+  })
+);
+
 // post 조회수 증가
-router.post(
+router.patch(
   '/:postId/views',
   requestHandler(async (req) => {
     const { postId } = req.params;

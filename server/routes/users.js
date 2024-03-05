@@ -9,7 +9,7 @@ const throwError = require('../utils/throw-error');
 
 // 사용자 가져오기
 router.get(
-  '/',
+  '/me',
   requestHandler(async (req) => {
     if (req.user) {
       const user = await User.findById(req.user.userId);
@@ -78,7 +78,7 @@ router.post(
 
 // 사용자 업데이트
 router.patch(
-  '/update',
+  '/me',
   requestHandler(async (req) => {
     const userId = req.user.userId;
     const { password, phone, username } = req.body;

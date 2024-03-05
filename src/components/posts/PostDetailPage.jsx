@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import fileIcon from 'assets/file-icon.png';
 import Button from 'components/common/Button';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { formatDate, formatHtml } from 'utils/format';
 import { useEffect } from 'react';
 import useScrollToTop from 'hooks/common/useScrollTop';
@@ -46,7 +46,7 @@ const FilesBlock = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-top: 50px;
-  
+
   .file {
     display: flex;
     align-items: center;
@@ -82,6 +82,7 @@ const ActionBlock = styled.div`
 `;
 
 const PostDetailPage = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
@@ -95,7 +96,12 @@ const PostDetailPage = () => {
 
   const countPostViews = useApiRequest({
     url: `/posts/${postId}/views`,
-    method: 'POST',
+    method: 'PATCH',
+  });
+
+  const deletePost = useApiRequest({
+    url: `/posts/${postId}`,
+    method: 'DELETE',
   });
 
   useScrollToTop();
@@ -122,6 +128,17 @@ const PostDetailPage = () => {
       });
     }
   }, [postId, isSuccess]);
+
+  const handlePostDelete = () => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      deletePost.mutate(null, {
+        onSuccess: () => {
+          navigate('..');
+        },
+      });
+    }
+  };
+
   return (
     <>
       <HeaderBlock>
@@ -166,10 +183,17 @@ const PostDetailPage = () => {
         </Button>
         {getCurrentUser()._id === post.authorId && (
           <div className="edit">
-            <Button to="update" size="s" width="65px">
-              수정
-            </Button>
-            <Button size="s" width="65px">
+            {!deletePost.isPending && (
+              <Button to="update" size="s" width="65px">
+                수정
+              </Button>
+            )}
+            <Button
+              onClick={handlePostDelete}
+              size="s"
+              width="65px"
+              disabled={deletePost.isPending}
+            >
               삭제
             </Button>
           </div>

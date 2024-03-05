@@ -58,7 +58,7 @@ const MainNav = () => {
       onBlur={toggleDropMenu(false)}
     >
       <h1>
-        <Link to="/">KSMS 서비스경영학회</Link>
+        <Link to="/home">KSMS 서비스경영학회</Link>
       </h1>
       <ul
         className="main-list"

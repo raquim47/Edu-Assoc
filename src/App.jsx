@@ -3,7 +3,7 @@ import { Navigate, RouterProvider } from 'react-router-dom';
 import router from './router';
 
 const App = () => {
-  const { isLoading, isError } = useApiRequest({ url: '/users' });
+  const { isLoading, isError } = useApiRequest({ url: '/users/me' });
   if (isLoading) {
     return <div></div>;
   }

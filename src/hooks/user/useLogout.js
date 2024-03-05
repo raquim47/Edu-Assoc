@@ -8,7 +8,7 @@ const useLogout = () => {
   return async () => {
     try {
       await api.post('/users/logout');
-      await queryClient.invalidateQueries(['/users', 'GET']);
+      await queryClient.invalidateQueries(['/users/me', 'GET']);
       navigate('/');
     } catch (error) {
       alert(error.message);

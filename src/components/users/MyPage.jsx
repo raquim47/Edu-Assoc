@@ -8,8 +8,8 @@ import { queryClient } from 'index';
 const MyPage = () => {
   const {
     data: { user },
-  } = useApiRequest({ url: `/users` });
-  const updateUser = useApiRequest({ url: `/users/update`, method: 'PATCH' });
+  } = useApiRequest({ url: `/users/me` });
+  const updateUser = useApiRequest({ url: `/users/me`, method: 'PATCH' });
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const MyPage = () => {
     updateUser.mutate(data, {
       onSuccess: async () => {
         setValue('password', '', { shouldValidate: false });
-        await queryClient.invalidateQueries(['/users', 'GET']);
+        await queryClient.invalidateQueries(['/users/me', 'GET']);
         alert('변경이 완료되었습니다');
       },
     });

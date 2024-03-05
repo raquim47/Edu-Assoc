@@ -36,7 +36,7 @@ const SubNav = () => {
     <Wrapper>
       <ul>
         <li>
-          <Link to="/">홈</Link>
+          <Link to="/home">홈</Link>
         </li>
         {user ? (
           <>

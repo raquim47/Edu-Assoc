@@ -19,7 +19,7 @@ const LoginForm = ({ miniMode }) => {
   const handleOnSubmit = (data) => {
     login.mutate(data, {
       onSuccess: async () => {
-        await queryClient.invalidateQueries(['/users', 'GET']);
+        await queryClient.invalidateQueries(['/users/me', 'GET']);
         navigate('/');
       },
     });
