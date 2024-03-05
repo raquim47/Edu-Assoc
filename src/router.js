@@ -42,15 +42,27 @@ const router = createBrowserRouter([
                 path: ':category',
                 children: [
                   { index: true, element: <PostsPage /> },
-                  { path: 'new', element: <EditPostPage /> },
+                  {
+                    path: 'new',
+                    element: (
+                      <AuthGuard element={<EditPostPage />} requireAuth />
+                    ),
+                  },
                   {
                     path: ':postId',
                     children: [
                       { index: true, element: <PostDetailPage /> },
-                      { path: 'update', element: <EditPostPage updateMode /> },
+                      {
+                        path: 'update',
+                        element: (
+                          <AuthGuard
+                            element={<EditPostPage updateMode />}
+                            requireAuth
+                          />
+                        ),
+                      },
                     ],
                   },
-                  
                 ],
               },
             ],

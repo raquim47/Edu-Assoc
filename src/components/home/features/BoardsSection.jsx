@@ -20,7 +20,7 @@ const Wrapper = styled.section`
 const BoardsSection = () => {
   return (
     <Wrapper>
-      <HomeBoard title="교육자료"  category="education"/>
+      <HomeBoard title="교육사업"  category="education"/>
       <HomeBoard title="공지사항" category="announcements"/>
       <HomeLogin />
     </Wrapper>
