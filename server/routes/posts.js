@@ -6,48 +6,48 @@ const { isValidObjectId } = require('mongoose');
 const { upload, bucket } = require('../middlewares/file-uplode');
 const requestHandler = require('../utils/request-handler');
 const { ERROR } = require('../utils/constants');
-const throwError = require('../utils/throw-error')
+const throwError = require('../utils/throw-error');
+
 // 새 post 등록
 router.post(
   '/',
-  upload.single('file'),
+  upload.array('files', 2),
   requestHandler(async (req) => {
     const { title, content, category } = req.body;
     const { username: authorName, userId: authorId } = req.user;
     let fileData = null;
 
-    if (req.file) {
-      const blob = bucket.file(req.file.filename);
-      const blobStream = blob.createWriteStream({
-        metadata: {
-          contentType: req.file.mimetype,
-        },
-      });
-
-      await new Promise((resolve, reject) => {
-        const fileStream = fs.createReadStream(req.file.path);
-
-        fileStream.on('error', (error) => {
-          reject(new Error('Error reading file from disk'));
-        });
-
-        fileStream
-          .pipe(blobStream)
-          .on('error', (error) => {
-            reject(new Error('Error uploading file to Firebase'));
-          })
-          .on('finish', async () => {
-            const signedUrlConfig = { action: 'read', expires: '03-09-2491' };
-            const signedUrl = await blob.getSignedUrl(signedUrlConfig);
-            fileData = {
-              url: signedUrl[0],
-              originalName: req.file.originalname,
-            };
-            resolve();
+    if (req.files) {
+      fileData = await Promise.all(
+        req.files.map(async (file) => {
+          const blob = bucket.file(file.originalname);
+          const blobStream = blob.createWriteStream({
+            metadata: {
+              contentType: file.mimetype,
+            },
           });
-      }).catch((error) => {
-        throwError(ERROR.FILE_UPLOAD_FAILED + error.message, 500);
-      });
+
+          return new Promise((resolve, reject) => {
+            const fileStream = fs.createReadStream(file.path);
+            fileStream.on('error', (error) =>
+              reject(new Error('Error reading file from disk'))
+            );
+            fileStream
+              .pipe(blobStream)
+              .on('error', (error) =>
+                reject(new Error('Error uploading file to storage'))
+              )
+              .on('finish', async () => {
+                const signedUrlConfig = {
+                  action: 'read',
+                  expires: '03-09-2491',
+                };
+                const [url] = await blob.getSignedUrl(signedUrlConfig);
+                resolve({ url, name: file.originalname });
+              });
+          });
+        })
+      );
     }
 
     await Post.create({
@@ -56,7 +56,7 @@ router.post(
       authorId,
       content,
       category,
-      file: fileData,
+      files: fileData,
     });
   })
 );
@@ -101,6 +101,76 @@ router.get(
     if (!post) throwError(ERROR.POST_NOT_FOUND, 404);
 
     return { post };
+  })
+);
+
+// post 업데이트
+router.patch(
+  '/:postId',
+  upload.array('files', 2),
+  requestHandler(async (req, res) => {
+    const { postId } = req.params;
+    const { title, content } = req.body;
+    const post = await Post.findById(postId);
+    if (!post) throwError(ERROR.POST_NOT_FOUND, 404);
+
+    // 기존 파일 삭제
+    if (post.files && post.files.length > 0) {
+      await Promise.all(
+        post.files.map(async (file) => {
+          const blob = bucket.file(file.name);
+          await blob.delete().catch((error) => {
+            console.error(`Failed to delete file ${file.name}: ${error}`);
+          });
+        })
+      );
+    }
+
+    let fileData = [];
+
+    // 새 파일 업로드
+    if (req.files) {
+      fileData = await Promise.all(
+        req.files.map(async (file) => {
+          const blob = bucket.file(file.originalname);
+          const blobStream = blob.createWriteStream({
+            metadata: {
+              contentType: file.mimetype,
+            },
+          });
+
+          return new Promise((resolve, reject) => {
+            const fileStream = fs.createReadStream(file.path);
+            fileStream.on('error', (error) =>
+              reject(new Error('Error reading file from disk'))
+            );
+            fileStream
+              .pipe(blobStream)
+              .on('error', (error) =>
+                reject(new Error('Error uploading file to storage'))
+              )
+              .on('finish', async () => {
+                const signedUrlConfig = {
+                  action: 'read',
+                  expires: '03-09-2491',
+                };
+                const [url] = await blob.getSignedUrl(signedUrlConfig);
+                resolve({ url, name: file.originalname });
+              });
+          });
+        })
+      );
+    }
+
+    await Post.findByIdAndUpdate(
+      postId,
+      {
+        title,
+        content,
+        files: fileData,
+      },
+      { new: true }
+    );
   })
 );
 

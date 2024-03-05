@@ -2,6 +2,7 @@ import Button from 'components/common/Button';
 import Fieldset from 'components/common/form/Fieldset';
 import InputField from 'components/common/form/InputField';
 import useApiRequest from 'hooks/common/useApiRequest';
+import { queryClient } from 'index';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,10 @@ const LoginForm = ({ miniMode }) => {
 
   const handleOnSubmit = (data) => {
     login.mutate(data, {
-      onSuccess: () => navigate('/'),
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(['/users', 'GET']);
+        navigate('/');
+      },
     });
   };
 

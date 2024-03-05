@@ -1,7 +1,7 @@
-import useApiRequest from 'hooks/common/useApiRequest';
 import useLogout from 'hooks/user/useLogout';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import getCurrentUser from 'utils/get-current-user';
 
 const Wrapper = styled.nav`
   padding: 10px 0;
@@ -30,7 +30,7 @@ const LogoutBtn = styled.button`
 `;
 
 const SubNav = () => {
-  const { data : { user } } = useApiRequest({ url: '/users' });
+  const user = getCurrentUser();
   const logout = useLogout();
   return (
     <Wrapper>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LoginForm from 'components/users/features/LoginForm';
 import Button from 'components/common/Button';
 import useLogout from 'hooks/user/useLogout';
-import useApiRequest from 'hooks/common/useApiRequest';
+import getCurrentUser from 'utils/get-current-user';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -41,9 +41,7 @@ const ActionLinks = styled.div`
 `;
 
 const HomeLogin = () => {
-  const {
-    data: { user },
-  } = useApiRequest({ url: '/users' });
+  const user = getCurrentUser();
   const logout = useLogout();
 
   return (

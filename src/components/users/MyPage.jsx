@@ -3,6 +3,7 @@ import Button from 'components/common/Button';
 import InputField from 'components/common/form/InputField';
 import Fieldset from 'components/common/form/Fieldset';
 import useApiRequest from 'hooks/common/useApiRequest';
+import { queryClient } from 'index';
 
 const MyPage = () => {
   const {
@@ -18,8 +19,9 @@ const MyPage = () => {
 
   const handleOnSubmit = (data) => {
     updateUser.mutate(data, {
-      onSuccess: () => {
+      onSuccess: async () => {
         setValue('password', '', { shouldValidate: false });
+        await queryClient.invalidateQueries(['/users', 'GET']);
         alert('변경이 완료되었습니다');
       },
     });

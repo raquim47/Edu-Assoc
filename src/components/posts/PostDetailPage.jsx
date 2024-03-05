@@ -6,6 +6,7 @@ import { formatDate, formatHtml } from 'utils/format';
 import { useEffect } from 'react';
 import useScrollToTop from 'hooks/common/useScrollTop';
 import useApiRequest from 'hooks/common/useApiRequest';
+import getCurrentUser from 'utils/get-current-user';
 
 const HeaderBlock = styled.div`
   border-top: 1px solid ${(props) => props.theme.color.gray[1]};
@@ -35,16 +36,22 @@ const PostInfo = styled.ul`
 `;
 
 const ContentBlock = styled.div`
-  padding: 30px 10px;
+  padding: 30px 10px 50px;
   color: ${(props) => props.theme.color.black[1]};
-  border-bottom: 1px solid ${(props) => props.theme.color.black[2]};
+  border-bottom: 1px solid ${(props) => props.theme.color.gray[1]};
+`;
 
+const FilesBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
+  
   .file {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-top: 30px;
-    padding: 10px 0;
+    padding: 10px;
     background-color: ${(props) => props.theme.color.gray[3]};
     border-top: 1px solid ${(props) => props.theme.color.gray[2]};
     border-bottom: 1px solid ${(props) => props.theme.color.gray[2]};
@@ -54,7 +61,7 @@ const ContentBlock = styled.div`
     }
 
     a {
-      width: 80%;
+      word-break: break-all;
       color: ${(props) => props.theme.color.blue[2]};
       &:hover {
         text-decoration: underline;
@@ -85,6 +92,7 @@ const PostDetailPage = () => {
     isSuccess,
     refetch,
   } = useApiRequest({ url: `posts/${postId}`, gcTime: 60000 });
+
   const countPostViews = useApiRequest({
     url: `/posts/${postId}/views`,
     method: 'POST',
@@ -114,7 +122,6 @@ const PostDetailPage = () => {
       });
     }
   }, [postId, isSuccess]);
-
   return (
     <>
       <HeaderBlock>
@@ -136,24 +143,37 @@ const PostDetailPage = () => {
       </HeaderBlock>
       <ContentBlock>
         {formatHtml(post.content)}
-        {post.file && (
-          <div className="file">
-            <img src={fileIcon} alt="file" />
-            <a href={post.file.url} download={post.file.originalName}>
-              {post.file.originalName}
-            </a>
-          </div>
-        )}
+        <FilesBlock>
+          {post?.files?.length > 0 &&
+            post.files.map((file) => (
+              <div className="file" key={file._id}>
+                <img src={fileIcon} alt="file" />
+                <a href={file.url} download={file.name}>
+                  {file.name}
+                </a>
+              </div>
+            ))}
+        </FilesBlock>
       </ContentBlock>
       <ActionBlock>
-      <Button size="s" to={`../?page=${beforePage || 1}`} color="gray" width="100px">
+        <Button
+          size="s"
+          to={`../?page=${beforePage || 1}`}
+          color="gray"
+          width="100px"
+        >
           목록
         </Button>
-        <div className='edit'>
-          <Button size="s" width="65px">수정</Button>
-          <Button size="s" width="65px">삭제</Button>
-        </div>
-        
+        {getCurrentUser()._id === post.authorId && (
+          <div className="edit">
+            <Button to="update" size="s" width="65px">
+              수정
+            </Button>
+            <Button size="s" width="65px">
+              삭제
+            </Button>
+          </div>
+        )}
       </ActionBlock>
     </>
   );

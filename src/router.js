@@ -10,7 +10,7 @@ import MyPage from 'components/users/MyPage';
 import PostGuard from 'components/common/guard/PostGuard';
 import PostsPage from 'components/posts/PostsPage';
 import PostDetailPage from 'components/posts/PostDetailPage';
-import NewPostPage from 'components/posts/NewPostPage';
+import EditPostPage from 'components/posts/EditPostPage';
 import GreetingsPage from 'components/about/GreetingsPage';
 import LocationPage from 'components/about/LocationPage';
 import HistoryPage from 'components/about/HistoryPage';
@@ -42,8 +42,15 @@ const router = createBrowserRouter([
                 path: ':category',
                 children: [
                   { index: true, element: <PostsPage /> },
-                  { path: 'new', element: <NewPostPage /> },
-                  { path: ':postId', element: <PostDetailPage /> },
+                  { path: 'new', element: <EditPostPage /> },
+                  {
+                    path: ':postId',
+                    children: [
+                      { index: true, element: <PostDetailPage /> },
+                      { path: 'update', element: <EditPostPage updateMode /> },
+                    ],
+                  },
+                  
                 ],
               },
             ],

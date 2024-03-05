@@ -81,7 +81,7 @@ const PostList = ({ posts, startNumber, currentPage }) => {
               <td>{startNumber - i}</td>
               <td className="td-title ellipsis">
                 <Link to={`${post._id}/?beforePage=${currentPage}`}>{post.title}</Link>
-                {post.file && (
+                {post.files.length > 0 && (
                   <span>
                     <img src={fileIcon} alt="file" />
                   </span>

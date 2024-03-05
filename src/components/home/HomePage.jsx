@@ -1,13 +1,18 @@
 import bannerImage from 'assets/banner.jpeg';
+import styled from 'styled-components';
 import BoardsSection from './features/BoardsSection';
 import ContactSection from './features/ContactSection';
+
+const BannerSection = styled.div`
+  height: 300px;
+`
 
 const HomePage = () => {
   return (
     <>
-      <section>
+      <BannerSection>
         <img src={bannerImage} alt="배너" />
-      </section>
+      </BannerSection>
       <BoardsSection/>
       <ContactSection/>
     </>

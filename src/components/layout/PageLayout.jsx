@@ -3,7 +3,7 @@ import PageTitle from './PageTitle';
 import styled from 'styled-components';
 import { NAVIGATION_DATA } from 'utils/constants';
 import { getNavDataFromUrl } from 'utils/format';
-import useApiRequest from 'hooks/common/useApiRequest';
+import getCurrentUser from 'utils/get-current-user';
 
 const Wrapper = styled.div`
   padding: 80px 0;
@@ -62,9 +62,7 @@ const SideBar = styled.aside`
 `;
 
 const PageLayout = () => {
-  const {
-    data: { user },
-  } = useApiRequest({ url: '/users' });
+  const user = getCurrentUser();
   const location = useLocation();
   const keyPath = location.pathname.split('/').slice(0, 3).join('/');
   const { categoryPath, currentPathName } = getNavDataFromUrl(

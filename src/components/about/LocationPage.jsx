@@ -29,9 +29,9 @@ const LocationPage = () => {
       </MapInfo>
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3160.459177293419!2d127.0107758764291!3d37.6148854720262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cbcf420e2ccbf%3A0x708ebedbe4568403!2z7ISc6rK964yA7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1709490396985!5m2!1sko!2skr"
+        title="google-maps"
         width="100%"
         height="450"
-        loading="lazy"
       ></iframe>
     </>
   );

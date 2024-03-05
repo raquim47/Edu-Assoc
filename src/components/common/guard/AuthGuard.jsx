@@ -1,9 +1,9 @@
-import useApiRequest from 'hooks/common/useApiRequest';
 import { useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
+import getCurrentUser from 'utils/get-current-user';
 
 const AuthGuard = ({ element, requireAuth = false }) => {
-  const { data: { user } } = useApiRequest({ url: '/users' });
+  const user = getCurrentUser()
   const alertShownRef = useRef(false);
   
   useEffect(() => {

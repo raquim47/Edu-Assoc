@@ -1,19 +1,16 @@
-import useApiRequest from 'hooks/common/useApiRequest';
 import { useEffect } from 'react';
+import getCurrentUser from 'utils/get-current-user';
 import useLogout from './useLogout';
 
 const useAutoLogout = () => {
   const logout = useLogout();
-  const {
-    data: { user },
-  } = useApiRequest({ url: `/users` });
 
   useEffect(() => {
     const events = ['mousemove', 'keydown'];
     let timer;
     const resetTimer = () => {
       clearTimeout(timer);
-      if (user) {
+      if (getCurrentUser()) {
         timer = setTimeout(() => logout(), 7200000);
       }
     };
@@ -26,7 +23,7 @@ const useAutoLogout = () => {
       events.forEach((event) => window.removeEventListener(event, resetTimer));
       clearTimeout(timer);
     };
-  }, [user, logout]);
+  }, [logout]);
 
   return null;
 };
