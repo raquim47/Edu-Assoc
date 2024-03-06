@@ -5,7 +5,7 @@ import ContactSection from './features/ContactSection';
 
 const BannerSection = styled.div`
   height: 300px;
-`
+`;
 
 const HomePage = () => {
   return (
@@ -13,8 +13,8 @@ const HomePage = () => {
       <BannerSection>
         <img src={bannerImage} alt="배너" />
       </BannerSection>
-      <BoardsSection/>
-      <ContactSection/>
+      <BoardsSection />
+      <ContactSection />
     </>
   );
 };

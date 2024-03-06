@@ -14,8 +14,8 @@ const useApiRequest = ({
       return response.data;
     } catch (error) {
       if (error.code !== 'ERR_CANCELED') {
-        console.error('useApiRequest Error:', error.message);
-        alert('useApiRequest Error : ' + error.message);
+        console.error('Api Request Error:', error.message);
+        alert(error.message);
       }
     }
   };

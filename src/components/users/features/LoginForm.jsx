@@ -3,10 +3,12 @@ import Fieldset from 'components/common/form/Fieldset';
 import InputField from 'components/common/form/InputField';
 import useApiRequest from 'hooks/common/useApiRequest';
 import { queryClient } from 'index';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ miniMode }) => {
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const login = useApiRequest({ url: `/users/login`, method: 'POST' });
   const navigate = useNavigate();
 
@@ -17,10 +19,15 @@ const LoginForm = ({ miniMode }) => {
   } = useForm();
 
   const handleOnSubmit = (data) => {
+    setIsLoggingIn(true);
     login.mutate(data, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(['/users/me', 'GET']);
-        navigate('/');
+        setIsLoggingIn(false);
+        navigate('/home', { replace: true });
+      },
+      onError: () => {
+        setIsLoggingIn(false);
       },
     });
   };
@@ -55,8 +62,12 @@ const LoginForm = ({ miniMode }) => {
           })}
         />
       </Fieldset>
-      <Button type="submit" width="100%" disabled={login.isPending}>
-        {login.isPending ? '요청중' : '로그인'}
+      <Button
+        type="submit"
+        width="100%"
+        disabled={login.isPending || isLoggingIn}
+      >
+        {login.isPending || isLoggingIn ? '요청중' : '로그인'}
       </Button>
     </form>
   );
