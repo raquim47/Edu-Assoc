@@ -13,7 +13,10 @@ const useApiRequest = ({
       const response = await api[method.toLowerCase()](url, data, config);
       return response.data;
     } catch (error) {
-      alert('useApiRequest Error : ' + error.message);
+      if (error.code !== 'ERR_CANCELED') {
+        console.error('useApiRequest Error:', error.message);
+        alert('useApiRequest Error : ' + error.message);
+      }
     }
   };
 
