@@ -1,4 +1,4 @@
-import useLogout from 'hooks/user/useLogout';
+import { useLogoutContext } from 'context/logout';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import getCurrentUser from 'utils/get-current-user';
@@ -19,6 +19,11 @@ const Wrapper = styled.nav`
     font-size: ${(props) => props.theme.fontSize.s};
     font-weight: 300;
     color: ${(props) => props.theme.color.white};
+
+    a.disabled {
+      pointer-events: none;
+      cursor: default;
+    }
   }
 `;
 
@@ -31,7 +36,7 @@ const LogoutBtn = styled.button`
 
 const SubNav = () => {
   const user = getCurrentUser();
-  const logout = useLogout();
+  const { logout, isLoading } = useLogoutContext();
   return (
     <Wrapper>
       <ul>
@@ -41,10 +46,10 @@ const SubNav = () => {
         {user ? (
           <>
             <li>
-              <Link to="/mypage">마이페이지</Link>
+              <Link to="/mypage" className={isLoading ? 'disabled' : ''}>마이페이지</Link>
             </li>
             <li>
-              <LogoutBtn onClick={logout}>로그아웃</LogoutBtn>
+              <LogoutBtn onClick={logout} disabled={isLoading}>로그아웃</LogoutBtn>
             </li>
           </>
         ) : (
@@ -57,9 +62,6 @@ const SubNav = () => {
             </li>
           </>
         )}
-        <li>
-          <Link>사이트맵</Link>
-        </li>
       </ul>
     </Wrapper>
   );

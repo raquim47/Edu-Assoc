@@ -10,7 +10,7 @@ const Btn = styled.button`
   transition: all 0.2s ease;
   width: ${({ $width }) => $width};
   cursor: pointer;
-  
+
   ${({ theme, $color }) =>
     $color === 'blue' &&
     css`
@@ -42,10 +42,10 @@ const Btn = styled.button`
         background-color: ${theme.color.blue[2]};
       }
     `}
-
-  &:disabled {
+  &[disabled] {
     background-color: ${({ theme }) => theme.color.gray[0]};
-    cursor: default;
+    pointer-events: none;
+    
     &:hover {
       background-color: ${({ theme }) => theme.color.gray[0]};
     }
@@ -62,7 +62,7 @@ export const Button = ({
   as = 'button',
   ...props
 }) => {
-  const Component = to ? Link : as
+  const Component = to ? Link : as;
   return (
     <Btn
       as={Component}

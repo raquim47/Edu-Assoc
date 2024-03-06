@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginForm from 'components/users/features/LoginForm';
 import Button from 'components/common/Button';
-import useLogout from 'hooks/user/useLogout';
 import getCurrentUser from 'utils/get-current-user';
+import { useLogoutContext } from 'context/logout';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -42,7 +42,7 @@ const ActionLinks = styled.div`
 
 const HomeLogin = () => {
   const user = getCurrentUser();
-  const logout = useLogout();
+  const { logout, isLoading } = useLogoutContext();
 
   return (
     <Wrapper>
@@ -52,8 +52,8 @@ const HomeLogin = () => {
             <strong>{user.username}</strong>님 안녕하세요
           </h3>
           <ActionBtns>
-            <Button to="/mypage">마이페이지</Button>
-            <Button onClick={logout}>로그아웃</Button>
+            <Button to="/mypage" disabled={isLoading}>마이페이지</Button>
+            <Button onClick={logout} disabled={isLoading}>로그아웃</Button>
           </ActionBtns>
         </>
       ) : (

@@ -2,8 +2,9 @@ import { Outlet } from 'react-router-dom';
 import useAutoLogout from 'hooks/user/useAutoLogout';
 import Header from 'components/common/header/Header';
 import Footer from 'components/common/footer/Footer';
+import { LogoutProvider } from 'context/logout';
 
-const RootLayout = () => {
+const Layer = () => {
   useAutoLogout();
   return (
     <>
@@ -13,6 +14,14 @@ const RootLayout = () => {
       </main>
       <Footer />
     </>
+  );
+};
+
+const RootLayout = () => {
+  return (
+    <LogoutProvider>
+      <Layer />
+    </LogoutProvider>
   );
 };
 

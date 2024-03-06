@@ -1,9 +1,9 @@
+import { useLogoutContext } from 'context/logout';
 import { useEffect } from 'react';
 import getCurrentUser from 'utils/get-current-user';
-import useLogout from './useLogout';
 
 const useAutoLogout = () => {
-  const logout = useLogout();
+  const logoutContext = useLogoutContext();
 
   useEffect(() => {
     const events = ['mousemove', 'keydown'];
@@ -11,7 +11,7 @@ const useAutoLogout = () => {
     const resetTimer = () => {
       clearTimeout(timer);
       if (getCurrentUser()) {
-        timer = setTimeout(() => logout(), 7200000);
+        timer = setTimeout(() => logoutContext.logout(), 7200000);
       }
     };
 
@@ -23,7 +23,7 @@ const useAutoLogout = () => {
       events.forEach((event) => window.removeEventListener(event, resetTimer));
       clearTimeout(timer);
     };
-  }, [logout]);
+  }, []);
 
   return null;
 };
