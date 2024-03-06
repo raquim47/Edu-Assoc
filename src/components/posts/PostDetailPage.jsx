@@ -4,7 +4,6 @@ import Button from 'components/common/Button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { formatDate, formatHtml } from 'utils/format';
 import { useEffect } from 'react';
-import useScrollToTop from 'hooks/common/useScrollTop';
 import useApiRequest from 'hooks/common/useApiRequest';
 import getCurrentUser from 'utils/get-current-user';
 
@@ -103,8 +102,6 @@ const PostDetailPage = () => {
     url: `/posts/${postId}`,
     method: 'DELETE',
   });
-
-  useScrollToTop();
 
   useEffect(() => {
     if (!isSuccess) return;
