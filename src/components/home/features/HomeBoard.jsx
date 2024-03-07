@@ -68,7 +68,6 @@ const HomeBoard = ({ title, category }) => {
       </header>
       <ul>
         {posts.map((post) => {
-          console.log(post);
           const date = formatDate(post.createdAt);
           return (
             <ListItem key={post._id}>
