@@ -50,16 +50,11 @@ const Footer = () => {
         </ul>
       </FooterTop>
       <FooterBottom>
-        <strong>한국법인협회</strong>
+        <strong>글로벌경영컨설팅협회</strong>
         <p>
-          04145 서울특별시 마포구 마포대로 115-8 (공덕동, 공덕빌딩 2층 206호) /
-          전화 : 02-364-4422 / 팩스 : 02-313-8772 / 이메일 :
-          openedu1@hanmail.net
+          02713 서울특별시 성북구 서경로 124, 한림관 1016호/ 전화: 02-940-7211/
         </p>
-        <p>
-          회비계좌번호 : 우리은행 1005-702-022701 (예금주 : 한국열린교육학회)
-        </p>
-        <p>COPYRIGHT ⓒ 2018 OPENEDU. ALL RIGHTS RESERVED.</p>
+        <p>COPYRIGHT ⓒ 2024 GMCA. ALL RIGHTS RESERVED.</p>
       </FooterBottom>
     </footer>
   );

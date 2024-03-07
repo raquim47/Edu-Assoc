@@ -1,5 +1,6 @@
 import Button from 'components/common/Button';
 import useApiRequest from 'hooks/common/useApiRequest';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { formatDate } from 'utils/format';
 
@@ -25,19 +26,24 @@ const Wrapper = styled.article`
 
 const ListItem = styled.li`
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   &:last-child {
     margin-bottom: 0;
   }
 
-  p {
+  a {
+    max-width: 100%;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
   }
 
-  p:hover {
+  a:hover {
     text-decoration: underline;
   }
 
@@ -62,10 +68,13 @@ const HomeBoard = ({ title, category }) => {
       </header>
       <ul>
         {posts.map((post) => {
+          console.log(post);
           const date = formatDate(post.createdAt);
           return (
             <ListItem key={post._id}>
-              <p>{post.title}</p>
+              <Link to={`/posts/${post.category}/${post._id}`}>
+                {post.title}
+              </Link>
               <time dateTime={date}>{date}</time>
             </ListItem>
           );

@@ -58,7 +58,7 @@ const GreetingsPage = () => {
         <h3>
           안녕하세요
           <br />
-          한국서비스경영학회 회원여러분
+          글로벌경영컨설팅협회 회원 여러분
         </h3>
       </Banner>
       <PBlock>

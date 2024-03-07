@@ -15,6 +15,7 @@ const Wrapper = styled.nav`
   h1 {
     font-size: ${(props) => props.theme.fontSize['3xl']};
     color: ${(props) => props.theme.color.blue[0]};
+    font-weight: 500;
   }
 
   .main-list {
@@ -58,7 +59,7 @@ const MainNav = () => {
       onBlur={toggleDropMenu(false)}
     >
       <h1>
-        <Link to="/home">KSMS 서비스경영학회</Link>
+        <Link to="/home">GMCA 글로벌경영컨설팅협회</Link>
       </h1>
       <ul
         className="main-list"

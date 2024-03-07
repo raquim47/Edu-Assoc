@@ -70,7 +70,7 @@ const EditPostPage = ({ updateMode = false }) => {
         registerOption={register('title')}
         required
         minLength={2}
-        maxLength={24}
+        maxLength={50}
         defaultValue={oldPost?.title || ''}
       />
       <InputField

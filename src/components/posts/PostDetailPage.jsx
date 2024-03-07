@@ -86,6 +86,7 @@ const PostDetailPage = () => {
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const beforePage = queryParams.get('beforePage');
+  const user = getCurrentUser();
 
   const {
     data: { post } = { post: {} },
@@ -178,7 +179,7 @@ const PostDetailPage = () => {
         >
           목록
         </Button>
-        {getCurrentUser()._id === post.authorId && (
+        {user && user._id === post.authorId && (
           <div className="edit">
             {!deletePost.isPending && (
               <Button to="update" size="s" width="65px">

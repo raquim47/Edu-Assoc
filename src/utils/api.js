@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://young-wave-45819-4c488469177c.herokuapp.com/api'; 
-// const API_URL = 'http://localhost:3030/api'; 
+// const API_URL = 'https://young-wave-45819-4c488469177c.herokuapp.com/api'; 
+const API_URL = 'http://localhost:3030/api'; 
 
 const api = axios.create({
   baseURL: API_URL,
