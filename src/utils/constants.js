@@ -5,6 +5,8 @@ export const NAVIGATION_DATA = {
     children: [
       { name: '인사말', path: '/greetings' },
       { name: '연혁', path: '/history' },
+      { name: '협회 정관', path: '/terms' },
+      { name: '협회 규정', path: '/policies' },
       { name: '오시는길', path: '/location' },
     ],
   },

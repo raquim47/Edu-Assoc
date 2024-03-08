@@ -14,6 +14,8 @@ import EditPostPage from 'components/posts/EditPostPage';
 import GreetingsPage from 'components/about/GreetingsPage';
 import LocationPage from 'components/about/LocationPage';
 import HistoryPage from 'components/about/HistoryPage';
+import TermsPage from 'components/about/TermsPage';
+import PoliciesPage from 'components/about/PoliciesPage';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,8 @@ const router = createBrowserRouter([
           { path: 'greetings', element: <GreetingsPage /> },
           { path: 'location', element: <LocationPage /> },
           { path: 'history', element: <HistoryPage /> },
+          { path: 'terms', element: <TermsPage /> },
+          { path: 'policies', element: <PoliciesPage /> },
         ],
       },
     ],

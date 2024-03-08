@@ -20,7 +20,7 @@ const FooterBottom = styled.div`
   margin: 0 auto;
   padding: 25px 0;
 
-  strong {
+  h2 {
     color: ${(props) => props.theme.color.blue[1]};
   }
 
@@ -50,7 +50,7 @@ const Footer = () => {
         </ul>
       </FooterTop>
       <FooterBottom>
-        <strong>글로벌경영컨설팅협회</strong>
+        <h2>사단법인 글로벌경영컨설팅협회(GMCA)</h2>
         <p>
           02713 서울특별시 성북구 서경로 124, 한림관 1016호/ 전화: 02-940-7211/
         </p>

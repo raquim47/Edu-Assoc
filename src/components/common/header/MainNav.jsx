@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { NAVIGATION_DATA } from 'utils/constants';
 import DropMenu from './DropMenu';
+import logo from 'assets/logo.png';
 
 const Wrapper = styled.nav`
   display: flex;
@@ -46,6 +47,28 @@ const DropMenuBg = styled.div`
   background-color: rgba(18, 43, 65, 0.85);
 `;
 
+const Logo = styled.div`
+  a {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  
+  small {
+    display: block;
+  }
+
+  small {
+    letter-spacing: 0.3px;
+    font-size: ${props => props.theme.fontSize.xs};
+  }
+`;
 const MainNav = () => {
   const [isDropMenuShow, setIsDropMenuShow] = useState(false);
 
@@ -58,9 +81,15 @@ const MainNav = () => {
       onMouseLeave={toggleDropMenu(false)}
       onBlur={toggleDropMenu(false)}
     >
-      <h1>
-        <Link to="/home">GMCA 글로벌경영컨설팅협회</Link>
-      </h1>
+      <Logo>
+        <Link to="/home">
+          <img src={logo} alt="GMCA" />
+          <div className='text'>
+            <h1>글로벌경영컨설팅협회</h1>
+            <small>Global Management Consulting Association</small>
+          </div>
+        </Link>
+      </Logo>
       <ul
         className="main-list"
         onMouseEnter={toggleDropMenu(true)}
